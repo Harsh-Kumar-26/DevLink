@@ -1,8 +1,8 @@
 import express from "express";
-import {registeruser,loginuser,logoutuser,refreshaccesstoken} from "../controllers/user.controller.js";
+import {registeruser,loginuser,logoutuser,refreshaccesstoken,getcurrentuser,editprofile} from "../controllers/user.controller.js";
 import {verifyJWT} from "../middlewares/auth.middleware.js";
 import {upload} from "../middlewares/multer.middleware.js";
-import {createproject} from "../controllers/project.controller.js"
+import {createproject,deleteproject,editproject, sendproject} from "../controllers/project.controller.js"
 
 const router=express.Router();
 router.route("/signup").post(
@@ -20,6 +20,7 @@ router.route("/signup").post(
     router.route("/login").post(loginuser);
     router.route("/logout").post(verifyJWT,logoutuser);
     router.route("/refreshtoken").post(refreshaccesstoken);
+    router.route("/current-user").get(verifyJWT,getcurrentuser);
     router.route("/newproject").post(upload.fields([
         {
             name:"bkphoto",
@@ -30,6 +31,24 @@ router.route("/signup").post(
             maxCount:1
         }
     ]),verifyJWT,createproject);
-
+    router.route("/edit-profile").patch(upload.fields([
+        {
+            name:"avatar",
+            maxCount:1
+        },{
+            name:"dis",
+            maxCount:1
+        }]),verifyJWT,editprofile);
+    
+router.route("/delete-project").post(verifyJWT,deleteproject);
+router.route("/edit-project").patch(upload.fields([
+        {
+            name:"bk",
+            maxCount:1
+        },{
+            name:"des",
+            maxCount:1
+        }]),verifyJWT,editproject);
+router.route("/send-project").post(verifyJWT,sendproject);
 
     export default router;

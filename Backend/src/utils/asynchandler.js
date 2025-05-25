@@ -1,6 +1,6 @@
 const asynchandler=(fxn)=>async(req,res,next)=>{
     try{
-        await fxn(req,res,next)
+        await fxn(req,res,next);
     }
     catch(err){
         res.status(err.code||500).json({

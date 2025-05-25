@@ -143,6 +143,69 @@ const refreshaccesstoken=asynchandler(async(req,res)=>{
         throw new ApiError(401,error?.message || "Invalid refresh token");
     }
 })
+const getcurrentuser=asynchandler(async(req,res)=>{
+    return res.status(200).json(new ApiResponse(200,req.user,"Current user fetched ssuccessfully"));
+})
+
+const editprofile=asynchandler(async(req,res)=>{
+    const userid=req.user._id;
+    let {fullname,email,specilities,description,updateavatar,oldpassword,newpassword}=req.body;
+    const olduser=await User.findById(userid);
+    if(!fullname){
+        fullname=olduser.fullname;
+    }
+
+    if(!email){
+        email=olduser.email;
+    }
+    if(!specilities){
+        specilities=olduser.specilities;
+    }
+    if(!description){
+        description=olduser.description;
+    }
+    let url="";
+    if(updateavatar){
+    let avatarlocalpath="";
+    
+    if(req.files && Array.isArray(req.files.avatar) && req.files.avatar.length>0){
+        avatarlocalpath=req.files.avatar[0].path;
+        
+    }
+    // console.log(avatarlocalpath);
+    
+    const avatar=await UploadOnCloudinary(avatarlocalpath);
+    url=avatar?.url||"";
+    
+}
+if(!updateavatar){
+    url=olduser.avatar;
+}
+
+let user=await User.findByIdAndUpdate(req.user?._id,{
+    $set:{
+        fullname,
+        email,
+        specilities,
+        description,
+        avatar:url
+    }
+},{new: true}).select("-password");
+if(oldpassword && newpassword){
+    if(newpassword.length<8){
+        throw new ApiError(409,"Password length should be atleast 8 charachter");
+    }
+    // console.log(oldpassword);
+    const correctpassword=await olduser.isPasswordCorrect(oldpassword);
+    if(!(correctpassword)){
+        throw new ApiError(400,"Wrong old password entered");
+    }
+    olduser.password=newpassword;
+    // console.log(olduser.password);
+    await olduser.save({validateBeforeSave:false});
+}
+    return res.status(200).json(new ApiResponse(200,user,"Success in changing user profile"));
+})
 
 
-export {registeruser,loginuser,logoutuser,refreshaccesstoken};
+export {registeruser,loginuser,logoutuser,refreshaccesstoken,getcurrentuser,editprofile};
