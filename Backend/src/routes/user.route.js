@@ -2,7 +2,7 @@ import express from "express";
 import {registeruser,loginuser,logoutuser,refreshaccesstoken,getcurrentuser,editprofile} from "../controllers/user.controller.js";
 import {verifyJWT} from "../middlewares/auth.middleware.js";
 import {upload} from "../middlewares/multer.middleware.js";
-import {createproject,deleteproject,editproject, sendproject} from "../controllers/project.controller.js"
+import {createproject,deleteproject,editproject, sendproject,apply,acceptproject,complete,review} from "../controllers/project.controller.js"
 
 const router=express.Router();
 router.route("/signup").post(
@@ -50,5 +50,9 @@ router.route("/edit-project").patch(upload.fields([
             maxCount:1
         }]),verifyJWT,editproject);
 router.route("/send-project").post(verifyJWT,sendproject);
+router.route("/apply").post(verifyJWT,apply);
+router.route("/accept").post(verifyJWT,acceptproject);
+router.route("/complete").post(verifyJWT,complete);
+router.route("/review").post(verifyJWT,review);
 
     export default router;

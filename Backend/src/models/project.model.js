@@ -25,6 +25,10 @@ const projectschema=new mongoose.Schema({
         type:Boolean,
         default:false
      },
+     reviewed:{
+      type:Boolean,
+      default:false
+     },
      accepted:{
         type:Boolean,
         default:false
@@ -32,7 +36,7 @@ const projectschema=new mongoose.Schema({
      bkphoto:{
         type:String,
         default:""
-     },
+     }, 
      description:{
         type:String
         //This is file to be submitted on cloudinary
