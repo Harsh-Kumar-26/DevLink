@@ -17,6 +17,14 @@ const projectschema=new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"
      }],
+     specilities:{
+        type:[String],
+        default:[]
+    },
+   //   bookmark:[{
+   //      type:mongoose.Schema.Types.ObjectId,
+   //      ref:"User"
+   //   }],
      accept:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"

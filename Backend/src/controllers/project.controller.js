@@ -12,7 +12,7 @@ import ApiResponse from "../utils/apiresponse.js";
 const createproject=asynchandler(async(req,res)=>{
     const {pjt_name,money,deswritten,complete_date}=req.body;
     // creator,bkphoto,descriptionlocalpath(file)
-    if([pjt_name,money,deswritten,complete_date].some((field)=>{
+    if([pjt_name,money,deswritten,complete_date,specilities].some((field)=>{
             return(
             field?.trim()==="")
         })){
@@ -39,7 +39,7 @@ const createproject=asynchandler(async(req,res)=>{
             throw error(500,"Cannot access creator id")
         }
         const Project=await project.create({
-            pjt_name,money,deswritten,complete_date,bkphoto:bkphoto?.url || "",creator:creator._id,description:description?.url||""
+            pjt_name,money,deswritten,complete_date,bkphoto:bkphoto?.url || "",creator:creator._id,description:description?.url||"",specilities
         })
         if(!Project){
             throw new ApiError(500,"Something went wrong while creating new project");
@@ -70,7 +70,7 @@ const editproject=asynchandler(async(req,res)=>{
     if(!projectid){
         throw new ApiError(404,"Project not found");
     }
-    let {pjt_name,money,deswritten,complete_date,updatedes,updatebk}=req.body;
+    let {pjt_name,money,deswritten,complete_date,updatedes,updatebk,specilities}=req.body;
     const oldproject= await project.findById(projectid);
     
     if(!oldproject.creator._id.equals(userid)){
@@ -85,6 +85,9 @@ const editproject=asynchandler(async(req,res)=>{
     }
     if(!money){
         money=oldproject.money;
+    }
+    if(!specilities){
+        specilities=oldproject.specilities;
     }
     if(!deswritten){
         deswritten=oldproject.deswritten;
@@ -136,7 +139,7 @@ let updatedproject=await project.findByIdAndUpdate(projectid,{
         money,
         deswritten,
         complete_date,
-        description:desurl,bkphoto:bkurl
+        description:desurl,bkphoto:bkurl,specilities
     }
 },{new: true});
     return res.status(201).json(
@@ -150,6 +153,19 @@ const sendproject=asynchandler(async(req,res)=>{
         throw new ApiError(404,"Project not found");
     }    
     const projectdata= await project.findById(projectid);
+    return res.status(201).json(
+        new ApiResponse(200,projectdata, "Project edited succesfully")
+    );
+});
+const sendprojectbyname=asynchandler(async(req,res)=>{
+    const {projectname}=req.body;
+    if(!projectname){
+        throw new ApiError(404,"Project not found");
+    }    
+    const projectdata= await project.findOne({pjt_name:projectname});
+    if(!projectdata){
+        throw new ApiError(400,"Could not find project");
+    }
     return res.status(201).json(
         new ApiResponse(200,projectdata, "Project edited succesfully")
     );
@@ -278,5 +294,113 @@ const review=asynchandler(async(req,res)=>{
     return(res.status(201).json(new ApiResponse(200,projectDoc,"Project submitted successfully")));
 });
 
+const removeapply = asynchandler(async (req, res) => {
+    const userid = req.user?._id;
+    if (!userid) {
+        throw new ApiError(400, "Unauthorized request");
+    }
 
-export {createproject,deleteproject,editproject,sendproject,apply,acceptproject,complete,review};
+    const { projectid } = req.body;
+    if (!projectid) {
+        throw new ApiError(404, "Project ID not found");
+    }
+
+    const projectDoc = await project.findById(projectid);
+    if (!projectDoc) {
+        throw new ApiError(404, "Project not found");
+    }
+    if (!projectDoc.applied.includes(userid)) {
+        throw new ApiError(409, "Never applied for this project");
+    }
+    if(projectDoc.accepted){
+        throw new ApiError(400,"Project has been accepted, you cant remove your apply now");
+    }
+
+    projectDoc.applied=project.applied.filter(e=>{
+        e._id!=userid;
+    })
+    await projectDoc.save();
+
+    return res.status(201).json(
+        new ApiResponse(200, projectDoc, "Applied successfully removed")
+    );
+});
+const getProjectSummaries = asynchandler(async (req, res) => {
+    // Give all unaccepted projects
+  const projects = await project.find(
+    { accept: { $exists: false } },
+    {
+      _id: 1,
+      creator: 1,
+      applied: 1,
+      accept: 1,
+      reviewed: 1
+    }
+  ).lean();
+
+  const summary = projects.map(p => ({
+    projectId: p._id,
+    creatorId: p.creator,
+    appliedIds: p.applied,
+    acceptedId: p.accept,
+    reviewed: p.reviewed || false,
+    specilities
+  }));
+
+  return res.status(200).json({ success: true, data: summary });
+});
+
+const userappliedprojects = asynchandler(async (req, res) => {
+const {userid}=req.body;
+if(!userid){
+    throw new ApiError(400,"User dont exist");
+}
+  const projects = await project.find({applied:userid}).lean();
+    if(!projects){
+        throw new ApiError(400,"User didnt applied for any project");
+    }
+  // Map each project to desired output format
+  const summary = projects.map(p => ({
+    projectId: p._id,
+    creatorId: p.creator,
+    appliedIds: p.applied,
+    acceptedId: p.accept,
+    reviewed: p.reviewed || false,
+    accepted:p.accepted,
+    completed:p.completed
+  }));
+
+  return res.status(200).json({ success: true, data: summary });
+});
+
+const usercreatedprojects = asynchandler(async (req, res) => {
+const {userid}=req.body;
+if(!userid){
+    throw new ApiError(400,"User dont exist");
+}
+  const projects = await project.find({creator:userid}).lean();
+    if(!projects){
+        throw new ApiError(400,"User didnt created any project");
+    }
+  // Map each project to desired output format
+  const summary = projects.map(p => ({
+    projectId: p._id,
+    creatorId: p.creator,
+    appliedIds: p.applied,
+    acceptedId: p.accept,
+    reviewed: p.reviewed || false,
+    accepted:p.accepted,
+    completed:p.completed
+  }));
+
+  return res.status(200).json({ success: true, data: summary });
+});
+
+
+
+
+/*
+    applied accepted and completed can be done through same fxn only a bit complex frontend needed
+*/
+
+export {createproject,deleteproject,editproject,sendproject,apply,acceptproject,complete,review,removeapply,getProjectSummaries,sendprojectbyname,userappliedprojects,usercreatedprojects};
