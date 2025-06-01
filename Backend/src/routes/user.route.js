@@ -60,6 +60,4 @@ router.route("/sendprojectbyname").post(verifyJWT,sendprojectbyname);
 router.route("/userappliedprojects").post(verifyJWT,userappliedprojects);
 router.route("/usercreatedprojects").post(verifyJWT,usercreatedprojects);
 
-
-
-    export default router;
+export default router;

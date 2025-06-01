@@ -1,0 +1,69 @@
+import React from "react";
+import { motion } from "framer-motion";
+import { FaArrowLeft, FaEdit, FaStar } from "react-icons/fa";
+
+export default function ProfilePage() {
+  // Dummy data (replace with real user data from props/context later)
+  const user = {
+    avatar: "https://i.pravatar.cc/150?img=12",
+    fullName: "Jane Doe",
+    username: "jdoe123",
+    email: "jane@example.com",
+    specialities: ["Frontend Developer", "UI/UX Designer"],
+    avgRating: 4.7,
+    description: "Passionate about clean design and performance-focused frontend development."
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-950 flex items-center justify-center px-4 py-10">
+      <motion.div
+        initial={{ opacity: 0, y: 60 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7 }}
+        className="w-full max-w-4xl bg-gray-900 text-white p-6 md:p-10 rounded-2xl shadow-2xl"
+      >
+        <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
+          <img
+            src={user.avatar}
+            alt="User Avatar"
+            className="w-40 h-40 rounded-full object-cover border-4 border-purple-500 shadow-lg"
+          />
+
+          <div className="flex-1">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+              <h2 className="text-3xl font-bold">{user.fullName}</h2>
+              <div className="flex gap-3">
+                <button className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-sm font-medium transition">
+                  <FaEdit /> Edit Profile
+                </button>
+                <button className="flex items-center gap-2 bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg text-sm font-medium transition">
+                  <FaArrowLeft /> Back
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-3 text-sm md:text-base">
+              <p><strong>Username:</strong> @{user.username}</p>
+              <p><strong>Email:</strong> {user.email}</p>
+              <p><strong>Average Rating:</strong> {user.avgRating} <FaStar className="inline text-yellow-400 mb-1" /></p>
+
+              <div>
+                <strong>Specialities:</strong>
+                <ul className="list-disc ml-6 mt-1">
+                  {user.specialities.map((spec, idx) => (
+                    <li key={idx}>{spec}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <strong>Description:</strong>
+                <p className="mt-1 text-gray-300">{user.description}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+}

@@ -10,7 +10,7 @@ import ApiResponse from "../utils/apiresponse.js";
 // import jwt from "JsonWebTokenError";
 
 const createproject=asynchandler(async(req,res)=>{
-    const {pjt_name,money,deswritten,complete_date}=req.body;
+    const {pjt_name,money,deswritten,complete_date,specilities}=req.body;
     // creator,bkphoto,descriptionlocalpath(file)
     if([pjt_name,money,deswritten,complete_date,specilities].some((field)=>{
             return(
@@ -334,7 +334,8 @@ const getProjectSummaries = asynchandler(async (req, res) => {
       creator: 1,
       applied: 1,
       accept: 1,
-      reviewed: 1
+      reviewed: 1,
+      specilities: 1
     }
   ).lean();
 
@@ -344,7 +345,7 @@ const getProjectSummaries = asynchandler(async (req, res) => {
     appliedIds: p.applied,
     acceptedId: p.accept,
     reviewed: p.reviewed || false,
-    specilities
+    specilities: p.specilities
   }));
 
   return res.status(200).json({ success: true, data: summary });
@@ -367,7 +368,8 @@ if(!userid){
     acceptedId: p.accept,
     reviewed: p.reviewed || false,
     accepted:p.accepted,
-    completed:p.completed
+    completed:p.completed,
+    specilities: p.specilities
   }));
 
   return res.status(200).json({ success: true, data: summary });
@@ -390,7 +392,8 @@ if(!userid){
     acceptedId: p.accept,
     reviewed: p.reviewed || false,
     accepted:p.accepted,
-    completed:p.completed
+    completed:p.completed,
+    specilities: p.specilities
   }));
 
   return res.status(200).json({ success: true, data: summary });

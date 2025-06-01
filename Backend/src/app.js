@@ -13,5 +13,5 @@ app.use(express.static("public"))
 app.use(express.urlencoded({extended:true , limit: "16kb"}))        
 app.use(cookieParser())
 
-app.use("/devlink",userrouter);
+app.use("/api/v1/devlink",userrouter);
 export default app;
