@@ -1,9 +1,9 @@
 import React from "react";
 import './App.jsx'
-import ChangePasswordPage from "./pages/Changepass.jsx";
+import SignupPage from "./forms/signup.jsx";
 const App=()=>{
   return(
-  <ChangePasswordPage/>
+  <SignupPage/>
   )
 }
 export default App

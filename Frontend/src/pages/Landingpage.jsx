@@ -1,4 +1,3 @@
-// pages/Landing.jsx
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "../components/Button";
