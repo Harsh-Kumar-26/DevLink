@@ -43,10 +43,17 @@ const registeruser=asynchandler(async(req,res)=>{
         throw new ApiError(409,"User already exist");
     }
     let avatarlocalpath="";
+    let avatar={url:""};
     if(req.files && req.files.avatar && Array.isArray(req.files.avatar) && req.files.avatar.length>0){
         avatarlocalpath=req.files.avatar[0].path;
+        try{
+        avatar=await UploadOnCloudinary(avatarlocalpath);
+        }
+        catch{
+            console.log(" ");
+            
+        }
     }
-    const avatar=await UploadOnCloudinary(avatarlocalpath);
     const user=await User.create({
         fullname,email,password,specilities,description,username:username.toLowerCase(),avatar: avatar?.url||""
     })
@@ -172,7 +179,7 @@ const editprofile=asynchandler(async(req,res)=>{
         avatarlocalpath=req.files.avatar[0].path;
         
     }
-    // console.log(avatarlocalpath);
+
     
     const avatar=await UploadOnCloudinary(avatarlocalpath);
     url=avatar?.url||"";
@@ -195,13 +202,13 @@ if(oldpassword && newpassword){
     if(newpassword.length<8){
         throw new ApiError(409,"Password length should be atleast 8 charachter");
     }
-    // console.log(oldpassword);
+    
     const correctpassword=await olduser.isPasswordCorrect(oldpassword);
     if(!(correctpassword)){
         throw new ApiError(400,"Wrong old password entered");
     }
     olduser.password=newpassword;
-    // console.log(olduser.password);
+    
     await olduser.save({validateBeforeSave:false});
 }
     return res.status(200).json(new ApiResponse(200,user,"Success in changing user profile"));

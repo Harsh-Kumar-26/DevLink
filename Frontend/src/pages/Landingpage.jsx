@@ -1,15 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "../components/Button";
 import Footer from "../components/Landingfooter";
 import Loader from "../components/loader";
+import {Link} from "react-router-dom";
 const refresh=()=>{
-    console.log("Hi");
+  window.location.reload();
     
 }
 
 
 export default function Landing() {
+    useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -33,10 +37,12 @@ export default function Landing() {
           transition={{ duration: 0.5 }}
           className="hidden md:flex space-x-4 "
         >
-          <Button variant="outline" onClick={() => alert("Login clicked")}>
+          <Link to="/login">
+          <Button variant="outline">
             Login
           </Button>
-          <Button onClick={() => alert("Sign up clicked")}>Sign Up</Button>
+          </Link>
+         <Link to="/signup"><Button>Sign Up</Button></Link>
         </motion.div>
 
         {/* Mobile Menu Toggle */}
@@ -79,25 +85,21 @@ export default function Landing() {
               exit={{ opacity: 0, y: -10 }}
               className="absolute top-16 left-0 w-full bg-black bg-opacity-90 flex flex-col items-center space-y-4 py-4 z-10 md:hidden"
             >
+              <Link to="/login">
               <Button
                 variant="outline"
                 className="w-11/12"
-                onClick={() => {
-                  setMenuOpen(false);
-                  alert("Login clicked");
-                }}
               >
                 Login
               </Button>
+              </Link>
+              <Link to="/signup">
               <Button
                 className="w-11/12"
-                onClick={() => {
-                  setMenuOpen(false);
-                  alert("Sign up clicked");
-                }}
               >
                 Sign Up
               </Button>
+              </Link>
             </motion.div>
           )}
         </AnimatePresence>
@@ -141,9 +143,11 @@ export default function Landing() {
           transition={{ delay: 0.6, duration: 0.5 }}
           className="z-10"
         >
-          <Button onClick={() => alert("Redirecting to sign up...")}>
+          <Link to="/signup">
+          <Button>
             Get Started
           </Button>
+          </Link>
         </motion.div>
       </div>
       <Footer/>

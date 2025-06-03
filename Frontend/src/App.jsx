@@ -1,9 +1,10 @@
 import React from "react";
 import './App.jsx'
-import SignupPage from "./forms/signup.jsx";
+import { Outlet } from "react-router-dom";
+import Landing from "./pages/Landingpage.jsx";
 const App=()=>{
   return(
-  <SignupPage/>
+  <Landing/>
   )
 }
 export default App

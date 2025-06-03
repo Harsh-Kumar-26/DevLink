@@ -2,6 +2,10 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Button from "../components/Button";
+import axios from 'axios';
+import Loader from "../components/loader";
+import {useNavigate} from "react-router-dom";
+
 
 const specialitiesList = [
   "Backend Developer", "Frontend Developer", "Full Stack Web Developer", "Android Developer",
@@ -15,6 +19,7 @@ const specialitiesList = [
 ];
 
 export default function SignupPage() {
+  const navigate=useNavigate();
   const [formData, setFormData] = useState({
     fullname: "",
     username: "",
@@ -25,11 +30,12 @@ export default function SignupPage() {
     specialities: []
   });
   const [showPassword, setShowPassword] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false);
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
     if (type === "file") {
-      setFormData({ ...formData, [name]: files[0] });
+      const a=(files[0]!==null)?files[0]:undefined;
+      setFormData({ ...formData, [name]: a });
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -45,12 +51,27 @@ export default function SignupPage() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log(formData); // Replace with API call
+    setIsLoading(true);
+    try{
+      console.log(formData);
+    const response=await axios.post(`${import.meta.env.VITE_BACKENDURL}/signup`,formData);
+    console.log(response);
+    navigate('/login');
+    // window.location.href="https://example.com";
+    
+    }
+
+    catch(err){
+      console.error(err);
+      
+    }finally{
+      setIsLoading(false);
+    }
   };
 
-  return (
+  return isLoading?(<Loader/>):(
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-950 px-4 py-10 flex items-center justify-center">
       <motion.form
         onSubmit={handleSubmit}
@@ -166,7 +187,7 @@ export default function SignupPage() {
           {/* Description (Optional) */}
           <div className="sm:col-span-2 lg:col-span-2">
             <label className="block font-semibold">
-              Brief Description <span className="text-gray-400">(optional)</span>
+              Brief Description
             </label>
             <textarea
               name="description"
@@ -211,5 +232,5 @@ export default function SignupPage() {
         </motion.button>
       </motion.form>
     </div>
-  );
+  )
 }

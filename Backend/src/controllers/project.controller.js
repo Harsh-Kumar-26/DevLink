@@ -76,7 +76,6 @@ const editproject=asynchandler(async(req,res)=>{
     if(!oldproject.creator._id.equals(userid)){
         throw new ApiError(401,"Unauthorized request");
     }
-    // console.log(oldproject.creator);
     if(!oldproject){
         throw new ApiError(500,"Error fetching project data");
     }
@@ -106,7 +105,6 @@ const editproject=asynchandler(async(req,res)=>{
             bklocalpath=req.files.bk[0].path;
             
         }
-        // console.log(avatarlocalpath);
         
         const bk=await UploadOnCloudinary(bklocalpath);
         bkurl=bk?.url||"";
@@ -125,7 +123,7 @@ const editproject=asynchandler(async(req,res)=>{
             deslocalpath=req.files.des[0].path;
             
         }
-        // console.log(avatarlocalpath);
+        
         
         const des=await UploadOnCloudinary(deslocalpath);
         desurl=des?.url||"";        

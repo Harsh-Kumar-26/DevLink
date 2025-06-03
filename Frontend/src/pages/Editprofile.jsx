@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaArrowLeft } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const specialitiesList = [
   "Backend Developer", "Frontend Developer", "Full Stack Web Developer", "Android Developer",
@@ -59,7 +60,7 @@ export default function EditProfilePage() {
       >
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-3xl md:text-4xl font-bold text-white">Edit Profile</h2>
-          <button
+          <button onClick={()=>window.history.back()}
             type="button"
             className="flex items-center gap-2 bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg text-sm font-medium transition"
           >
@@ -108,12 +109,14 @@ export default function EditProfilePage() {
 
           <div className="w-full">
             {/* <label className="block mb-1 text-sm font-medium">Change Password</label> */}
+            <Link to="/changepassword">
             <button
               type="button"
               className="bg-purple-600 hover:bg-purple-700 transition px-4 py-2 w-full rounded-lg font-semibold text-sm"
             >
               Change Password
             </button>
+            </Link>
           </div>
 
           <textarea

@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaArrowLeft, FaEdit, FaStar } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function ProfilePage() {
   // Dummy data (replace with real user data from props/context later)
@@ -33,10 +34,12 @@ export default function ProfilePage() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
               <h2 className="text-3xl font-bold">{user.fullName}</h2>
               <div className="flex gap-3">
+                <Link to="/editprofile">
                 <button className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-sm font-medium transition">
                   <FaEdit /> Edit Profile
                 </button>
-                <button className="flex items-center gap-2 bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg text-sm font-medium transition">
+                </Link>
+                <button onClick={()=>window.history.back()} className="flex items-center gap-2 bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg text-sm font-medium transition">
                   <FaArrowLeft /> Back
                 </button>
               </div>
