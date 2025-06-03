@@ -173,6 +173,7 @@ const editprofile=asynchandler(async(req,res)=>{
         
     }
     
+    
     const avatar=await UploadOnCloudinary(avatarlocalpath);
     url=avatar?.url||"";
     
@@ -200,7 +201,6 @@ if(oldpassword && newpassword){
         throw new ApiError(400,"Wrong old password entered");
     }
     olduser.password=newpassword;
-    
     await olduser.save({validateBeforeSave:false});
 }
     return res.status(200).json(new ApiResponse(200,user,"Success in changing user profile"));

@@ -2,6 +2,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import userrouter from "./routes/user.route.js"
+import errorHandler from "./middlewares/error.middleware.js";
 
 const app=express();
 app.use(cors({
@@ -14,4 +15,5 @@ app.use(express.urlencoded({extended:true , limit: "16kb"}))
 app.use(cookieParser())
 
 app.use("/api/v1/devlink",userrouter);
+app.use(errorHandler);
 export default app;

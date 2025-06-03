@@ -71,8 +71,14 @@ export default function SignupPage() {
       }
 
       console.log(formData);
+      try{
     const response=await axios.post(`${import.meta.env.VITE_BACKENDURL}/signup`,formData);
     console.log(response);
+      }
+      catch(err){
+        console.error(err);
+        
+      }
     navigate('/login');
     // window.location.href="https://example.com";
     
