@@ -74,12 +74,12 @@ export default function SignupPage() {
       try{
     const response=await axios.post(`${import.meta.env.VITE_BACKENDURL}/signup`,formData);
     console.log(response);
+    navigate('/login');
       }
       catch(err){
         console.error(err);
         
       }
-    navigate('/login');
     // window.location.href="https://example.com";
     
     }
