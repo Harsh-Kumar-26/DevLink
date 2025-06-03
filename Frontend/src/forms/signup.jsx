@@ -5,6 +5,8 @@ import Button from "../components/Button";
 import axios from 'axios';
 import Loader from "../components/loader";
 import {useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
+// import {log} from "console";
 
 
 const specialitiesList = [
@@ -17,8 +19,9 @@ const specialitiesList = [
   "Computer Vision Engineer", "Mobile App Developer", "Network Engineer", "Product Manager",
   "Software Architect"
 ];
-
+let errorcodn;
 export default function SignupPage() {
+  const [formError, setFormError] = useState("");
   const navigate=useNavigate();
   const [formData, setFormData] = useState({
     fullname: "",
@@ -70,15 +73,33 @@ export default function SignupPage() {
         formDataToSend.append("avatar", file);
       }
 
-      console.log(formData);
+      // console.log(formData);
       try{
     const response=await axios.post(`${import.meta.env.VITE_BACKENDURL}/signup`,formData);
-    console.log(response);
-    navigate('/login');
+    try{
+    const autologin=await axios.post(`${import.meta.env.VITE_BACKENDURL}/login`,formData,{
+      withCredentials:true
+    });
+    // console.log("Login done ");
+    // console.log(autologin);
+    // navigate('/main');
+    
+    }
+    catch(err){
+      
+      // console.log("Unable to login");
+      console.log(err);
+      navigate('/login');
+    }
+    // console.log(response);
       }
       catch(err){
-        console.error(err);
-        
+        console.log("Hello");
+        setFormError(err.response?.data?.message || "Something went wrong");
+        errorcodn=true;
+        // console.error(formError);
+        // console.error(err);
+        // console.log("Hi");
       }
     // window.location.href="https://example.com";
     
@@ -104,7 +125,7 @@ export default function SignupPage() {
         {/* Login link */}
         <div className="text-center sm:text-right mb-6">
           <p className="text-sm">
-            Already have an account? <Button children="Login" />
+            Already have an account? <Link to="/login"><Button children="Login"/></Link>
           </p>
         </div>
 
@@ -217,6 +238,7 @@ export default function SignupPage() {
               onChange={handleChange}
               rows="3"
               className="bg-gray-800 p-3 rounded-lg outline-none focus:ring-2 focus:ring-purple-500 w-full"
+              required
             />
           </div>
 
@@ -243,6 +265,14 @@ export default function SignupPage() {
         </div>
 
         {/* Submit */}
+        {errorcodn && (
+  <div className="mt-6 bg-red-800/60 text-red-200 border border-red-500 rounded-lg p-4 text-sm shadow-md">
+    <div>
+      {formError}
+      </div>
+  </div>
+)}
+
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}

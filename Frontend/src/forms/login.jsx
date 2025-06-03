@@ -2,27 +2,54 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Button from "../components/Button";
+import { Link } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import Loader from "../components/loader";
+import axios from 'axios';
+
+
+
 
 export default function LoginPage() {
-  const [loginMode, setLoginMode] = useState("username"); // "username" or "email"
+  const navigate=useNavigate();
+  const [formError,setformError]=useState("");
+  const [loginMode, setLoginMode] = useState("email"); // "username" or "email"
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: ""
   });
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
+    setIsLoading(true);
     console.log(formData); // add login logic later
+    try{
+    const login=await axios.post(`${import.meta.env.VITE_BACKENDURL}/login`,formData,{
+      withCredentials:true
+    //  navigate('');
+    });
+    console.log(login);
+    
+  }
+  catch(err){
+    console.log(err);
+    setformError(err.response?.data?.message || "Something went wrong");
+  }
+  finally{
+      setIsLoading(false);
+    }
   };
 
-  return (
+  return isLoading?(<Loader/>):(
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-950 px-4 py-10 flex items-center justify-center">
       <motion.form
         onSubmit={handleSubmit}
@@ -39,13 +66,13 @@ export default function LoginPage() {
             onChange={(e) => setLoginMode(e.target.value)}
             className="bg-gray-800 p-2 rounded-md outline-none cursor-pointer"
           >
-            <option value="username">Username Login</option>
             <option value="email">Email Login</option>
+            <option value="username">Username Login</option>
           </select>
 
           {/* Signup Link */}
           <p className="text-sm">
-            Don't have an account? <Button children="Signup" />
+            Don't have an account? <Link to="/signup"><Button children="Signup" /></Link>
           </p>
         </div>
 
@@ -96,6 +123,13 @@ export default function LoginPage() {
             </button>
           </div>
         </div>
+        {formError && (
+  <div className="mt-6 bg-red-800/60 text-red-200 border border-red-500 rounded-lg p-4 text-sm shadow-md">
+    <div>
+      {formError}
+      </div>
+  </div>
+)}
 
         <motion.button
           whileHover={{ scale: 1.05 }}
