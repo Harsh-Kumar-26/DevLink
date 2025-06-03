@@ -43,17 +43,10 @@ const registeruser=asynchandler(async(req,res)=>{
         throw new ApiError(409,"User already exist");
     }
     let avatarlocalpath="";
-    let avatar={url:""};
     if(req.files && req.files.avatar && Array.isArray(req.files.avatar) && req.files.avatar.length>0){
         avatarlocalpath=req.files.avatar[0].path;
-        try{
-        avatar=await UploadOnCloudinary(avatarlocalpath);
-        }
-        catch{
-            console.log(" ");
-            
-        }
     }
+    const avatar=await UploadOnCloudinary(avatarlocalpath);
     const user=await User.create({
         fullname,email,password,specilities,description,username:username.toLowerCase(),avatar: avatar?.url||""
     })
@@ -179,7 +172,6 @@ const editprofile=asynchandler(async(req,res)=>{
         avatarlocalpath=req.files.avatar[0].path;
         
     }
-
     
     const avatar=await UploadOnCloudinary(avatarlocalpath);
     url=avatar?.url||"";

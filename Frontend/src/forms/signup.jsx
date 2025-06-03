@@ -34,9 +34,15 @@ export default function SignupPage() {
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
     if (type === "file") {
-      const a=(files[0]!==null)?files[0]:undefined;
-      setFormData({ ...formData, [name]: a });
-    } else {
+      if(files[0]){
+      setFormData({ ...formData, [name]: files[0]});
+      }
+      else{
+        
+        setFormData({ ...formData, [name]: null});
+      }
+    }
+    else {
       setFormData({ ...formData, [name]: value });
     }
   };
@@ -55,6 +61,15 @@ export default function SignupPage() {
     e.preventDefault();
     setIsLoading(true);
     try{
+      const formDataToSend = new FormData();
+      if(!formData.avatar){
+      const av=await fetch("/avatar.jpg");
+        const blob=await av.blob();
+        const file = new File([blob], 'avatar.jpg', { type: blob.type });
+        // setFormData({ ...formData, avatar: file });
+        formDataToSend.append("avatar", file);
+      }
+
       console.log(formData);
     const response=await axios.post(`${import.meta.env.VITE_BACKENDURL}/signup`,formData);
     console.log(response);
