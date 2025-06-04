@@ -51,7 +51,9 @@ export default function EditProfilePage() {
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
     if (type === "file") {
+      console.log("a1");
       setuser({ ...user, [name]: files[0] });
+      console.log("a2");
     } else {
       setuser({ ...user, [name]: value });
     }
@@ -79,6 +81,7 @@ export default function EditProfilePage() {
       // data.append("password", user.password);
       data.append("description", user.description);
       if (user.avatar) {
+        console.log("a3");
         data.append("avatar", user.avatar);
       }
       user.specilities.forEach((spec) => data.append("specilities", spec));
