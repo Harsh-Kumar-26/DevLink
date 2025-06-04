@@ -31,10 +31,16 @@ export default function EditProfilePage() {
             { withCredentials: true } // important to send cookies
           );
           let userData = response.data.data;
+          console.log("Userdata1 "+userData);
           setuser(userData);
+          console.log("Userdata2 "+userData);
+          
         } catch (err) {
           console.error("Failed to fetch user:", err);
           setError(err);
+        }
+        finally{
+          setisloding(false);
         }
       }
       fetchUser();
