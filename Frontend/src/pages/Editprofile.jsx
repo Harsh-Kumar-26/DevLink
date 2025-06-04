@@ -2,6 +2,9 @@ import { useState,useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Loader from "../components/loader";
+import axios from "axios";
 
 const specialitiesList = [
   "Backend Developer", "Frontend Developer", "Full Stack Web Developer", "Android Developer",
@@ -15,8 +18,9 @@ const specialitiesList = [
 ];
 
 export default function EditProfilePage() {
+  const navigate=useNavigate();
   const [isloding,setisloding]=useState(false);
-    const [user, setuser]=useState(null);
+    const [user, setuser]=useState();
     const [error, setError] = useState(null);
   useEffect(() => {
       async function fetchUser() {
@@ -41,9 +45,9 @@ export default function EditProfilePage() {
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
     if (type === "file") {
-      setuser({ ...formData, [name]: files[0] });
+      setuser({ ...user, [name]: files[0] });
     } else {
-      setuser({ ...formData, [name]: value });
+      setuser({ ...user, [name]: value });
     }
   };
 
@@ -51,9 +55,9 @@ export default function EditProfilePage() {
     const { value, checked } = e.target;
     setuser((prev) => {
       const updated = checked
-        ? [...prev.specialities, value]
-        : prev.specialities.filter((item) => item !== value);
-      return { ...prev, specialities: updated };
+        ? [...prev.specilities, value]
+        : prev.specilities.filter((item) => item !== value);
+      return { ...prev, specilities: updated };
     });
   };
 
@@ -66,14 +70,14 @@ export default function EditProfilePage() {
       data.append("fullname", user.fullname);
       data.append("username", user.username);
       data.append("email", user.email);
-      data.append("password", user.password);
+      // data.append("password", user.password);
       data.append("description", user.description);
       if (user.avatar) {
         data.append("avatar", user.avatar);
       }
-      user.specialities.forEach((spec) => data.append("specilities", spec));
+      user.specilities.forEach((spec) => data.append("specilities", spec));
 
-      const res = await axios.patch(`${import.meta.env.VITE_BACKENDURL}/edit-project`, data, {
+      const res = await axios.patch(`${import.meta.env.VITE_BACKENDURL}/edit-profile`, data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -87,7 +91,7 @@ export default function EditProfilePage() {
     // Submit logic to be handled by you
   };
 
-  return (
+  return (isloding || !user)?(<Loader/>):(
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-950 px-4 py-10 flex items-center justify-center">
       <motion.form
         onSubmit={handleSubmit}
@@ -109,7 +113,7 @@ export default function EditProfilePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <input
             type="text"
-            name="fullName"
+            name="fullname"
             placeholder="Full Name"
             value={user.fullname}
             onChange={handleChange}
