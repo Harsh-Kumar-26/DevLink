@@ -37,7 +37,7 @@ export default function EditProfilePage() {
           
         } catch (err) {
           console.error("Failed to fetch user:", err);
-          setError(err);
+          setError("Failed to fetch user");
         }
         finally{
           setisloding(false);
@@ -95,7 +95,7 @@ export default function EditProfilePage() {
       });
      navigate("/profile");
     } catch (err) {
-      setError(err.response?.data?.message || "Signup failed");
+      setError(err.response?.data?.message || "Editing profile failed");
     } finally {
       setisloding(false);
     }
@@ -199,7 +199,11 @@ export default function EditProfilePage() {
             ))}
           </div>
         </div>
-
+            {error && (
+          <div className="mt-6 bg-red-800/60 text-red-200 border border-red-500 rounded-lg p-4 text-sm shadow-md">
+            {error}
+          </div>
+        )}
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
