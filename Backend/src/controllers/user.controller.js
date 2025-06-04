@@ -80,7 +80,8 @@ const loginuser=asynchandler(async(req,res)=>{
     const loggedinuser=await User.findById(user._id).select("-password -refreshtoken");
     const option={
         httpOnly:true,
-        secure:true
+        secure:true,
+        sameSite: "None",
     }
     return res.status(200).cookie("accesstoken",accestoken,option).cookie("refreshtoken",refreshtoken,option)
     .json(
@@ -109,7 +110,8 @@ await User.findByIdAndUpdate(
 
     const options={
             httpOnly:true,     
-            secure:true
+            secure:true,
+            sameSite: "None"
         }
         res.status(200).clearCookie("accesstoken",options).clearCookie("refreshtoken",options).json(new ApiResponse(200,{},"User logged out successfully"))
 })
@@ -133,7 +135,8 @@ const refreshaccesstoken=asynchandler(async(req,res)=>{
         }
         const options={
             httpOnly:true,
-            secure:true
+            secure:true,
+            sameSite: "None"
         }
     
        const{accesstoken,refreshtoken}=await generateaccessandrefreshtoken(user._id);
