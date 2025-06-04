@@ -23,7 +23,7 @@ catch(error){
 
 const registeruser=asynchandler(async(req,res,next)=>{
     const {fullname,username,email,password,specilities,description}=req.body;
-    if([fullname,email,password,username,specilities,description].some((field)=>{
+    if([fullname,email,password,username,description].some((field)=>{
         return(
         field?.trim()==="")
     })){
