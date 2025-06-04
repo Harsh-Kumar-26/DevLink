@@ -20,7 +20,7 @@ export default function ProfilePage() {
         );
         console.log(response);
         
-        let userData = response.data;
+        let userData = response.data.data;
 
         // Set default avatar if empty
         // if (userData.avatar=="") {
@@ -69,7 +69,7 @@ export default function ProfilePage() {
 
           <div className="flex-1">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-              <h2 className="text-3xl font-bold">{user.fullName}</h2>
+              <h2 className="text-3xl font-bold">{user.fullname}</h2>
               <div className="flex gap-3">
                 <Link to="/editprofile">
                 <button className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-sm font-medium transition">
@@ -85,7 +85,7 @@ export default function ProfilePage() {
             <div className="space-y-3 text-sm md:text-base">
               <p><strong>Username:</strong> @{user.username}</p>
               <p><strong>Email:</strong> {user.email}</p>
-              <p><strong>Average Rating:</strong> {user.avgRating} <FaStar className="inline text-yellow-400 mb-1" /></p>
+              <p><strong>Average Rating:</strong> {user.avgrating} <FaStar className="inline text-yellow-400 mb-1" /></p>
 
               <div>
                 <strong>Specialities:</strong>
