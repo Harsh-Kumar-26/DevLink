@@ -89,11 +89,15 @@ export default function ProfilePage() {
 
               <div>
                 <strong>Specialities:</strong>
+                {user.specialities && user.specialities.length>0?(
                 <ul className="list-disc ml-6 mt-1">
                   {user.specialities.map((spec, idx) => (
                     <li key={idx}>{spec}</li>
                   ))}
-                </ul>
+                </ul>):(
+                  <p className="ml-6 mt-1 text-gray-400">No specialities</p>
+                )
+}
               </div>
 
               <div>
