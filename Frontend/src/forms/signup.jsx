@@ -1,13 +1,10 @@
 import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import axios from "axios";
 import Button from "../components/Button";
-import axios from 'axios';
 import Loader from "../components/loader";
-import {useNavigate} from "react-router-dom";
-import {Link} from "react-router-dom";
-// import {log} from "console";
-
 
 const specialitiesList = [
   "Backend Developer", "Frontend Developer", "Full Stack Web Developer", "Android Developer",
@@ -19,10 +16,8 @@ const specialitiesList = [
   "Computer Vision Engineer", "Mobile App Developer", "Network Engineer", "Product Manager",
   "Software Architect"
 ];
-let errorcodn;
+
 export default function SignupPage() {
-  const [formError, setFormError] = useState("");
-  const navigate=useNavigate();
   const [formData, setFormData] = useState({
     fullname: "",
     username: "",
@@ -30,22 +25,19 @@ export default function SignupPage() {
     password: "",
     avatar: null,
     description: "",
-    specialities: []
+    specialities: [],
   });
+
+  const [formError, setFormError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
     if (type === "file") {
-      if(files[0]){
-      setFormData({ ...formData, [name]: files[0]});
-      }
-      else{
-        
-        setFormData({ ...formData, [name]: null});
-      }
-    }
-    else {
+      setFormData({ ...formData, avatar: files[0] || null });
+    } else {
       setFormData({ ...formData, [name]: value });
     }
   };
@@ -60,60 +52,43 @@ export default function SignupPage() {
     });
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setFormError("");
     setIsLoading(true);
-    try{
-      const formDataToSend = new FormData();
-      if(!formData.avatar){
-      const av=await fetch("/avatar.jpg");
-        const blob=await av.blob();
-        const file = new File([blob], 'avatar.jpg', { type: blob.type });
-        // setFormData({ ...formData, avatar: file });
-        formDataToSend.append("avatar", file);
-      }
 
-      // console.log(formData);
-      try{
-    const response=await axios.post(`${import.meta.env.VITE_BACKENDURL}/signup`,formData);
-    try{
-    const autologin=await axios.post(`${import.meta.env.VITE_BACKENDURL}/login`,formData,{
-      withCredentials:true
-    });
-    // console.log("Login done ");
-    // console.log(autologin);
-    navigate('/profile');
-    
-    }
-    catch(err){
-      
-      // console.log("Unable to login");
-      console.log(err);
-      navigate('/login');
-    }
-    // console.log(response);
+    try {
+      const data = new FormData();
+      data.append("fullname", formData.fullname);
+      data.append("username", formData.username);
+      data.append("email", formData.email);
+      data.append("password", formData.password);
+      data.append("description", formData.description);
+      if (formData.avatar) {
+        data.append("avatar", formData.avatar);
       }
-      catch(err){
-        console.log("Hello");
-        setFormError(err.response?.data?.message || "Something went wrong");
-        errorcodn=true;
-        // console.error(formError);
-        // console.error(err);
-        // console.log("Hi");
-      }
-    // window.location.href="https://example.com";
-    
-    }
+      formData.specialities.forEach((spec) => data.append("specilities", spec));
 
-    catch(err){
-      console.error(err);
-      
-    }finally{
+      const res = await axios.post(`${import.meta.env.VITE_BACKENDURL}/signup`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      await axios.post(`${import.meta.env.VITE_BACKENDURL}/login`, {
+        username: formData.username,
+        password: formData.password,
+      }, { withCredentials: true });
+
+      navigate("/profile");
+    } catch (err) {
+      setFormError(err.response?.data?.message || "Signup failed");
+    } finally {
       setIsLoading(false);
     }
   };
 
-  return isLoading?(<Loader/>):(
+  return isLoading ? <Loader /> : (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-950 px-4 py-10 flex items-center justify-center">
       <motion.form
         onSubmit={handleSubmit}
@@ -122,10 +97,9 @@ export default function SignupPage() {
         transition={{ duration: 0.6 }}
         className="w-full max-w-[1600px] bg-gray-900 text-white p-6 md:p-10 xl:p-14 rounded-2xl shadow-2xl"
       >
-        {/* Login link */}
         <div className="text-center sm:text-right mb-6">
           <p className="text-sm">
-            Already have an account? <Link to="/login"><Button children="Login"/></Link>
+            Already have an account? <Link to="/login"><Button children="Login" /></Link>
           </p>
         </div>
 
@@ -134,55 +108,23 @@ export default function SignupPage() {
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-          {/* Full Name */}
-          <div>
-            <label className="block font-semibold">
-              Full Name <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              name="fullname"
-              placeholder="Full Name"
-              value={formData.fullname}
-              onChange={handleChange}
-              className="bg-gray-800 p-3 rounded-lg outline-none focus:ring-2 focus:ring-purple-500 w-full"
-              required
-            />
-          </div>
-
-          {/* Username */}
-          <div>
-            <label className="block font-semibold">
-              Username <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              name="username"
-              placeholder="Unique Username"
-              value={formData.username}
-              onChange={handleChange}
-              className="bg-gray-800 p-3 rounded-lg outline-none focus:ring-2 focus:ring-purple-500 w-full"
-              required
-            />
-            <p className="text-xs text-gray-400 mt-1">Username must be unique</p>
-          </div>
-
-          {/* Email */}
-          <div>
-            <label className="block font-semibold">
-              Email <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              className="bg-gray-800 p-3 rounded-lg outline-none focus:ring-2 focus:ring-purple-500 w-full"
-              required
-            />
-          </div>
+          {/* Name, Username, Email */}
+          {["fullname", "username", "email"].map((field) => (
+            <div key={field}>
+              <label className="block font-semibold capitalize">
+                {field} <span className="text-red-500">*</span>
+              </label>
+              <input
+                type={field === "email" ? "email" : "text"}
+                name={field}
+                value={formData[field]}
+                onChange={handleChange}
+                placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+                className="bg-gray-800 p-3 rounded-lg outline-none focus:ring-2 focus:ring-purple-500 w-full"
+                required
+              />
+            </div>
+          ))}
 
           {/* Password */}
           <div className="sm:col-span-2 lg:col-span-3">
@@ -208,35 +150,31 @@ export default function SignupPage() {
               </button>
             </div>
             <p className="text-xs text-gray-400 mt-1">
-              Password must be at least 8 characters long with a special character.
+              At least 8 characters and include a special character.
             </p>
           </div>
 
-          {/* Avatar (Optional) */}
+          {/* Avatar */}
           <div>
-            <label className="block font-semibold">
-              Avatar <span className="text-gray-400">(optional)</span>
-            </label>
+            <label className="block font-semibold">Avatar (optional)</label>
             <input
               type="file"
               name="avatar"
               accept="image/*"
               onChange={handleChange}
-              className="bg-gray-800 p-3 rounded-lg outline-none file:mr-3 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-purple-600 file:text-white hover:file:bg-purple-700 w-full"
+              className="bg-gray-800 p-3 rounded-lg file:bg-purple-600 file:text-white hover:file:bg-purple-700 w-full"
             />
           </div>
 
-          {/* Description (Optional) */}
+          {/* Description */}
           <div className="sm:col-span-2 lg:col-span-2">
-            <label className="block font-semibold">
-              Brief Description
-            </label>
+            <label className="block font-semibold">Description</label>
             <textarea
               name="description"
-              placeholder="Tell us about yourself"
               value={formData.description}
               onChange={handleChange}
-              rows="3"
+              placeholder="Tell us about yourself"
+              rows={3}
               className="bg-gray-800 p-3 rounded-lg outline-none focus:ring-2 focus:ring-purple-500 w-full"
               required
             />
@@ -244,10 +182,10 @@ export default function SignupPage() {
 
           {/* Specialities */}
           <div className="sm:col-span-2 lg:col-span-3">
-            <label className="block mb-2 font-semibold">
+            <label className="block font-semibold mb-2">
               Select Your Specialities <span className="text-gray-400">(optional)</span>
             </label>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 max-h-60 overflow-y-scroll bg-gray-800 p-3 rounded-lg">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-2 max-h-60 overflow-y-scroll bg-gray-800 p-3 rounded-lg">
               {specialitiesList.map((spec) => (
                 <label key={spec} className="flex items-center gap-2">
                   <input
@@ -255,7 +193,7 @@ export default function SignupPage() {
                     value={spec}
                     checked={formData.specialities.includes(spec)}
                     onChange={handleSpecialityChange}
-                    className="accent-purple-600 cursor-pointer hover:"
+                    className="accent-purple-600"
                   />
                   <span className="text-sm">{spec}</span>
                 </label>
@@ -264,15 +202,14 @@ export default function SignupPage() {
           </div>
         </div>
 
-        {/* Submit */}
-        {errorcodn && (
-  <div className="mt-6 bg-red-800/60 text-red-200 border border-red-500 rounded-lg p-4 text-sm shadow-md">
-    <div>
-      {formError}
-      </div>
-  </div>
-)}
+        {/* Error */}
+        {formError && (
+          <div className="mt-6 bg-red-800/60 text-red-200 border border-red-500 rounded-lg p-4 text-sm shadow-md">
+            {formError}
+          </div>
+        )}
 
+        {/* Submit */}
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -283,5 +220,5 @@ export default function SignupPage() {
         </motion.button>
       </motion.form>
     </div>
-  )
+  );
 }
