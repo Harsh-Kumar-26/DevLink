@@ -162,7 +162,7 @@ export default function SignupPage() {
               name="avatar"
               accept="image/*"
               onChange={handleChange}
-              className="bg-gray-800 p-3 rounded-lg file:bg-purple-600 file:text-white hover:file:bg-purple-700 w-full"
+              className="bg-gray-800 p-3 rounded-lg outline-none file:mr-3 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-purple-600 file:text-white hover:file:bg-purple-700 w-full"
             />
           </div>
 

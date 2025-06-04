@@ -18,7 +18,7 @@ export default function ProfilePage() {
           `${import.meta.env.VITE_BACKENDURL}/current-user`,
           { withCredentials: true } // important to send cookies
         );
-        console.log(response);
+        // console.log(response);
         
         let userData = response.data.data;
 
