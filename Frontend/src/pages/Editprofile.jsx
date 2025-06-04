@@ -87,6 +87,7 @@ export default function EditProfilePage() {
         headers: {
           "Content-Type": "multipart/form-data",
         },
+        withCredentials: true,
       });
      navigate("/profile");
     } catch (err) {
