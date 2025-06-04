@@ -80,11 +80,13 @@ export default function EditProfilePage() {
       data.append("email", user.email);
       // data.append("password", user.password);
       data.append("description", user.description);
-      if (user.avatar) {
-        console.log("a3");
-        data.append("updateavatar","true");
-        data.append("avatar", user.avatar);
-      }
+      if (user.avatar instanceof File) {
+  data.append("avatar", user.avatar);
+  data.append("updateavatar", true);
+} else {
+  data.append("updateavatar", false);
+}
+
       user.specilities.forEach((spec) => data.append("specilities", spec));
 
       const res = await axios.patch(`${import.meta.env.VITE_BACKENDURL}/edit-profile`, data, {
@@ -151,7 +153,16 @@ export default function EditProfilePage() {
             className="bg-gray-800 p-3 rounded-lg outline-none focus:ring-2 focus:ring-purple-500 w-full"
             required
           />
-
+          {user.avatar && (
+  <div className="mb-4">
+    <p className="mb-1">Current Avatar:</p>
+    <img
+      src={user.avatar}
+      alt="Current avatar"
+      className="w-24 h-24 object-cover rounded-full border-2 border-purple-500"
+    />
+  </div>
+)}
           <input
             type="file"
             name="avatar"
