@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -15,27 +15,41 @@ const specialitiesList = [
 ];
 
 export default function EditProfilePage() {
-  const [formData, setFormData] = useState({
-    fullName: "Jane Doe",
-    username: "jdoe123",
-    email: "jane@example.com",
-    avatar: null,
-    description: "Frontend dev with a focus on UX & performance.",
-    specialities: ["Frontend Developer", "UI/UX Designer"]
-  });
+  const [isloding,setisloding]=useState(false);
+    const [user, setuser]=useState(null);
+    const [error, setError] = useState(null);
+  useEffect(() => {
+      async function fetchUser() {
+        try {
+          setisloding(true);
+          const response = await axios.get(
+            `${import.meta.env.VITE_BACKENDURL}/current-user`,
+            { withCredentials: true } // important to send cookies
+          );
+          let userData = response.data.data;
+          setuser(userData);
+        } catch (err) {
+          console.error("Failed to fetch user:", err);
+          setError(err);
+        }
+      }
+      fetchUser();
+    }, []);
+  
+  // const [formData, setFormData] = useState(null);
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
     if (type === "file") {
-      setFormData({ ...formData, [name]: files[0] });
+      setuser({ ...formData, [name]: files[0] });
     } else {
-      setFormData({ ...formData, [name]: value });
+      setuser({ ...formData, [name]: value });
     }
   };
 
   const handleSpecialityChange = (e) => {
     const { value, checked } = e.target;
-    setFormData((prev) => {
+    setuser((prev) => {
       const updated = checked
         ? [...prev.specialities, value]
         : prev.specialities.filter((item) => item !== value);
@@ -43,9 +57,33 @@ export default function EditProfilePage() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log("Updated Profile:", formData);
+    setisloding(true);
+    console.log("Updated Profile:", user);
+     try {
+      const data = new FormData();
+      data.append("fullname", user.fullname);
+      data.append("username", user.username);
+      data.append("email", user.email);
+      data.append("password", user.password);
+      data.append("description", user.description);
+      if (user.avatar) {
+        data.append("avatar", user.avatar);
+      }
+      user.specialities.forEach((spec) => data.append("specilities", spec));
+
+      const res = await axios.patch(`${import.meta.env.VITE_BACKENDURL}/edit-project`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+     navigate("/profile");
+    } catch (err) {
+      setError(err.response?.data?.message || "Signup failed");
+    } finally {
+      setisloding(false);
+    }
     // Submit logic to be handled by you
   };
 
@@ -73,7 +111,7 @@ export default function EditProfilePage() {
             type="text"
             name="fullName"
             placeholder="Full Name"
-            value={formData.fullName}
+            value={user.fullname}
             onChange={handleChange}
             className="bg-gray-800 p-3 rounded-lg outline-none focus:ring-2 focus:ring-purple-500 w-full"
             required
@@ -83,7 +121,7 @@ export default function EditProfilePage() {
             type="text"
             name="username"
             placeholder="Username"
-            value={formData.username}
+            value={user.username}
             onChange={handleChange}
             className="bg-gray-800 p-3 rounded-lg outline-none focus:ring-2 focus:ring-purple-500 w-full"
             required
@@ -93,7 +131,7 @@ export default function EditProfilePage() {
             type="email"
             name="email"
             placeholder="Email"
-            value={formData.email}
+            value={user.email}
             onChange={handleChange}
             className="bg-gray-800 p-3 rounded-lg outline-none focus:ring-2 focus:ring-purple-500 w-full"
             required
@@ -122,7 +160,7 @@ export default function EditProfilePage() {
           <textarea
             name="description"
             placeholder="Your Description"
-            value={formData.description}
+            value={user.description}
             onChange={handleChange}
             rows="3"
             className="bg-gray-800 p-3 rounded-lg outline-none focus:ring-2 focus:ring-purple-500 w-full lg:col-span-2"
@@ -137,7 +175,7 @@ export default function EditProfilePage() {
                 <input
                   type="checkbox"
                   value={spec}
-                  checked={formData.specialities.includes(spec)}
+                  checked={user.specilities.includes(spec)}
                   onChange={handleSpecialityChange}
                   className="accent-purple-600"
                 />

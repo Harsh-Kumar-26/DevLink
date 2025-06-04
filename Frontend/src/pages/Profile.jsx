@@ -18,15 +18,11 @@ export default function ProfilePage() {
           `${import.meta.env.VITE_BACKENDURL}/current-user`,
           { withCredentials: true } // important to send cookies
         );
-        // console.log(response);
+        
         
         let userData = response.data.data;
 
-        // Set default avatar if empty
-        // if (userData.avatar=="") {
-        //   userData.avatar =
-        //     "";
-        // }
+        
 
         setuser(userData);
       } catch (err) {
