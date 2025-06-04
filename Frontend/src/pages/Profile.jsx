@@ -1,21 +1,56 @@
-import React from "react";
+import React, { useState ,useEffect} from "react";
 import { motion } from "framer-motion";
 import { FaArrowLeft, FaEdit, FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import Loader from "../components/loader";
+import axios from 'axios';
 
 export default function ProfilePage() {
-  // Dummy data (replace with real user data from props/context later)
-  const user = {
-    avatar: "https://i.pravatar.cc/150?img=12",
-    fullName: "Jane Doe",
-    username: "jdoe123",
-    email: "jane@example.com",
-    specialities: ["Frontend Developer", "UI/UX Designer"],
-    avgRating: 4.7,
-    description: "Passionate about clean design and performance-focused frontend development."
-  };
+  const [isloding,setisloding]=useState(false);
+  const [user,setuser]=useState(null);
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        setisloding(true);
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKENDURL}/current-user`,
+          { withCredentials: true } // important to send cookies
+        );
 
-  return (
+        let userData = response.data.data.user;
+
+        // Set default avatar if empty
+        if (userData.avatar=="") {
+          userData.avatar =
+            "https://res.cloudinary.com/dznit2e1x/image/upload/v1749028463/default-avatar-icon-of-social-media-user-vector_ge35qc.jpg";
+        }
+
+        setuser(userData);
+      } catch (err) {
+        console.error("Failed to fetch user:", err);
+        setError(err);
+      } finally {
+        setisloding(false);
+      }
+    }
+
+    fetchUser();
+  }, []);
+
+  // if (isloding) return <div>Loading...</div>;
+
+  // const user = {
+  //   avatar: "https://i.pravatar.cc/150?img=12",
+  //   fullName: "Jane Doe",
+  //   username: "jdoe123",
+  //   email: "jane@example.com",
+  //   specialities: ["Frontend Developer", "UI/UX Designer"],
+  //   avgRating: 4.7,
+  //   description: "Passionate about clean design and performance-focused frontend development."
+  // };
+
+  return isloding?<Loader/>: (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-950 flex items-center justify-center px-4 py-10">
       <motion.div
         initial={{ opacity: 0, y: 60 }}

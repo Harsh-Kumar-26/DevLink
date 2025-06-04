@@ -82,7 +82,7 @@ export default function SignupPage() {
     });
     // console.log("Login done ");
     // console.log(autologin);
-    // navigate('/main');
+    navigate('/profile');
     
     }
     catch(err){

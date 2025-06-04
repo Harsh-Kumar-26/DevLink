@@ -31,17 +31,16 @@ export default function LoginPage() {
   const handleSubmit = async(e) => {
     e.preventDefault();
     setIsLoading(true);
-    console.log(formData); // add login logic later
+    // console.log(formData); // add login logic later
     try{
     const login=await axios.post(`${import.meta.env.VITE_BACKENDURL}/login`,formData,{
       withCredentials:true
-    //  navigate('');
     });
-    console.log(login);
-    
+    navigate('/profile');
+    // console.log(login);
   }
   catch(err){
-    console.log(err);
+    // console.log(err);
     setformError(err.response?.data?.message || "Something went wrong");
   }
   finally{
