@@ -50,7 +50,7 @@ export default function EditProfilePage() {
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
-    if (type === "file") {
+    if (type === "file" && files[0]) {
       console.log("a1");
       setuser({ ...user, [name]: files[0] });
       console.log("a2");
@@ -81,9 +81,14 @@ export default function EditProfilePage() {
       // data.append("password", user.password);
       data.append("description", user.description);
       if (user.avatar instanceof File) {
+        console.log("avatar");
+        
   data.append("avatar", user.avatar);
   data.append("updateavatar", true);
-} else {
+} 
+else {
+  console.log("No avatar");
+  
   data.append("updateavatar", false);
 }
 
