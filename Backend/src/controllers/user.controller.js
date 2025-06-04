@@ -182,7 +182,11 @@ const editprofile=asynchandler(async(req,res)=>{
     
 }
 if(!updateavatar){
-    url=olduser.avatar;
+    if (req.body.avatar) {
+        url = req.body.avatar;
+    } else {
+        url = olduser.avatar;
+    }
 }
 
 let user=await User.findByIdAndUpdate(req.user?._id,{

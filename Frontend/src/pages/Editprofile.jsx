@@ -88,7 +88,7 @@ export default function EditProfilePage() {
 } 
 else {
   console.log("No avatar");
-  
+  data.append("avatar",user.avatar);
   data.append("updateavatar", false);
 }
 
