@@ -18,8 +18,9 @@ export default function ProfilePage() {
           `${import.meta.env.VITE_BACKENDURL}/current-user`,
           { withCredentials: true } // important to send cookies
         );
-
-        let userData = response.data.data.user;
+        console.log(response);
+        
+        let userData = response.data;
 
         // Set default avatar if empty
         // if (userData.avatar=="") {
