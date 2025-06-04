@@ -82,7 +82,7 @@ export default function EditProfilePage() {
       data.append("description", user.description);
       if (user.avatar) {
         console.log("a3");
-        data.append("updateavatar",true);
+        data.append("updateavatar","true");
         data.append("avatar", user.avatar);
       }
       user.specilities.forEach((spec) => data.append("specilities", spec));
