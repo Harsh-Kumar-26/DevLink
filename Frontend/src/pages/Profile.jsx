@@ -9,6 +9,7 @@ import axios from 'axios';
 export default function ProfilePage() {
   const [isloding,setisloding]=useState(false);
   const [user,setuser]=useState(null);
+  const [error, setError] = useState(null);
   useEffect(() => {
     async function fetchUser() {
       try {
@@ -21,10 +22,10 @@ export default function ProfilePage() {
         let userData = response.data.data.user;
 
         // Set default avatar if empty
-        if (userData.avatar=="") {
-          userData.avatar =
-            "https://res.cloudinary.com/dznit2e1x/image/upload/v1749028463/default-avatar-icon-of-social-media-user-vector_ge35qc.jpg";
-        }
+        // if (userData.avatar=="") {
+        //   userData.avatar =
+        //     "";
+        // }
 
         setuser(userData);
       } catch (err) {
@@ -50,7 +51,7 @@ export default function ProfilePage() {
   //   description: "Passionate about clean design and performance-focused frontend development."
   // };
 
-  return isloding?<Loader/>: (
+  return (isloding|| !user)?<Loader/>: (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-950 flex items-center justify-center px-4 py-10">
       <motion.div
         initial={{ opacity: 0, y: 60 }}
@@ -60,7 +61,7 @@ export default function ProfilePage() {
       >
         <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
           <img
-            src={user.avatar}
+            src={user.avatar || "https://res.cloudinary.com/dznit2e1x/image/upload/v1749028463/default-avatar-icon-of-social-media-user-vector_ge35qc.jpg"}
             alt="User Avatar"
             className="w-40 h-40 rounded-full object-cover border-4 border-purple-500 shadow-lg"
           />
