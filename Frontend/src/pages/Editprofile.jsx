@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/loader";
 import axios from "axios";
+import Button from "../components/Button";
 
 const specialitiesList = [
   "Backend Developer", "Frontend Developer", "Full Stack Web Developer", "Android Developer",
@@ -179,12 +180,13 @@ else {
           <div className="w-full">
             {/* <label className="block mb-1 text-sm font-medium">Change Password</label> */}
             <Link to="/changepassword">
-            <button
-              type="button"
-              className="bg-purple-600 hover:bg-purple-700 transition px-4 py-2 w-full rounded-lg font-semibold text-sm"
+            <Button
+            variant="green"
+              // type="button"
+              // className="bg-purple-600 hover:bg-purple-700 transition px-4 py-2 w-full rounded-lg font-semibold text-sm"
             >
               Change Password
-            </button>
+            </Button>
             </Link>
           </div>
 

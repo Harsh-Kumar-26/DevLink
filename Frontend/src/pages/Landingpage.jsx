@@ -38,11 +38,11 @@ export default function Landing() {
           className="hidden md:flex space-x-4 "
         >
           <Link to="/login">
-          <Button variant="green">
+          <Button >
             Login
           </Button>
           </Link>
-         <Link to="/signup"><Button>Sign Up</Button></Link>
+         <Link to="/signup"><Button variant="green">Sign Up</Button></Link>
         </motion.div>
 
         {/* Mobile Menu Toggle */}
