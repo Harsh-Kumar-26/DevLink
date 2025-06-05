@@ -38,7 +38,7 @@ export default function Landing() {
           className="hidden md:flex space-x-4 "
         >
           <Link to="/login">
-          <Button variant="outline">
+          <Button variant="green">
             Login
           </Button>
           </Link>

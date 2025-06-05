@@ -25,7 +25,10 @@ export default function Button({
   } else if (variant === "danger") {
   variantStyle =
     "bg-red-600 text-white hover:bg-red-700 shadow-md hover:shadow-xl";
-}
+}else if (variant === "green") {
+    variantStyle =
+    "bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md hover:shadow-xl";
+  }
 
 
   return (
