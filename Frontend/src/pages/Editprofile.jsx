@@ -31,12 +31,12 @@ export default function EditProfilePage() {
             { withCredentials: true } // important to send cookies
           );
           let userData = response.data.data;
-          console.log("Userdata1 "+userData);
+          // console.log("Userdata1 "+userData);
           setuser(userData);
-          console.log("Userdata2 "+userData);
+          // console.log("Userdata2 "+userData);
           
         } catch (err) {
-          console.error("Failed to fetch user:", err);
+          // console.error("Failed to fetch user:", err);
           setError("Failed to fetch user");
         }
         finally{
@@ -51,9 +51,9 @@ export default function EditProfilePage() {
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
     if (type === "file" && files[0]) {
-      console.log("a1");
+      // console.log("a1");
       setuser({ ...user, [name]: files[0] });
-      console.log("a2");
+      // console.log("a2");
     } else {
       setuser({ ...user, [name]: value });
     }
@@ -72,7 +72,7 @@ export default function EditProfilePage() {
   const handleSubmit = async(e) => {
     e.preventDefault();
     setisloding(true);
-    console.log("Updated Profile:", user);
+    // console.log("Updated Profile:", user);
      try {
       const data = new FormData();
       data.append("fullname", user.fullname);
@@ -81,13 +81,13 @@ export default function EditProfilePage() {
       // data.append("password", user.password);
       data.append("description", user.description);
       if (user.avatar instanceof File) {
-        console.log("avatar");
+        // console.log("avatar");
         
   data.append("avatar", user.avatar);
   data.append("updateavatar", true);
 } 
 else {
-  console.log("No avatar");
+  // console.log("No avatar");
   data.append("avatar",user.avatar);
   data.append("updateavatar", false);
 }

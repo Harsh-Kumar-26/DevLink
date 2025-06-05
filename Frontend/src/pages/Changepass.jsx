@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { FaArrowLeft, FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function ChangePasswordPage() {
+  cont [error,seterror]=useState(null);
+  const [isloding,setisloding]=useState(false);
   const [formData, setFormData] = useState({
     oldPassword: "",
     newPassword: "",
@@ -24,9 +26,27 @@ export default function ChangePasswordPage() {
     setShowPasswords((prev) => ({ ...prev, [field]: !prev[field] }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     console.log("Change Password Data:", formData);
+    if(formData.newPassword==formData.confirmPassword){
+         try{
+      const data= {newpassword:formData.newPassword,oldpassword:formData.oldPassword};
+      console.log("Data "+data);
+      const res = await axios.patch(`${import.meta.env.VITE_BACKENDURL}/edit-profile`, data,{withCredentials: true,
+      });
+     navigate("/profile");
+    } catch (err) {
+      setError(err.response?.data?.message || "Editing profile failed");
+    } finally {
+      setisloding(false);
+    }
+  }
+  else{
+    console.log("Not equal");
+    
+    seterror("New password & Confirm password does not match");
+  }
     // Add your own password update logic here
   };
 
