@@ -19,7 +19,13 @@ import { log } from "console";
             }
             const response=await cloudinary.uploader.upload(localFilePath,
                 {
-                    resource_type:"auto"
+                    resource_type:"auto",
+                    folder: "devlink_users",        
+                    quality: "auto",                
+                    width: 300,                     
+                    height: 300,                    
+                    crop: "fill",                  
+                    gravity: "face",
                 }
             )
             fs.unlinkSync(localFilePath)
