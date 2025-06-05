@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { motion } from "framer-motion";
-import { FaArrowLeft, FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Loader from "../components/loader";
+import axios from "axios";
 
 export default function ChangePasswordPage() {
   cont [error,seterror]=useState(null);
@@ -29,7 +33,7 @@ export default function ChangePasswordPage() {
   const handleSubmit = async(e) => {
     e.preventDefault();
     console.log("Change Password Data:", formData);
-    if(formData.newPassword==formData.confirmPassword){
+    if(formData.newPassword===formData.confirmPassword){
          try{
       const data= {newpassword:formData.newPassword,oldpassword:formData.oldPassword};
       console.log("Data "+data);
@@ -37,14 +41,13 @@ export default function ChangePasswordPage() {
       });
      navigate("/profile");
     } catch (err) {
-      setError(err.response?.data?.message || "Editing profile failed");
+      seterror(err.response?.data?.message || "Editing profile failed");
     } finally {
       setisloding(false);
     }
   }
   else{
     console.log("Not equal");
-    
     seterror("New password & Confirm password does not match");
   }
     // Add your own password update logic here
