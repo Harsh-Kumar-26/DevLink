@@ -1,10 +1,10 @@
 import React from "react";
 import './App.jsx'
 import { Outlet } from "react-router-dom";
-import Landing from "./pages/Landingpage.jsx";
+import LogoutButton from "./components/Logout.jsx";
 const App=()=>{
   return(
-  <Landing/>
+  <LogoutButton/>
   )
 }
 export default App

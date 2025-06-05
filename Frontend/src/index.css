@@ -48,15 +48,15 @@ button {
   border: 1px solid transparent;
   transition: all 0.3s; 
   color:black;
-  background-color: #64a7ff;
+  /* background-color: #64a7ff; */
 }
 /* font-family: inherit;
 background-color: #1a1a1a;*/
 /* button:hover {
   } */
-  button:hover {
+  /* button:hover {
    background-color: #646cff;
- }
+ } */
 /* button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;

@@ -33,7 +33,7 @@ export default function ChangePasswordPage() {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log("Change Password Data:", formData);
+    // console.log("Change Password Data:", formData);
     if(formData.newPassword===formData.confirmPassword){
       setisloding(true);
          try{

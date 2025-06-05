@@ -9,11 +9,16 @@ import SignupPage from './forms/signup.jsx'
 import ProfilePage from './pages/Profile.jsx'
 import EditProfilePage from './pages/Editprofile.jsx'
 import ChangePasswordPage from './pages/Changepass.jsx'
+import LogoutButton from './components/Logout.jsx'
 
 const router=createBrowserRouter([
   {
     path:"/",
     element:<Landing/>
+  },
+  {
+    path:"/l",
+    element:<LogoutButton/>
   },
   {
     path:"/login",

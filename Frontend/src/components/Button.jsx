@@ -22,7 +22,11 @@ export default function Button({
   } else if (variant === "outline") {
     variantStyle =
       "bg-transparent border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white";
-  }
+  } else if (variant === "danger") {
+  variantStyle =
+    "bg-red-600 text-white hover:bg-red-700 shadow-md hover:shadow-xl";
+}
+
 
   return (
     <motion.button
