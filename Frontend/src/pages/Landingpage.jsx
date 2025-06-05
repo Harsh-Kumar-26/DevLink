@@ -54,7 +54,7 @@ export default function Landing() {
             <svg
               className="w-6 h-6"
               fill="none"
-              stroke="currentColor"
+              stroke="#9f7aea"
               viewBox="0 0 24 24"
             >
               {menuOpen ? (
@@ -87,14 +87,14 @@ export default function Landing() {
             >
               <Link to="/login">
               <Button
-                variant="outline"
+                variant="primary"
                 className="w-11/12"
               >
                 Login
               </Button>
               </Link>
               <Link to="/signup">
-              <Button
+              <Button variant="green"
                 className="w-11/12"
               >
                 Sign Up
