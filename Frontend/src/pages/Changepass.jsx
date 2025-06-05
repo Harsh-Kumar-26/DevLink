@@ -1,6 +1,6 @@
 import { useState,useEffect } from "react";
 import { motion } from "framer-motion";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft,FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/loader";
