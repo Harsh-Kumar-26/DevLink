@@ -55,7 +55,7 @@ export default function ChangePasswordPage() {
     // Add your own password update logic here
   };
 
-  return (
+  return isloding?<Loader/>:(
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-950 px-4 py-10 flex items-center justify-center">
       <motion.form
         onSubmit={handleSubmit}
