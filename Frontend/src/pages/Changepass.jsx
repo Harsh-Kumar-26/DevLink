@@ -36,7 +36,7 @@ export default function ChangePasswordPage() {
     if(formData.newPassword===formData.confirmPassword){
          try{
       const data= {newpassword:formData.newPassword,oldpassword:formData.oldPassword};
-      console.log("Data "+data);
+      console.log("Data ",data);
       const res = await axios.patch(`${import.meta.env.VITE_BACKENDURL}/edit-profile`, data,{withCredentials: true,
       });
      navigate("/profile");
