@@ -7,7 +7,7 @@ import Loader from "../components/loader";
 import axios from "axios";
 
 export default function ChangePasswordPage() {
-  cont [error,seterror]=useState(null);
+  const [error,seterror]=useState(null);
   const [isloding,setisloding]=useState(false);
   const [formData, setFormData] = useState({
     oldPassword: "",
