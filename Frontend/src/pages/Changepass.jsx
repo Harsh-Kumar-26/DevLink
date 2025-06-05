@@ -7,6 +7,7 @@ import Loader from "../components/loader";
 import axios from "axios";
 
 export default function ChangePasswordPage() {
+    const navigate=useNavigate();
   const [error,seterror]=useState(null);
   const [isloding,setisloding]=useState(false);
   const [formData, setFormData] = useState({
@@ -34,9 +35,10 @@ export default function ChangePasswordPage() {
     e.preventDefault();
     console.log("Change Password Data:", formData);
     if(formData.newPassword===formData.confirmPassword){
+      setisloding(true);
          try{
       const data= {newpassword:formData.newPassword,oldpassword:formData.oldPassword};
-      console.log("Data ",data);
+      // console.log("Data ",data);
       const res = await axios.patch(`${import.meta.env.VITE_BACKENDURL}/edit-profile`, data,{withCredentials: true,
       });
      navigate("/profile");
@@ -47,7 +49,7 @@ export default function ChangePasswordPage() {
     }
   }
   else{
-    console.log("Not equal");
+    // console.log("Not equal");
     seterror("New password & Confirm password does not match");
   }
     // Add your own password update logic here
@@ -133,7 +135,11 @@ export default function ChangePasswordPage() {
             </button>
           </div>
         </div>
-
+        {error && (
+          <div className="mt-6 bg-red-800/60 text-red-200 border border-red-500 rounded-lg p-4 text-sm shadow-md">
+            {error}
+          </div>
+        )}
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
