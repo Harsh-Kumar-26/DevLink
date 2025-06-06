@@ -10,8 +10,7 @@ import ProfilePage from './pages/Profile.jsx'
 import EditProfilePage from './pages/Editprofile.jsx'
 import ChangePasswordPage from './pages/Changepass.jsx'
 import ProjectCard from './components/Projectcard.jsx'
-import {defaultProject} from './components/Projectcard.jsx'
-import MainLayout from './pages/Main.jsx'
+// import MainLayout from './pages/Main.jsx'
 
 
 const router=createBrowserRouter([
