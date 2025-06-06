@@ -60,7 +60,7 @@ export default function ProjectCard({pjtid}) {
     descriptionFile,
   } = project;
   console.log(creator);
-  
+  console.log(creator.fullname);
   const toggleBookmark = () => setBookmarked(!bookmarked);
 
   return (isloding || !project)?<Loader/>:(
