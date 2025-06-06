@@ -38,7 +38,7 @@ export default function ProjectCard({pjtid}) {
         }
       }
       fetchUser();
-    }, [pjtid]);
+    }, []);
   const {
     _id,
     pjt_name,
