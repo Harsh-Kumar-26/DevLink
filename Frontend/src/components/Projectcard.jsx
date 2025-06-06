@@ -46,7 +46,7 @@ export default function ProjectCard({pjtid}) {
     if(!project){
         return <Loader/>
     }
- if(project){ const {
+    const {
     _id,
     pjt_name,
     money,
@@ -58,7 +58,7 @@ export default function ProjectCard({pjtid}) {
     createdAt,
     applied = [],
     descriptionFile,
-  } = project;}
+  } = project;
 
   const toggleBookmark = () => setBookmarked(!bookmarked);
 
