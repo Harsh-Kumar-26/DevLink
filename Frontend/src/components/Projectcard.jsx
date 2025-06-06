@@ -18,16 +18,19 @@ import axios from "axios";
 const fallbackAvatar = "https://cdn3.iconfinder.com/data/icons/essential-rounded/64/Rounded-31-512.png";
 
 export default function ProjectCard({pjtid}) {
+    console.log(pjtid);
     const [isloding,setisloding]=useState(false);
     const [project,setproject]=useState(null);
     const [error,setError]=useState(null);
       useEffect(() => {
       async function fetchUser() {
         try {
+            console.log("Hello");
           setisloding(true);
           const response = await axios.post(`${import.meta.env.VITE_BACKENDURL}/send-project`,{projectid:pjtid},{ withCredentials: true }
           );
           let userData = response.data.data;
+          console.log(userData);
           setproject(userData);
           
         } catch (err) {
