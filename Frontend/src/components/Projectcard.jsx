@@ -42,7 +42,7 @@ export default function ProjectCard({pjtid}) {
       }
       fetchUser();
     }, []);
-  const {
+ if(!project){ const {
     _id,
     pjt_name,
     money,
@@ -54,7 +54,7 @@ export default function ProjectCard({pjtid}) {
     createdAt,
     applied = [],
     descriptionFile,
-  } = project;
+  } = project;}
 
   const [bookmarked, setBookmarked] = useState(false);
   const toggleBookmark = () => setBookmarked(!bookmarked);
