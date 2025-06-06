@@ -78,7 +78,7 @@ export default function ProjectCard({pjtid}) {
         />
         <div className="flex flex-col">
           <span className="text-sm font-semibold text-purple-300">
-            {creator?.username || "Unknown User"}
+            {creator?.fullname || "Unknown User"}
           </span>
           <span className="text-xs text-gray-500">
             Posted {formatDistanceToNow(new Date(createdAt))} ago
