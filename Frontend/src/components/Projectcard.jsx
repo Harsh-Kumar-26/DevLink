@@ -25,7 +25,7 @@ export default function ProjectCard({pjtid}) {
       async function fetchUser() {
         try {
           setisloding(true);
-          const response = await axios.post(`${import.meta.env.VITE_BACKENDURL}/send-project`,pjtid,{ withCredentials: true }
+          const response = await axios.post(`${import.meta.env.VITE_BACKENDURL}/send-project`,{projectid:pjtid},{ withCredentials: true }
           );
           let userData = response.data.data;
           setproject(userData);
