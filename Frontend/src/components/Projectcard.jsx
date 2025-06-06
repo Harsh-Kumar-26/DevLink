@@ -22,6 +22,7 @@ export default function ProjectCard({pjtid}) {
     const [isloding,setisloding]=useState(false);
     const [project,setproject]=useState(null);
     const [error,setError]=useState(null);
+    // const [creatordat,setcreatordat]=useState(null);
       useEffect(() => {
       async function fetchUser() {
         try {
@@ -31,6 +32,7 @@ export default function ProjectCard({pjtid}) {
           );
           let userData = response.data.data;
           console.log(userData);
+          
           setproject(userData);
           
         } catch (err) {
@@ -42,7 +44,9 @@ export default function ProjectCard({pjtid}) {
       }
       fetchUser();
     }, []);
- if(project){ const {
+ if(!project){ 
+    return <Loader/>
+ }const {
     _id,
     pjt_name,
     money,
@@ -54,7 +58,8 @@ export default function ProjectCard({pjtid}) {
     createdAt,
     applied = [],
     descriptionFile,
-  } = project;}
+  } = project;
+
 
   const [bookmarked, setBookmarked] = useState(false);
   const toggleBookmark = () => setBookmarked(!bookmarked);
@@ -75,7 +80,7 @@ export default function ProjectCard({pjtid}) {
         />
         <div className="flex flex-col">
           <span className="text-sm font-semibold text-purple-300">
-            {creator?.username || "Unknown User"}
+            {creator?.fullname || "Unknown User"}
           </span>
           <span className="text-xs text-gray-500">
             Posted {formatDistanceToNow(new Date(createdAt))} ago
@@ -156,25 +161,7 @@ export default function ProjectCard({pjtid}) {
       </div>
 
       {/* Applied Users */}
-      {applied.length > 0 && (
-        <div className="mt-4">
-          <p className="text-sm text-gray-400 mb-2">Applied Developers:</p>
-          <div className="flex gap-3 overflow-x-auto max-w-full pb-1">
-            {applied.map((user, idx) => (
-              <div key={idx} className="flex flex-col items-center">
-                <img
-                  src={user?.avatar || fallbackAvatar}
-                  alt={user?.username}
-                  className="w-8 h-8 rounded-full border border-purple-500"
-                />
-                <span className="text-xs text-gray-400 mt-1 max-w-[60px] text-center line-clamp-1">
-                  {user?.username || "User"}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+      <div>Total Applies: {applied.length}</div>
     </motion.div>
   );
 }
