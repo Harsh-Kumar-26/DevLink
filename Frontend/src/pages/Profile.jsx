@@ -21,9 +21,6 @@ export default function ProfilePage() {
         
         
         let userData = response.data.data;
-
-        
-
         setuser(userData);
       } catch (err) {
         console.error("Failed to fetch user:", err);

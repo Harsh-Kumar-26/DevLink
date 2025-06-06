@@ -1,0 +1,177 @@
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import {
+  FaRupeeSign,
+  FaRegClock,
+  FaUser,
+  FaBookmark,
+  FaRegBookmark,
+  FaFileAlt,
+} from "react-icons/fa";
+import { formatDistanceToNow } from "date-fns";
+import Button from "./Button";
+import { useState , useEffect} from "react";
+import Loader from "./loader";
+import axios from "axios";
+
+// Sample fallback image
+const fallbackAvatar = "https://cdn3.iconfinder.com/data/icons/essential-rounded/64/Rounded-31-512.png";
+
+export default function ProjectCard({pjtid}) {
+    const [isloding,setisloding]=useState(false);
+    const [project,setproject]=useState(null);
+    const [error,setError]=useState(null);
+      useEffect(() => {
+      async function fetchUser() {
+        try {
+          setisloding(true);
+          const response = await axios.post(`${import.meta.env.VITE_BACKENDURL}/send-project`,pjtid,{ withCredentials: true }
+          );
+          let userData = response.data.data;
+          setproject(userData);
+          
+        } catch (err) {
+          setError("Failed to fetch user");
+        }
+        finally{
+          setisloding(false);
+        }
+      }
+      fetchUser();
+    }, [pjtid]);
+  const {
+    _id,
+    pjt_name,
+    money,
+    deswritten,
+    complete_date,
+    specilities,
+    bkphoto,
+    creator,
+    createdAt,
+    applied = [],
+    descriptionFile,
+  } = project;
+
+  const [bookmarked, setBookmarked] = useState(false);
+  const toggleBookmark = () => setBookmarked(!bookmarked);
+
+  return isloding?<Loader/>:(
+    <motion.div
+  className="bg-gradient-to-b from-white/5 to-white/0 bg-white/5 backdrop-blur-sm border border-gray-700 rounded-2xl p-5 shadow-md hover:shadow-xl transition duration-300 flex flex-col gap-4"
+    initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+    >
+      {/* Creator Header */}
+      <div className="flex items-center gap-3">
+        <img
+          src={creator?.avatar || fallbackAvatar}
+          alt="creator"
+          className="w-10 h-10 rounded-full object-cover border border-purple-500"
+        />
+        <div className="flex flex-col">
+          <span className="text-sm font-semibold text-purple-300">
+            {creator?.username || "Unknown User"}
+          </span>
+          <span className="text-xs text-gray-500">
+            Posted {formatDistanceToNow(new Date(createdAt))} ago
+          </span>
+        </div>
+      </div>
+
+      {/* Background Image */}
+      {bkphoto && (
+        <img
+          src={bkphoto}
+          alt="project background"
+          className="rounded-xl h-48 w-full object-cover"
+        />
+      )}
+
+      {/* Project Info */}
+      <div className="flex flex-col gap-2">
+        <h2 className="text-xl font-semibold text-purple-400">{pjt_name}</h2>
+        <p className="text-sm text-gray-300 line-clamp-4">{deswritten}</p>
+
+        {/* Description File Link */}
+        {descriptionFile && (
+          <a
+            href={descriptionFile}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 text-purple-400 mt-1 text-sm hover:underline"
+            title="View Project Description File"
+          >
+            <FaFileAlt />
+            <span>Description File</span>
+          </a>
+        )}
+
+        <div className="flex flex-wrap gap-2 mt-2">
+          {specilities?.map((tag, idx) => (
+            <span
+              key={idx}
+              className="bg-purple-800/30 text-purple-300 px-2 py-1 rounded-full text-xs"
+            >
+              #{tag}
+            </span>
+          ))}
+        </div>
+
+        <div className="flex flex-wrap justify-between text-sm text-gray-400 mt-4">
+          <div className="flex items-center gap-1">
+            <FaRupeeSign className="text-purple-400" />
+            {money.toLocaleString()} INR
+          </div>
+          <div className="flex items-center gap-1">
+            <FaRegClock className="text-purple-400" />
+            {new Date(complete_date).toLocaleDateString()}
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Actions */}
+      <div className="flex justify-between items-center mt-4">
+        <div className="flex gap-3">
+          <Link to={`/project/${_id}`}>
+            <Button>View</Button>
+          </Link>
+          <Button variant="green">Apply</Button>
+        </div>
+        <button
+          onClick={toggleBookmark}
+          className="text-purple-400 hover:text-purple-300 transition"
+          title={bookmarked ? "Remove Bookmark" : "Bookmark"}
+        >
+          {bookmarked ? (
+            <FaBookmark style={{ color: "red" }} size={18} />
+          ) : (
+            <FaRegBookmark size={18} />
+          )}
+        </button>
+      </div>
+
+      {/* Applied Users */}
+      {applied.length > 0 && (
+        <div className="mt-4">
+          <p className="text-sm text-gray-400 mb-2">Applied Developers:</p>
+          <div className="flex gap-3 overflow-x-auto max-w-full pb-1">
+            {applied.map((user, idx) => (
+              <div key={idx} className="flex flex-col items-center">
+                <img
+                  src={user?.avatar || fallbackAvatar}
+                  alt={user?.username}
+                  className="w-8 h-8 rounded-full border border-purple-500"
+                />
+                <span className="text-xs text-gray-400 mt-1 max-w-[60px] text-center line-clamp-1">
+                  {user?.username || "User"}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </motion.div>
+  );
+}

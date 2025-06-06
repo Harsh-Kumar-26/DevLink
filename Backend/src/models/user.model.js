@@ -58,6 +58,10 @@ const userschema=new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"project"
     }],
+    bookmarked:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"project"
+    }],
     projectdone:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"project"
