@@ -42,7 +42,7 @@ export default function ProjectCard({pjtid}) {
       }
       fetchUser();
     }, []);
- if(!project){ const {
+ if(project){ const {
     _id,
     pjt_name,
     money,
