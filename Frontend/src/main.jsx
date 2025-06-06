@@ -20,7 +20,7 @@ const router=createBrowserRouter([
   },
   {
     path:"/l",
-    element:<ProjectCard pjtid="6832ef2592a220b2b61e66d8"/>
+    element:<ProjectCard pjtid="6837088589b3d5646e0db65e"/>
   },
   {
     path:"/login",
