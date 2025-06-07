@@ -19,8 +19,10 @@ export default function ProjectsList() {
           `${import.meta.env.VITE_BACKENDURL}/allprojects`,
           { params: { page, limit } }
         );
+        console.log(response);
+        
         const data = response.data.data; // adapt based on your API response
-
+        log(data);
         if (data.length < limit) {
           setHasMore(false);
         }
