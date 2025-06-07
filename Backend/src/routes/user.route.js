@@ -21,7 +21,7 @@ router.route("/signup").post(
     router.route("/logout").post(verifyJWT,logoutuser);
     router.route("/refreshtoken").post(refreshaccesstoken);
     router.route("/current-user").get(verifyJWT,getcurrentuser);
-    router.route("/user-from-id").get(verifyJWT,getuserfromid);
+    router.route("/user-from-id").post(getuserfromid);
     router.route("/newproject").post(upload.fields([
         {
             name:"bkphoto",
