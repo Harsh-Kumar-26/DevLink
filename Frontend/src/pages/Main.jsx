@@ -37,6 +37,9 @@ data();
 },[]);
   const refresh=()=>{
     navigate(0);
+  };
+  const profile=()=>{
+    navigate("/profile");
   }
   const handleLogout = () => {
     // logout logic here
@@ -182,7 +185,7 @@ data();
             <FiMenu size={26} />
           </Button>
 
-          <div className="flex items-center gap-3 ml-auto">
+          <div onClick={profile} className="flex items-center gap-3 ml-auto cursor-pointer">
             <img
               src={
                 currentUser?.avatar ||

@@ -324,7 +324,11 @@ const removeapply = asynchandler(async (req, res) => {
     );
 });
 const getProjectSummaries = asynchandler(async (req, res) => {
-    // Give all unaccepted projects
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+
+  const skip = (page - 1) * limit;
+
   const projects = await project.find(
     { accept: { $exists: false } },
     {
@@ -335,7 +339,10 @@ const getProjectSummaries = asynchandler(async (req, res) => {
       reviewed: 1,
       specilities: 1
     }
-  ).lean();
+  )
+    .skip(skip)
+    .limit(limit)
+    .lean();
 
   const summary = projects.map(p => ({
     projectId: p._id,
