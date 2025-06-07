@@ -22,6 +22,7 @@ export default function ProjectCard({pjtid}) {
     const [bookmarked, setBookmarked] = useState(false);
     const [isloding,setisloding]=useState(false);
     const [project,setproject]=useState(null);
+        const [creator,setcreator]=useState(null);
     const [error,setError]=useState(null);
       useEffect(() => {
       async function fetchUser() {
@@ -33,7 +34,14 @@ export default function ProjectCard({pjtid}) {
           let userData = response.data.data;
           console.log(userData);
           setproject(userData);
+          console.log(userData.creator._id);
           
+          const creatorres = await axios.post(`${import.meta.env.VITE_BACKENDURL}/getuserfromid`,{id:userData.creator._id},{ withCredentials: true });
+          console.log(creatorres);
+          let creatordata=creatorres.data.data;
+          console.log(creatordata);
+          
+          setcreator(creatordata);
         } catch (err) {
           setError("Failed to fetch user");
         }
@@ -54,16 +62,13 @@ export default function ProjectCard({pjtid}) {
     complete_date,
     specilities,
     bkphoto,
-    creator,
     createdAt,
     applied = [],
     descriptionFile,
   } = project;
-  console.log(creator);
-  console.log(creator.fullname);
   const toggleBookmark = () => setBookmarked(!bookmarked);
 
-  return (isloding || !project)?<Loader/>:(
+  return (isloding || !project || !creator)?<Loader/>:(
     <motion.div
   className="bg-gradient-to-b from-white/5 to-white/0 bg-white/5 backdrop-blur-sm border border-gray-700 rounded-2xl p-5 shadow-md hover:shadow-xl transition duration-300 flex flex-col gap-4"
     initial={{ opacity: 0, y: 20 }}

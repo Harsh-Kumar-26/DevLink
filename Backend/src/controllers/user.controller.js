@@ -149,6 +149,14 @@ const refreshaccesstoken=asynchandler(async(req,res)=>{
 const getcurrentuser=asynchandler(async(req,res)=>{
     return res.status(200).json(new ApiResponse(200,req.user,"Current user fetched ssuccessfully"));
 })
+const getuserfromid=asynchandler(async(req,res)=>{
+    const {id}=req.body;
+    const user = await User.findById(id).select("-password -refreshToken");
+    if(!user){
+        throw new ApiError(404,"User not found");
+    }
+    return res.status(200).json(new ApiResponse(200,user,"user data fetched successfully"));
+})
 
 const editprofile=asynchandler(async(req,res)=>{
     const userid=req.user._id;
@@ -214,4 +222,4 @@ if(oldpassword && newpassword){
 })
 
 
-export {registeruser,loginuser,logoutuser,refreshaccesstoken,getcurrentuser,editprofile};
+export {registeruser,loginuser,logoutuser,refreshaccesstoken,getcurrentuser,editprofile,getuserfromid};
