@@ -1,5 +1,5 @@
 import { Outlet, Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense, lazy } from "react";
 import {
   FaSignOutAlt,
   FaUser,
@@ -12,11 +12,10 @@ import {
 import { FiMenu } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
-import ProjectCard from "../components/Projectcard";
-// import { defaultProject } from "../components/Projectcard";
+// import ProjectsList from "../components/Allpjts";
+const ProjectsList = lazy(() => import("../components/Allpjts"));
 import Button from "../components/Button";
 
-// const dummyProjects = Array(6).fill(defaultProject);
 
 export default function MainLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -204,21 +203,18 @@ data();
         </header>
 
         {/* Projects & Outlet */}
-        <main className="flex-1 overflow-y-auto p-6 space-y-6 bg-gradient-to-br from-[#0f0f0f] via-[#121829] to-[#1a1a1a]
+        <main className="flex-1 overflow-y-auto p-6 space-y-6 bg-gradient-to-br from-[#0f0f0f] via-[#121829] to-[#1a1a1a] justify-center items-center
 ">
-          {/* {dummyProjects.map((proj, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.12, duration: 0.4 }}
-              whileHover={{ scale: 1.03, boxShadow: "0 0 12px rgba(16, 185, 129, 0.6)" }}
-              className="rounded-xl bg-gradient-to-r from-[#122337] to-[#1b2e4b] border border-teal-700 shadow-md cursor-pointer"
-            >
-              <ProjectCard project={proj} />
-            </motion.div>
-          ))} */}
-
+          <Suspense fallback={<div
+  class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
+  role="status">
+  <span
+    class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+    >Loading...</span
+  >
+</div>}>
+          <ProjectsList/>
+          </Suspense>
           <Outlet />
         </main>
       </div>

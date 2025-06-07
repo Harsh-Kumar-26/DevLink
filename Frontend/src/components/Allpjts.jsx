@@ -67,7 +67,7 @@ export default function ProjectsList() {
         </Button>
       )}
 
-      {/* {!hasMore && <p className="mt-4 text-gray-400">No more projects</p>} */}
+      {!hasMore && <p className="mt-4 text-gray-400">No more projects</p>}
     </>
   );
 }
