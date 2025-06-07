@@ -22,7 +22,6 @@ export default function ProjectsList() {
         console.log(response);
         
         const data = response.data.data; // adapt based on your API response
-        log(data);
         if (data.length < limit) {
           setHasMore(false);
         }
@@ -45,7 +44,7 @@ export default function ProjectsList() {
     <>
       <div className="projects-list">
         {projects.map((project) => (
-          <ProjectCard key={project._id} pjtid={project._id} />
+          <ProjectCard key={project.projectId} pjtid={project.projectId} />
         ))}
       </div>
 
