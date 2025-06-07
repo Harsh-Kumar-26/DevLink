@@ -34,9 +34,8 @@ export default function ProjectCard({pjtid}) {
           let userData = response.data.data;
           console.log(userData);
           setproject(userData);
-          console.log(userData.creator._id);
-          
-          const creatorres = await axios.post(`${import.meta.env.VITE_BACKENDURL}/user-from-id`,{id:userData.creator._id},{ withCredentials: true });
+          console.log(userData.creator);
+          const creatorres = await axios.post(`${import.meta.env.VITE_BACKENDURL}/user-from-id`,{id:userData.creator},{ withCredentials: true });
           console.log(creatorres);
           let creatordata=creatorres.data.data;
           console.log(creatordata);
