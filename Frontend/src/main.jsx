@@ -10,7 +10,7 @@ import ProfilePage from './pages/Profile.jsx'
 import EditProfilePage from './pages/Editprofile.jsx'
 import ChangePasswordPage from './pages/Changepass.jsx'
 import ProjectCard from './components/Projectcard.jsx'
-// import MainLayout from './pages/Main.jsx'
+import MainLayout from './pages/Main.jsx'
 
 
 const router=createBrowserRouter([
@@ -21,6 +21,9 @@ const router=createBrowserRouter([
   {
     path:"/l",
     element:<ProjectCard pjtid="6837088589b3d5646e0db65e"/>
+  },{
+    path:"/main",
+    element:<MainLayout/>
   },
   {
     path:"/login",

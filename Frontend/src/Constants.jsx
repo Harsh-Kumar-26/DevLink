@@ -1,0 +1,1 @@
+export const defaultavatar="https://res.cloudinary.com/dznit2e1x/image/upload/v1749028463/default-avatar-icon-of-social-media-user-vector_ge35qc.jpg"

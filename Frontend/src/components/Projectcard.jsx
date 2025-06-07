@@ -18,7 +18,7 @@ import axios from "axios";
 const fallbackAvatar = "https://cdn3.iconfinder.com/data/icons/essential-rounded/64/Rounded-31-512.png";
 
 export default function ProjectCard({pjtid}) {
-    console.log(pjtid);
+    // console.log(pjtid);
     const [bookmarked, setBookmarked] = useState(false);
     const [isloding,setisloding]=useState(false);
     const [project,setproject]=useState(null);
@@ -27,18 +27,18 @@ export default function ProjectCard({pjtid}) {
       useEffect(() => {
       async function fetchUser() {
         try {
-            console.log("Hello");
+            // console.log("Hello");
           setisloding(true);
           const response = await axios.post(`${import.meta.env.VITE_BACKENDURL}/send-project`,{projectid:pjtid},{ withCredentials: true }
           );
           let userData = response.data.data;
-          console.log(userData);
+          // console.log(userData);
           setproject(userData);
-          console.log(userData.creator);
+          // console.log(userData.creator);
           const creatorres = await axios.post(`${import.meta.env.VITE_BACKENDURL}/user-from-id`,{id:userData.creator},{ withCredentials: true });
-          console.log(creatorres);
+          // console.log(creatorres);
           let creatordata=creatorres.data.data;
-          console.log(creatordata);
+          // console.log(creatordata);
           
           setcreator(creatordata);
         } catch (err) {
