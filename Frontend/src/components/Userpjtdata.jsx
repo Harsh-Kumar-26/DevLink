@@ -40,6 +40,7 @@ export default function UserProjectsList({key}) {
         filtered = data.filter((p) => p.completed==true);
       }
       setProjects((prev) => [...prev, ...filtered]);
+      console.log(projects);
       } catch (err) {
         console.error("Error fetching projects:", err);
       } finally {
