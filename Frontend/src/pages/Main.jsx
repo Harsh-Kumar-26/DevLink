@@ -12,12 +12,13 @@ import {
 import { FiMenu } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
-// import ProjectsList from "../components/Allpjts";
 const ProjectsList = lazy(() => import("../components/Allpjts"));
 import Button from "../components/Button";
+import LogoutButton from "../components/Logout";
 
 
 export default function MainLayout() {
+  const [codn,setcodn]=useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
     const [currentUser,setcurrentuser]=useState(null);
@@ -157,14 +158,15 @@ data();
                 </Button>
                   </Link>
 
-                <Button
+                {/* <Button
                   onClick={handleLogout}
                   variant="danger"
                   className="w-full flex items-center justify-center gap-3"
                 >
                   <FaSignOutAlt />
                   Logout
-                </Button>
+                </Button> */}
+                <LogoutButton className="w-full flex items-center justify-center gap-3" codn={codn} onClick={()=>setcodn(true)}/>
               </div>
             </motion.nav>
           </>

@@ -3,7 +3,7 @@ import { useEffect,useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export default function LogoutButton({codn=false,onClick}){
+export default function LogoutButton({codn=false,onClick,className}){
     const navigate=useNavigate();
     const [loading,setloading]=useState(false);
     useEffect(()=>{
@@ -12,7 +12,6 @@ export default function LogoutButton({codn=false,onClick}){
             if(codn){
                 setloading(true);
                 await axios.post(`${import.meta.env.VITE_BACKENDURL}/logout`,{},{ withCredentials: true });
-                setloading(false);
                 navigate("/");
             }
         }
@@ -33,7 +32,7 @@ export default function LogoutButton({codn=false,onClick}){
         onClick={onClick}
         disabled={loading}
         type="button"
-        className="px-6 py-3 text-white bg-red-600 hover:bg-red-700 transition rounded-xl shadow-lg"
+        className={className}
       >
         {loading?"Logging Out...":"Logout"}
       </Button>
