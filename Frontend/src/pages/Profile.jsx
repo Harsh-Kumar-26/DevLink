@@ -5,8 +5,13 @@ import { Link } from "react-router-dom";
 import {useNavigate} from "react-router-dom";
 import Loader from "../components/loader";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 export default function ProfilePage() {
+  const navigate=useNavigate();
+  const back=()=>{
+    navigate("/main");
+  }
   const [isloding,setisloding]=useState(false);
   const [user,setuser]=useState(null);
   const [error, setError] = useState(null);
@@ -69,7 +74,7 @@ export default function ProfilePage() {
                   <FaEdit /> Edit Profile
                 </button>
                 </Link>
-                <button onClick={()=>window.history.back()} className="flex items-center gap-2 bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg text-sm font-medium transition">
+                <button onClick={back} className="flex items-center gap-2 bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg text-sm font-medium transition">
                   <FaArrowLeft /> Back
                 </button>
               </div>
