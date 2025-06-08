@@ -35,11 +35,11 @@ export default function UserProjectsList({key}) {
         if(key=="all"){
         setProjects((prev) => [...prev, ...data]);
         }
-        else if(key=="accepted"){
-
+        else if(key=="accepted" && data.accepted){
+        setProjects((prev) => [...prev, ...data]);
         }
-        else if(key=="completed"){
-
+        else if(key=="completed" && data.completed){
+        setProjects((prev) => [...prev, ...data]);
         }
       } catch (err) {
         console.error("Error fetching projects:", err);
