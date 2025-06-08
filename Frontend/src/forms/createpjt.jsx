@@ -63,7 +63,7 @@ export default function PostProject() {
       const res = await axios.post(`${import.meta.env.VITE_BACKENDURL}/newproject`, data, {
         headers: {
           "Content-Type": "multipart/form-data",
-        },
+        }, withCredentials: true 
       });
       navigate("/main");
     } catch (err) {
