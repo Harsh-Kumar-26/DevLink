@@ -36,7 +36,7 @@ export default function LoginPage() {
     const login=await axios.post(`${import.meta.env.VITE_BACKENDURL}/login`,formData,{
       withCredentials:true
     });
-    navigate('/profile');
+    navigate('/main');
     // console.log(login);
   }
   catch(err){

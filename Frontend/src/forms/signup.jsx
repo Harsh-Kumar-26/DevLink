@@ -80,7 +80,7 @@ export default function SignupPage() {
         password: formData.password,
       }, { withCredentials: true });
 
-      navigate("/profile");
+      navigate("/main");
     } catch (err) {
       setFormError(err.response?.data?.message || "Signup failed");
     } finally {
