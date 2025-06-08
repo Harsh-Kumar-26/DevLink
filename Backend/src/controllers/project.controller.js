@@ -12,7 +12,7 @@ import ApiResponse from "../utils/apiresponse.js";
 const createproject=asynchandler(async(req,res)=>{
     const {pjt_name,money,deswritten,complete_date,specilities}=req.body;
     // creator,bkphoto,descriptionlocalpath(file)
-    if([pjt_name,money,deswritten,complete_date,specilities].some((field)=>{
+    if([pjt_name,deswritten].some((field)=>{
             return(
             field?.trim()==="")
         })){
