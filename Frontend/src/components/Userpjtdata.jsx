@@ -15,9 +15,16 @@ export default function UserProjectsList() {
     async function fetchProjects() {
       setLoading(true);
       try {
+    //     const config = {
+    //  headers: {
+    //  "Content-Type": "multipart/form-data",
+    //  },
+    //  ,
+    // };
+        const user=await axios.get(`${import.meta.env.VITE_BACKENDURL}/current-user`);
+        const userid=user.data.data._id;
         const response = await axios.post(
-          `${import.meta.env.VITE_BACKENDURL}/usercreatedprojects`,
-          { params: { page, limit } }
+          `${import.meta.env.VITE_BACKENDURL}/usercreatedprojects`,{userid},{withCredentials: true}
         );
         console.log(response);
         
