@@ -15,7 +15,7 @@ export default function UserProjectsList() {
     async function fetchProjects() {
       setLoading(true);
       try {
-        const response = await axios.get(
+        const response = await axios.post(
           `${import.meta.env.VITE_BACKENDURL}/usercreatedprojects`,
           { params: { page, limit } }
         );
