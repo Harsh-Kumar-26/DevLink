@@ -42,7 +42,7 @@ export default function PostProject() {
 // newproject
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    // console.log(formData);
     setFormError("");
     setIsLoading(true);
     try {
@@ -59,7 +59,7 @@ export default function PostProject() {
         data.append("bkphoto", formData.bkphoto);
       }
       formData.specilities.forEach((spec) => data.append("specilities", spec));
-        console.log(data);
+        // console.log(data);
         const config = {
      headers: {
      "Content-Type": "multipart/form-data",
@@ -69,7 +69,7 @@ export default function PostProject() {
       const res = await axios.post(`${import.meta.env.VITE_BACKENDURL}/newproject`, data, config);
       navigate("/main");
     } catch (err) {
-        console.log(err);
+        // console.log(err);
         
       setFormError(err.response?.data?.message || "Posting failed");
     } finally {

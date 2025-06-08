@@ -12,12 +12,16 @@ import ChangePasswordPage from './pages/Changepass.jsx'
 import MainLayout from './pages/Main.jsx'
 import ProjectsList from './components/Allpjts.jsx'
 import PostProject from './forms/createpjt.jsx'
-
+import ProjectCardt from './components/Projectcardt.jsx'
 
 const router=createBrowserRouter([
   {
     path:"/",
     element:<Landing/>
+  },
+   {
+    path:"/l",
+    element:<ProjectCardt/>
   },
   {
     path:"/postproject",
