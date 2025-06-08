@@ -10,18 +10,21 @@ import ProfilePage from './pages/Profile.jsx'
 import EditProfilePage from './pages/Editprofile.jsx'
 import ChangePasswordPage from './pages/Changepass.jsx'
 import MainLayout from './pages/Main.jsx'
-import ProjectsList from './components/Allpjts.jsx'
 import PostProject from './forms/createpjt.jsx'
-import ProjectCardt from './components/Projectcardt.jsx'
+import MyProjects from './pages/MyProjects.jsx'
+import UserProjectsList from './components/Userpjtdata.jsx'
 
 const router=createBrowserRouter([
   {
     path:"/",
     element:<Landing/>
+  },{
+    poth:"/l",
+    element:<UserProjectsList/>
   },
    {
-    path:"/l",
-    element:<ProjectCardt/>
+    path:"/myprojects",
+    element:<MyProjects/>
   },
   {
     path:"/postproject",
