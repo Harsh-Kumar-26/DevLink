@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 export default function ProfilePage() {
   const navigate=useNavigate();
   const back=()=>{
-    navigate("/main");
+    navigate("/");
   }
   const [isloding,setisloding]=useState(false);
   const [user,setuser]=useState(null);
