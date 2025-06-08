@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Button from "../components/Button";
 import Loader from "../components/loader";
 import { specialitiesList } from "../Constants";
-
+import axios from "axios";
 
 export default function PostProject() {
   const [formData, setFormData] = useState({
@@ -60,13 +60,17 @@ export default function PostProject() {
       }
       formData.specilities.forEach((spec) => data.append("specilities", spec));
         console.log(data);
-      const res = await axios.post(`${import.meta.env.VITE_BACKENDURL}/newproject`, data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        }, withCredentials: true 
-      });
+        const config = {
+     headers: {
+     "Content-Type": "multipart/form-data",
+     },
+     withCredentials: true,
+    };
+      const res = await axios.post(`${import.meta.env.VITE_BACKENDURL}/newproject`, data, config);
       navigate("/main");
     } catch (err) {
+        console.log(err);
+        
       setFormError(err.response?.data?.message || "Posting failed");
     } finally {
       setIsLoading(false);
