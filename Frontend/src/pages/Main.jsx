@@ -38,13 +38,7 @@ data();
   const refresh=()=>{
     navigate(0);
   };
-  const profile=()=>{
-    navigate("/profile");
-  }
-  const handleLogout = () => {
-    // logout logic here
-    navigate("/login");
-  };
+  // const profile=
 
   const handleResize = () => {
     if (window.innerWidth >= 768) {
@@ -186,7 +180,9 @@ data();
             <FiMenu size={26} />
           </Button>
 
-          <div onClick={profile} className="flex items-center gap-3 ml-auto cursor-pointer">
+          <div onClick={()=>{
+    navigate("/profile");
+  }} className="flex items-center gap-3 ml-auto cursor-pointer">
             <img
               src={
                 currentUser?.avatar ||

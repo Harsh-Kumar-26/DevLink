@@ -22,7 +22,8 @@ const router=createBrowserRouter([
   {
     path:"/l",
     element:<ProjectsList/>
-  },{
+  },
+  {
     path:"/main",
     element:<MainLayout/>
   },
