@@ -20,11 +20,7 @@ export default function ProfilePage() {
       try {
         setisloding(true);
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKENDURL}/current-user`,
-          { withCredentials: true } // important to send cookies
-        );
-        
-        
+          `${import.meta.env.VITE_BACKENDURL}/current-user`,{ withCredentials: true });
         let userData = response.data.data;
         setuser(userData);
       } catch (err) {

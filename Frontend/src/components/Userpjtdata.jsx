@@ -27,20 +27,19 @@ export default function UserProjectsList({key}) {
           `${import.meta.env.VITE_BACKENDURL}/usercreatedprojects`,{userid},{withCredentials: true}
         );
         console.log(response);
-        
         const data = response.data.data; // adapt based on your API response
         if (data.length < limit) {
           setHasMore(false);
         }
-        if(key=="all"){
-        setProjects((prev) => [...prev, ...data]);
-        }
-        else if(key=="accepted" && data.accepted){
-        setProjects((prev) => [...prev, ...data]);
-        }
-        else if(key=="completed" && data.completed){
-        setProjects((prev) => [...prev, ...data]);
-        }
+        let filtered = [];
+      if (key === "all") {
+        filtered = data;
+      } else if (key === "accepted") {
+        filtered = data.filter((p) => p.accepted==true);
+      } else if (key === "completed") {
+        filtered = data.filter((p) => p.completed==true);
+      }
+      setProjects((prev) => [...prev, ...filtered]);
       } catch (err) {
         console.error("Error fetching projects:", err);
       } finally {
