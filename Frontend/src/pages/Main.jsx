@@ -107,7 +107,7 @@ data();
                   My Projects
                 </Link>
                 <Link
-                  to="/client/new"
+                  to="/postproject"
                   className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-teal-500/20 transition"
                 >
                   <FaPlus className="text-teal-400" />
@@ -208,8 +208,7 @@ data();
   role="status">
   <span
     class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-    >Loading...</span
-  >
+    >Loading...</span>
 </div>}>
           <ProjectsList/>
           </Suspense>
