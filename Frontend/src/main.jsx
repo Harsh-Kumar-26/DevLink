@@ -19,7 +19,7 @@ const router=createBrowserRouter([
     path:"/",
     element:<Landing/>
   },{
-    poth:"/l",
+    path:"/l",
     element:<UserProjectsList/>
   },
    {
