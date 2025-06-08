@@ -5,17 +5,17 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
 import Button from "../components/Button";
 import Loader from "../components/loader";
-
-const specialitiesList = [
-  "Backend Developer", "Frontend Developer", "Full Stack Web Developer", "Android Developer",
-  "iOS Developer", "Blockchain Developer", "Machine Learning Engineer", "Data Scientist",
-  "DevOps Engineer", "Game Developer", "Cybersecurity Specialist", "AI Engineer", "UI/UX Designer",
-  "Database Administrator", "AR/VR Developer", "Embedded Systems Engineer", "IoT Developer",
-  "Cloud Solutions Architect", "Systems Engineer", "Site Reliability Engineer",
-  "Desktop Application Developer", "Data Analyst", "QA Engineer", "Web3 Developer",
-  "Computer Vision Engineer", "Mobile App Developer", "Network Engineer", "Product Manager",
-  "Software Architect"
-];
+import { specialitiesList } from "../Constants";
+// const specialitiesList = [
+//   "Backend Developer", "Frontend Developer", "Full Stack Web Developer", "Android Developer",
+//   "iOS Developer", "Blockchain Developer", "Machine Learning Engineer", "Data Scientist",
+//   "DevOps Engineer", "Game Developer", "Cybersecurity Specialist", "AI Engineer", "UI/UX Designer",
+//   "Database Administrator", "AR/VR Developer", "Embedded Systems Engineer", "IoT Developer",
+//   "Cloud Solutions Architect", "Systems Engineer", "Site Reliability Engineer",
+//   "Desktop Application Developer", "Data Analyst", "QA Engineer", "Web3 Developer",
+//   "Computer Vision Engineer", "Mobile App Developer", "Network Engineer", "Product Manager",
+//   "Software Architect"
+// ];
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({

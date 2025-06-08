@@ -9,9 +9,9 @@ import SignupPage from './forms/signup.jsx'
 import ProfilePage from './pages/Profile.jsx'
 import EditProfilePage from './pages/Editprofile.jsx'
 import ChangePasswordPage from './pages/Changepass.jsx'
-import ProjectCard from './components/Projectcard.jsx'
 import MainLayout from './pages/Main.jsx'
 import ProjectsList from './components/Allpjts.jsx'
+import PostProject from './forms/createpjt.jsx'
 
 
 const router=createBrowserRouter([
@@ -20,8 +20,8 @@ const router=createBrowserRouter([
     element:<Landing/>
   },
   {
-    path:"/l",
-    element:<ProjectsList/>
+    path:"/postproject",
+    element:<PostProject/>
   },
   {
     path:"/main",

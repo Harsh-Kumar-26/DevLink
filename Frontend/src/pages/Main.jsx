@@ -35,9 +35,7 @@ export default function MainLayout() {
 }
 data();
 },[]);
-  const refresh=()=>{
-    navigate(0);
-  };
+  // const refresh=
   // const profile=
 
   const handleResize = () => {
@@ -82,7 +80,9 @@ data();
             // bg-gradient-to-b from-[#121829] to-[#1f2a41]
             >
               <div className="flex justify-between items-center mb-8">
-                <h1 onClick={refresh} className="text-4xl font-extrabold tracking-tight cursor-pointer">
+                <h1 onClick={()=>{
+    navigate(0);
+  }} className="text-4xl font-extrabold tracking-tight cursor-pointer">
                   Dev
                   <span className="text-purple-500 ml-1">Link</span>
                 </h1>
