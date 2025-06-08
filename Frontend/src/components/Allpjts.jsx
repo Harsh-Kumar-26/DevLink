@@ -42,7 +42,7 @@ export default function ProjectsList() {
 
   return (
     <>
-      <div className="projects-list mb-100px">
+      <div className="projects-list">
         {projects.map((project) => (
           <ProjectCard key={project.projectId} pjtid={project.projectId} />
         ))}
