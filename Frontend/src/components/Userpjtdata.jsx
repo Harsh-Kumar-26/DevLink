@@ -4,7 +4,7 @@ import Loader from "./loader"; // Your loader component
 import ProjectCard from "./Projectcard"; // Your card component
 import Button from "./Button";
 
-export default function UserProjectsList() {
+export default function UserProjectsList({key}) {
   const [projects, setProjects] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -21,7 +21,7 @@ export default function UserProjectsList() {
     //  },
     //  ,
     // };
-        const user=await axios.get(`${import.meta.env.VITE_BACKENDURL}/current-user`);
+        const user=await axios.get(`${import.meta.env.VITE_BACKENDURL}/current-user`,{ withCredentials: true });
         const userid=user.data.data._id;
         const response = await axios.post(
           `${import.meta.env.VITE_BACKENDURL}/usercreatedprojects`,{userid},{withCredentials: true}
@@ -32,7 +32,15 @@ export default function UserProjectsList() {
         if (data.length < limit) {
           setHasMore(false);
         }
+        if(key=="all"){
         setProjects((prev) => [...prev, ...data]);
+        }
+        else if(key=="accepted"){
+
+        }
+        else if(key=="completed"){
+
+        }
       } catch (err) {
         console.error("Error fetching projects:", err);
       } finally {
