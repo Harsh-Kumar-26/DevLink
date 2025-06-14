@@ -4,7 +4,7 @@ import Loader from "./loader"; // Your loader component
 import ProjectCard from "./Projectcard"; // Your card component
 import Button from "./Button";
 
-export default function UserProjectsList({key}) {
+export default function UserProjectsList({key="all"}) {
   const [projects, setProjects] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -15,19 +15,13 @@ export default function UserProjectsList({key}) {
     async function fetchProjects() {
       setLoading(true);
       try {
-    //     const config = {
-    //  headers: {
-    //  "Content-Type": "multipart/form-data",
-    //  },
-    //  ,
-    // };
         const user=await axios.get(`${import.meta.env.VITE_BACKENDURL}/current-user`,{ withCredentials: true });
         const userid=user.data.data._id;
         const response = await axios.post(
           `${import.meta.env.VITE_BACKENDURL}/usercreatedprojects`,{userid},{withCredentials: true}
         );
         console.log(response);
-        const data = response.data.data; // adapt based on your API response
+        const data = response.data.data;
         if (data.length < limit) {
           setHasMore(false);
         }

@@ -30,7 +30,6 @@ export default function MyProjects() {
         return null;
     }
   };
-
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-950 text-white">
       
