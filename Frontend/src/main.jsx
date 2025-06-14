@@ -20,7 +20,7 @@ const router=createBrowserRouter([
     element:<Landing/>
   },{
     path:"/l",
-    element:<UserProjectsList key="all"/>
+    element:<UserProjectsList pjtkey="accepted"/>
   },
    {
     path:"/myprojects",

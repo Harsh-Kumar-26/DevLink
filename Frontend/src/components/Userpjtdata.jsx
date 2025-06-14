@@ -4,7 +4,7 @@ import Loader from "./loader"; // Your loader component
 import ProjectCard from "./Projectcard"; // Your card component
 import Button from "./Button";
 
-export default function UserProjectsList({key="all"}) {
+export default function UserProjectsList({pjtkey="all"}) {
   const [projects, setProjects] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -26,11 +26,11 @@ export default function UserProjectsList({key="all"}) {
           setHasMore(false);
         }
         let filtered = [];
-      if (key === "all") {
+      if (pjtkey === "all") {
         filtered = data;
-      } else if (key === "accepted") {
+      } else if (pjtkey === "accepted") {
         filtered = data.filter((p) => p.accepted==true);
-      } else if (key === "completed") {
+      } else if (pjtkey === "completed") {
         filtered = data.filter((p) => p.completed==true);
       }
       setProjects((prev) => [...prev, ...filtered]);
@@ -53,7 +53,7 @@ export default function UserProjectsList({key="all"}) {
     <>
       <div className="projects-list">
         {projects.map((project) => (
-          <ProjectCard key={project.projectId} pjtid={project.projectId} />
+          <ProjectCard pjtkey={project.projectId} pjtid={project.projectId} />
         ))}
       </div>
 
