@@ -1,7 +1,7 @@
 import { useState, useEffect, Suspense } from "react";
 import axios from "axios";
 import Loader from "./loader"; // Your loader component
-import ProjectCard from "./Projectcard"; // Your card component
+import ProjectCardt from "./Projectcardt"; // Your card component
 import Button from "./Button";
 
 export default function UserProjectsList({pjtkey="all"}) {
@@ -53,7 +53,7 @@ export default function UserProjectsList({pjtkey="all"}) {
     <>
       <div className="projects-list">
         {projects.map((project) => (
-          <ProjectCard pjtkey={project.projectId} pjtid={project.projectId} />
+          <ProjectCardt pjtkey={project.projectId} pjtid={project.projectId} />
         ))}
       </div>
 
