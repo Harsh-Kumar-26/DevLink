@@ -405,7 +405,7 @@ if(!userid){
     specilities: p.specilities
   }));
 
-  return res.status(200).json({ success: true, data: summary });
+  return res.status(200).json({ success: true, data: [summary,projects] });
 });
 
 
