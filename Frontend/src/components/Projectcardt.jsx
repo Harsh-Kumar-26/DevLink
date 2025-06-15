@@ -5,13 +5,12 @@ import {
   FaRegClock,
   FaFileAlt,
 } from "react-icons/fa";
-import { formatDistanceToNow } from "date-fns";
-import Button from "./Button";
 import { useState, useEffect } from "react";
-import Loader from "./loader";
 import axios from "axios";
+import Button from "./Button";
+import Loader from "./loader";
 
-export default function ProjectCardt({ pjtid="6837088589b3d5646e0db65e" }) {
+export default function ProjectCardt({ pjtid = "6837088589b3d5646e0db65e" }) {
   const [isloding, setisloding] = useState(false);
   const [project, setproject] = useState(null);
   const [error, setError] = useState(null);
@@ -47,6 +46,8 @@ export default function ProjectCardt({ pjtid="6837088589b3d5646e0db65e" }) {
     bkphoto,
     createdAt,
     descriptionFile,
+    selected,
+    apply,
   } = project;
 
   return isloding ? (
@@ -104,12 +105,37 @@ export default function ProjectCardt({ pjtid="6837088589b3d5646e0db65e" }) {
             <FaRupeeSign className="text-purple-400" />
             {money.toLocaleString()} INR
           </div>
-          {/* <div className="text-green-500" >Accepted: {accept?accept:"None"}</div> */}
           <div className="flex items-center gap-1">
             <FaRegClock className="text-purple-400" />
             {new Date(complete_date).toLocaleDateString()}
           </div>
         </div>
+
+        {/* Selected Freelancer */}
+        {selected && (
+          <div className="mt-3 text-green-400 text-sm">
+            ✅ Selected: <span className="font-semibold">{selected}</span>
+          </div>
+        )}
+
+        {/* Applied Freelancers */}
+        {apply?.length > 0 && (
+          <div className="mt-2 text-sm text-purple-300">
+            📝 Applied:
+            <ul className="list-disc list-inside mt-1 space-y-1">
+              {apply.map((user, idx) => (
+                <li key={idx}>
+                  {user}
+                  {user === selected && (
+                    <span className="text-green-400 ml-2 font-semibold">
+                      (Selected)
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
 
       {/* Edit Button */}
