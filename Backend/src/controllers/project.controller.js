@@ -389,7 +389,7 @@ const {userid}=req.body;
 if(!userid){
     throw new ApiError(400,"User dont exist");
 }
-  const projects = await project.find({creator:userid}).skip(skip).limit(limit).lean();
+  const projects = await project.find({creator:userid}).skip(skip).limit(limit).populate("applied","_id fullname avatar").populate("accept","_id fullname").lean();
     if(!projects){
         throw new ApiError(400,"User didnt created any project");
     }
