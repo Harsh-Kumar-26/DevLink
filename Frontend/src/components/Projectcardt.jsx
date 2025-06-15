@@ -104,6 +104,7 @@ export default function ProjectCardt({ pjtid="6837088589b3d5646e0db65e" }) {
             <FaRupeeSign className="text-purple-400" />
             {money.toLocaleString()} INR
           </div>
+          <div className="text-green-500" >Accepted: {accept?accept:"None"}</div>
           <div className="flex items-center gap-1">
             <FaRegClock className="text-purple-400" />
             {new Date(complete_date).toLocaleDateString()}
