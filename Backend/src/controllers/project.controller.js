@@ -150,7 +150,7 @@ const sendproject=asynchandler(async(req,res)=>{
     if(!projectid){
         throw new ApiError(404,"Project not found");
     }    
-    const projectdata= await project.findById(projectid);
+    const projectdata= await project.findById(projectid).populate("applied","_id fullname avatar").populate("accept","_id fullname");
     return res.status(201).json(
         new ApiResponse(200,projectdata, "Project edited succesfully")
     );
@@ -160,7 +160,7 @@ const sendprojectbyname=asynchandler(async(req,res)=>{
     if(!projectname){
         throw new ApiError(404,"Project not found");
     }    
-    const projectdata= await project.findOne({pjt_name:projectname});
+    const projectdata= await project.findOne({pjt_name:projectname}).populate("applied","_id fullname avatar").populate("accept","_id fullname");
     if(!projectdata){
         throw new ApiError(400,"Could not find project");
     }
@@ -342,7 +342,6 @@ const getProjectSummaries = asynchandler(async (req, res) => {
   )
     .skip(skip)
     .limit(limit)
-    .populate("applied","_id fullname avatar").populate("accept","_id fullname")
     .lean();
 
   const summary = projects.map(p => ({
