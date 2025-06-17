@@ -21,7 +21,7 @@ export default function UserProjectsList({pjtkey="all"}) {
           `${import.meta.env.VITE_BACKENDURL}/usercreatedprojects`,{userid},{withCredentials: true}
         );
         console.log(response);
-        const data = response.data.data;
+        const data = response.data.data[0];
         if (data.length < limit) {
           setHasMore(false);
         }
