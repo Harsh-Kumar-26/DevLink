@@ -21,7 +21,7 @@ export default function UserProjectsList({pjtkey="all"}) {
           `${import.meta.env.VITE_BACKENDURL}/usercreatedprojects`,{userid},{withCredentials: true}
         );
         console.log(response);
-        const data = response.data.data[0];
+        const data = response.data.data;
         if (data.length < limit) {
           setHasMore(false);
         }
@@ -51,7 +51,7 @@ export default function UserProjectsList({pjtkey="all"}) {
 
   return (
     <>
-  <div className="projects-list flex flex-wrap justify-center gap-6 px-4">
+  <div className="projects-list flex-col flex-wrap justify-center gap-6 px-4">
     {projects.map((project) => (
       <ProjectCardt key={project.projectId} pjtkey={project.projectId} pjtid={project.projectId} />
     ))}

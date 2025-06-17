@@ -342,6 +342,7 @@ const getProjectSummaries = asynchandler(async (req, res) => {
   )
     .skip(skip)
     .limit(limit)
+    .populate("applied","_id fullname avatar").populate("accept","_id fullname")
     .lean();
 
   const summary = projects.map(p => ({
@@ -389,7 +390,7 @@ const {userid}=req.body;
 if(!userid){
     throw new ApiError(400,"User dont exist");
 }
-  const projects = await project.find({creator:userid}).skip(skip).limit(limit).populate("applied","_id fullname avatar").populate("accept","_id fullname").lean();
+  const projects = await project.find({creator:userid}).skip(skip).limit(limit).lean();
     if(!projects){
         throw new ApiError(400,"User didnt created any project");
     }
@@ -405,7 +406,7 @@ if(!userid){
     specilities: p.specilities
   }));
 
-  return res.status(200).json({ success: true, data: [summary,projects] });
+  return res.status(200).json({ success: true, data: summary });
 });
 
 
