@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Button from "../components/Button";
 import Footer from "../components/Landingfooter";
-import UserProjectsList from './components/Userpjtdata.jsx'
+import UserProjectsList from '../components/Userpjtdata.jsx'
 
 export default function MyProjects() {
   const [selectedTab, setSelectedTab] = useState("all");
