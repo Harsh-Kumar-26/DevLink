@@ -82,9 +82,9 @@ export default function MyProjects() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="w-full max-w-6xl mx-auto py-6 flex-grow"
+          className="w-full max-w-7xl mx-auto py-6 flex-grow px-4"
         >
-          <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center">
+          <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center">
             {renderContent()}
           </div>
         </motion.div>
