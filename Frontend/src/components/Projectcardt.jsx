@@ -118,7 +118,7 @@ export default function ProjectCardt({ pjtid = "6837088589b3d5646e0db65e" }) {
         )}
 
         {/* Applied Freelancers */}
-        {apply?.length > 0 && (
+        {/* {apply?.length > 0 && (
           <div className="mt-2 text-sm text-purple-300">
             📝 Applied:
             <ul className="list-disc list-inside mt-1 space-y-1">
@@ -134,7 +134,7 @@ export default function ProjectCardt({ pjtid = "6837088589b3d5646e0db65e" }) {
               ))}
             </ul>
           </div>
-        )}
+        )} */}
       </div>
 
       {/* Edit Button */}
