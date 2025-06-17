@@ -33,7 +33,6 @@ export default function MyProjects() {
   };
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-950 text-white">
-      
       {/* Header */}
       <header className="flex items-center justify-between px-6 md:px-12 py-4 relative z-20">
         <motion.div
@@ -57,9 +56,9 @@ export default function MyProjects() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-grow flex flex-col">
+      <main className="flex-grow flex flex-col w-full px-4 sm:px-6 md:px-12">
         {/* Tabs */}
-        <div className="flex justify-center space-x-4 px-4 mt-8 mb-6">
+        <div className="w-full max-w-6xl mx-auto flex justify-center flex-wrap gap-4 mt-8 mb-6">
           {tabs.map((tab) => (
             <motion.button
               key={tab.key}
@@ -83,13 +82,15 @@ export default function MyProjects() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="px-6 md:px-12 py-6 max-w-4xl mx-auto text-gray-300 flex-grow"
+          className="w-full max-w-6xl mx-auto py-6 flex-grow"
         >
-          {renderContent()}
+          <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            {renderContent()}
+          </div>
         </motion.div>
       </main>
 
-      {/* Footer at Bottom */}
+      {/* Footer */}
       <Footer />
     </div>
   );
