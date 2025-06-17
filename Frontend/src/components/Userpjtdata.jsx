@@ -55,7 +55,7 @@ export default function UserProjectsList({pjtkey="all"}) {
         {projects.map((project) => (
           <ProjectCardt pjtkey={project.projectId} pjtid={project.projectId} />
         ))}
-      </div>
+      
       
       {loading && 
 <div role="status">
@@ -77,6 +77,7 @@ export default function UserProjectsList({pjtkey="all"}) {
       )}
 
       {!hasMore && <p className="mt-4 text-gray-400">No more projects</p>}
+      </div>
     </>
   );
 }
