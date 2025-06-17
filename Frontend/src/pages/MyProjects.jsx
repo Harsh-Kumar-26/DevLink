@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Button from "../components/Button";
 import Footer from "../components/Landingfooter";
+import UserProjectsList from './components/Userpjtdata.jsx'
 
 export default function MyProjects() {
   const [selectedTab, setSelectedTab] = useState("all");
@@ -21,11 +22,11 @@ export default function MyProjects() {
   const renderContent = () => {
     switch (selectedTab) {
       case "all":
-        return <div>All your posted or accepted projects go here.</div>;
+        return <><div><UserProjectsList pjtkey="all"/></div></>;
       case "accepted":
-        return <div>Your currently accepted projects go here.</div>;
+        return <><div><UserProjectsList pjtkey="accepted"/></div></>;
       case "completed":
-        return <div>Projects you completed go here.</div>;
+        return <><div><UserProjectsList pjtkey="completed"/></div></>;
       default:
         return null;
     }

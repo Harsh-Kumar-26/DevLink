@@ -164,25 +164,8 @@ export default function ProjectCard({pjtid}) {
       </div>
 
       {/* Applied Users */}
-      {applied.length > 0 && (
-        <div className="mt-4">
-          <p className="text-sm text-gray-400 mb-2">Applied Developers:</p>
-          <div className="flex gap-3 overflow-x-auto max-w-full pb-1">
-            {applied.map((user, idx) => (
-              <div key={idx} className="flex flex-col items-center">
-                <img
-                  src={user?.avatar || fallbackAvatar}
-                  alt={user?.username}
-                  className="w-8 h-8 rounded-full border border-purple-500"
-                />
-                <span className="text-xs text-gray-400 mt-1 max-w-[60px] text-center line-clamp-1">
-                  {user?.username || "User"}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+       <div className="mt-4"><p className="text-sm text-gray-400 mb-2">Total applicants: {(applied?.length)||0}</p></div>
+      
     </motion.div>
   );
 }

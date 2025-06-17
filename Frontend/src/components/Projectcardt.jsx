@@ -47,7 +47,6 @@ export default function ProjectCardt({ pjtid = "6837088589b3d5646e0db65e" }) {
     createdAt,
     descriptionFile,
     selected,
-    apply,
   } = project;
 
   return isloding ? (
