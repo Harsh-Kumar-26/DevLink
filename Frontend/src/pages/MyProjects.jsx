@@ -84,7 +84,7 @@ export default function MyProjects() {
           transition={{ duration: 0.4 }}
           className="w-full max-w-6xl mx-auto py-6 flex-grow"
         >
-          <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center">
             {renderContent()}
           </div>
         </motion.div>
