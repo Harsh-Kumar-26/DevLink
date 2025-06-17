@@ -22,11 +22,11 @@ export default function MyProjects() {
   const renderContent = () => {
     switch (selectedTab) {
       case "all":
-        return <><div><UserProjectsList pjtkey="all"/></div></>;
+        return <UserProjectsList pjtkey="all"/>;
       case "accepted":
-        return <><div><UserProjectsList pjtkey="accepted"/></div></>;
+        return <UserProjectsList pjtkey="accepted"/>;
       case "completed":
-        return <><div><UserProjectsList pjtkey="completed"/></div></>;
+        return <UserProjectsList pjtkey="completed"/>;
       default:
         return null;
     }
@@ -84,7 +84,7 @@ export default function MyProjects() {
           transition={{ duration: 0.4 }}
           className="w-full max-w-7xl mx-auto py-6 flex-grow px-4"
         >
-          <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center">
+          <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {renderContent()}
           </div>
         </motion.div>
