@@ -22,11 +22,11 @@ export default function MyProjects() {
   const renderContent = () => {
     switch (selectedTab) {
       case "all":
-        return <><div><UserProjectsList pjtkey="all"/></div></>;
+        return <><div><UserProjectsList pjtkey="all"/></div><div>No More projects to show</div></>;
       case "accepted":
-        return <><div><UserProjectsList pjtkey="accepted"/></div></>;
+        return <><div><UserProjectsList pjtkey="accepted"/></div><div>No More projects to show</div></>;
       case "completed":
-        return <><div><UserProjectsList pjtkey="completed"/></div></>;
+        return <><div><UserProjectsList pjtkey="completed"/></div><div>No More projects to show</div></>;
       default:
         return null;
     }
