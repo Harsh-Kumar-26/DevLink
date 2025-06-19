@@ -56,7 +56,7 @@ router.route("/accept").post(verifyJWT,acceptproject);
 router.route("/complete").post(verifyJWT,complete);
 router.route("/review").post(verifyJWT,review);
 router.route("/removeapply").post(verifyJWT,removeapply);
-router.route("/allprojects").get(getProjectSummaries);
+router.route("/allprojects").get(verifyJWT,getProjectSummaries);
 router.route("/sendprojectbyname").post(verifyJWT,sendprojectbyname);
 router.route("/userappliedprojects").post(verifyJWT,userappliedprojects);
 router.route("/usercreatedprojects").post(verifyJWT,usercreatedprojects);
