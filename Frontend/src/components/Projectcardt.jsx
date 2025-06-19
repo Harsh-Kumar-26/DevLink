@@ -47,6 +47,9 @@ export default function ProjectCardt({ pjtid = "6837088589b3d5646e0db65e" }) {
     createdAt,
     descriptionFile,
     selected,
+    applied=[],
+    accepted,
+    completed
   } = project;
 
   return isloding ? (
@@ -71,6 +74,9 @@ export default function ProjectCardt({ pjtid = "6837088589b3d5646e0db65e" }) {
       <div className="flex flex-col gap-2">
         <h2 className="text-xl font-semibold text-purple-400">{pjt_name}</h2>
         <p className="text-sm text-gray-300 line-clamp-4">{deswritten}</p>
+        <span className="text-xs text-gray-500">
+                    Posted {formatDistanceToNow(new Date(createdAt))} ago
+                  </span>
 
         {/* Description File Link */}
         {descriptionFile && (
@@ -111,12 +117,17 @@ export default function ProjectCardt({ pjtid = "6837088589b3d5646e0db65e" }) {
         </div>
 
         {/* Selected Freelancer */}
-        {selected && (
+        {accepted && (
           <div className="mt-3 text-green-400 text-sm">
-            ✅ Selected: <span className="font-semibold">{selected}</span>
+            ✅ Selected: <Link to><span className="font-semibold">{selected}</span></Link>
           </div>
         )}
-
+        {completed && (
+          <div className="mt-3 text-green-400 text-sm">
+            ✅ Project Finished
+          </div>
+        )}
+        
         {/* Applied Freelancers */}
         {/* {apply?.length > 0 && (
           <div className="mt-2 text-sm text-purple-300">
@@ -138,11 +149,14 @@ export default function ProjectCardt({ pjtid = "6837088589b3d5646e0db65e" }) {
       </div>
 
       {/* Edit Button */}
+
+      {/* {accepted?<div><Link><div></div></Link></div>:<></>} */}
       <div className="flex justify-end mt-4">
         <Link to={`/edit-project/${_id}`}>
           <Button variant="green">Edit</Button>
         </Link>
       </div>
+           <div className="mt-4"><p className="text-sm text-gray-400 mb-2">Total applicants: {(applied?.length)||0}</p></div>  
     </motion.div>
   );
 }

@@ -324,13 +324,17 @@ const removeapply = asynchandler(async (req, res) => {
     );
 });
 const getProjectSummaries = asynchandler(async (req, res) => {
+    const user=req.user;
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
 
   const skip = (page - 1) * limit;
 // 
   const projects = await project.find(
-    { accept: { $exists: false } },
+    { accept: { $exists: false } ,
+    creator: { $ne: a },
+    applied: { $ne: a }
+  },
     {
       _id: 1,
       creator: 1,
