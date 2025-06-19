@@ -1,6 +1,7 @@
 import fs from "fs"
 import { v2 as cloudinary } from 'cloudinary';
 import { log } from "console";
+import path from "path";
 
 
     // Configuration
@@ -17,17 +18,23 @@ import { log } from "console";
                 
                 return null;
             }
-            const response=await cloudinary.uploader.upload(localFilePath,
-                {
-                    resource_type:"auto",
-                    folder: "devlink_users",        
-                    quality: "auto",                
-                    width: 300,                     
-                    height: 300,                    
-                    crop: "fill",                  
-                    gravity: "face",
-                }
-            )
+            const fileExt = path.extname(localFilePath).toLowerCase();
+            
+let options = {
+    resource_type: "auto",
+    folder: "devlink_users",
+};
+if ([".jpg", ".jpeg", ".png", ".webp", ".gif"].includes(fileExt)) {
+    options = {
+        ...options,
+        quality: "auto",
+        width: 300,
+        height: 300,
+        crop: "fill",
+        gravity: "face"
+    };
+}
+            const response = await cloudinary.uploader.upload(localFilePath, options);
             fs.unlinkSync(localFilePath)
             return response
         } catch (error) {
