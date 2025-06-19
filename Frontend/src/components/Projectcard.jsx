@@ -145,9 +145,9 @@ export default function ProjectCard({pjtid}) {
       {/* Bottom Actions */}
       <div className="flex justify-between items-center mt-4">
         <div className="flex gap-3">
-          <Link to={`/project/${_id}`}>
+          {/* <Link to={`/project/${_id}`}>
             <Button>View</Button>
-          </Link>
+          </Link> */}
           <Button variant="green">Apply</Button>
         </div>
         <button

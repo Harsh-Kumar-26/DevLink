@@ -17,7 +17,7 @@ export default function ProjectsList() {
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_BACKENDURL}/allprojects`,
-          { params: { page, limit } }
+          { params: { page, limit } ,withCredentials: true}
         );
         console.log(response);
         
