@@ -63,7 +63,7 @@ export default function ProjectCard({pjtid}) {
     bkphoto,
     createdAt,
     applied = [],
-    descriptionFile,
+    description,
   } = project;
   const toggleBookmark = () => setBookmarked(!bookmarked);
 
@@ -106,9 +106,9 @@ export default function ProjectCard({pjtid}) {
         <p className="text-sm text-gray-300 line-clamp-4">{deswritten}</p>
 
         {/* Description File Link */}
-        {descriptionFile && (
+        {description && (
           <a
-            href={descriptionFile}
+            href={description}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1 text-purple-400 mt-1 text-sm hover:underline"

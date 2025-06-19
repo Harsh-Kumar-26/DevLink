@@ -45,7 +45,7 @@ export default function ProjectCardt({ pjtid = "6837088589b3d5646e0db65e" }) {
     specilities,
     bkphoto,
     createdAt,
-    descriptionFile,
+    description,
     selected,
     applied=[],
     accepted,
@@ -79,9 +79,9 @@ export default function ProjectCardt({ pjtid = "6837088589b3d5646e0db65e" }) {
                   </span>
 
         {/* Description File Link */}
-        {descriptionFile && (
+        {description && (
           <a
-            href={descriptionFile}
+            href={description}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1 text-purple-400 mt-1 text-sm hover:underline"
