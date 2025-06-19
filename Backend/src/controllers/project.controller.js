@@ -329,8 +329,10 @@ const getProjectSummaries = asynchandler(async (req, res) => {
   const limit = parseInt(req.query.limit) || 10;
 
   const skip = (page - 1) * limit;
-const a=req.user;
-  const projects = await project.find(
+// const mongoose = require('mongoose');
+// const a = new mongoose.Types.ObjectId(req.user._id);
+    const a=req.user._id;
+    const projects = await project.find(
     { accept: { $exists: false } ,
     creator: { $ne: a },
     applied: { $ne: a }
