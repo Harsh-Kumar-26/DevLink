@@ -22,8 +22,18 @@ export default function ProjectCard({pjtid}) {
     const [bookmarked, setBookmarked] = useState(false);
     const [isloding,setisloding]=useState(false);
     const [project,setproject]=useState(null);
+    const [ap,setap]=useState(false);
         const [creator,setcreator]=useState(null);
     const [error,setError]=useState(null);
+    const apply=async()=>{
+      try{
+          const respons = await axios.post(`${import.meta.env.VITE_BACKENDURL}/apply`,{projectid:_id},{ withCredentials: true });
+          setap(true);
+      }
+      catch(err){
+        console.log(err);
+      }
+    }
       useEffect(() => {
       async function fetchUser() {
         try {
@@ -148,7 +158,7 @@ export default function ProjectCard({pjtid}) {
           {/* <Link to={`/project/${_id}`}>
             <Button>View</Button>
           </Link> */}
-          <Button variant="green">Apply</Button>
+          <Button onClick={apply} disabled={ap} variant={ap?"secondary":"green"}>{ap?"Applied":"Apply"}</Button>
         </div>
         <button
           onClick={toggleBookmark}
