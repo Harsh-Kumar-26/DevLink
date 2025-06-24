@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
 
-export default function ProfilePage() {
+export default function ProfilePage({userid}) {
   const navigate=useNavigate();
   const back=()=>{
     navigate("/main");
@@ -19,8 +19,15 @@ export default function ProfilePage() {
     async function fetchUser() {
       try {
         setisloding(true);
-        const response = await axios.get(
+        let response;
+        if(!userid){
+        response = await axios.get(
           `${import.meta.env.VITE_BACKENDURL}/current-user`,{ withCredentials: true });
+        }
+        else{
+         response = await axios.get(
+          `${import.meta.env.VITE_BACKENDURL}/user-from-id`,{ withCredentials: true }); 
+        }
         let userData = response.data.data;
         setuser(userData);
       } catch (err) {

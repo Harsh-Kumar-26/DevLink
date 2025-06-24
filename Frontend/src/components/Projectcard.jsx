@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FaRupeeSign,
   FaRegClock,
@@ -18,6 +18,7 @@ import axios from "axios";
 const fallbackAvatar = "https://cdn3.iconfinder.com/data/icons/essential-rounded/64/Rounded-31-512.png";
 
 export default function ProjectCard({pjtid}) {
+  const navigate=useNavigate();
     // console.log(pjtid);
     const [bookmarked, setBookmarked] = useState(false);
     const [isloding,setisloding]=useState(false);
@@ -85,7 +86,9 @@ export default function ProjectCard({pjtid}) {
       transition={{ duration: 0.4 }}
     >
       {/* Creator Header */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3" onClick={()=>{
+        navigate("")
+      }}>
         <img
           src={creator?.avatar || fallbackAvatar}
           alt="creator"
