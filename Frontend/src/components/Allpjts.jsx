@@ -10,7 +10,7 @@ export default function ProjectsList() {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const limit = 5; // number of projects per fetch
-
+  
   useEffect(() => {
     async function fetchProjects() {
       setLoading(true);
@@ -66,7 +66,6 @@ export default function ProjectsList() {
           Load More
         </Button>
       )}
-
       {!hasMore && <p className="mt-4 text-gray-400">No more projects</p>}
     </>
   );

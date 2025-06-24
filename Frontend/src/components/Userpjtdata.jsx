@@ -20,7 +20,7 @@ export default function UserProjectsList({pjtkey="all"}) {
         const response = await axios.post(
           `${import.meta.env.VITE_BACKENDURL}/usercreatedprojects`,{userid},{withCredentials: true}
         );
-        console.log(response);
+        console.log("Res "+response);
         const data = response.data.data;
         if (data.length < limit) {
           setHasMore(false);
@@ -34,7 +34,7 @@ export default function UserProjectsList({pjtkey="all"}) {
         filtered = data.filter((p) => p.completed==true);
       }
       setProjects((prev) => [...prev, ...filtered]);
-      console.log(projects);
+      console.log("Pro "+projects);
       } catch (err) {
         console.error("Error fetching projects:", err);
       } finally {
@@ -53,7 +53,7 @@ export default function UserProjectsList({pjtkey="all"}) {
     <>
   <div className="projects-list flex-col flex-wrap justify-center gap-6 px-4">
     {projects.map((project) => (
-      <ProjectCardt key={project.projectId} pjtkey={project.projectId} pjtid={project.projectId} />
+      <ProjectCardt pjtid={project.projectId} />
     ))}
   </div>
 

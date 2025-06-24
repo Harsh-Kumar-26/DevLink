@@ -367,7 +367,10 @@ const {userid}=req.body;
 if(!userid){
     throw new ApiError(400,"User dont exist");
 }
-  const projects = await project.find({applied:userid}).lean();
+  const projects = await project.find({
+  accept: { $ne: userid },
+  applied: userid
+}).lean();
     if(!projects){
         throw new ApiError(400,"User didnt applied for any project");
     }

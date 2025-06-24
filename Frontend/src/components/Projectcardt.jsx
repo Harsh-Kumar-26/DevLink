@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Button from "./Button";
 import Loader from "./loader";
+import { formatDistanceToNow } from "date-fns";
 
 export default function ProjectCardt({ pjtid = "6837088589b3d5646e0db65e" }) {
   const [isloding, setisloding] = useState(false);
