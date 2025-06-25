@@ -90,7 +90,7 @@ export default function ClientProjectReviews() {
         await axios.post(
           `${import.meta.env.VITE_BACKENDURL}/review`,
           {
-            projectId,
+            projectId:projectId,
             review: reviewData.review,
             rating: reviewData.rating,
           },
