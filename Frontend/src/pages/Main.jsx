@@ -115,7 +115,7 @@ data();
                   My Projects
                 </Link>
                 <Link
-                  to="//capp"
+                  to="/capp"
                   className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-teal-500/20 transition"
                 >
                   <FaList className="text-teal-400" />
