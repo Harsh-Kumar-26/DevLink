@@ -5,7 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Button from '../components/Button';
 
-const testing = true;
+const testing = false;
 
 const mockProjects = [
   {
@@ -40,14 +40,18 @@ export default function ClientProjectReviews() {
         if (testing) {
           setProjects(mockProjects);
         } else {
+            console.log("1");
           const userRes = await axios.get(
           `${import.meta.env.VITE_BACKENDURL}/current-user`,
           { withCredentials: true }
         );
+        console.log("2");
         const userid = userRes.data.data._id;
+        console.log("3");
           const res = await axios.post(
           `${import.meta.env.VITE_BACKENDURL}/usercreatedprojects`,{userid},{withCredentials: true}
         );
+        console.log("4");
             let filtered=[];
             filtered = res.data.data.filter((p) => p.completed==true);
             setProjects(filtered);
@@ -82,10 +86,9 @@ export default function ClientProjectReviews() {
     try {
       if (!testing) {
         await axios.post(
-          `${import.meta.env.VITE_BACKENDURL}/submitreview`,
+          `${import.meta.env.VITE_BACKENDURL}/review`,
           {
             projectId,
-            userId,
             review: reviewData.review,
             rating: reviewData.rating,
           },
