@@ -11,7 +11,12 @@ export default function ProfilePage() {
   const navigate=useNavigate();
    const { userid } = useParams();
   const back=()=>{
+    if(!userid){
     navigate("/main");
+    }
+    else{
+      navigate(-1);
+    }
   }
   const [isloding,setisloding]=useState(false);
   const [user,setuser]=useState(null);

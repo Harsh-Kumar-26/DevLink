@@ -86,8 +86,8 @@ export default function ProjectCard({pjtid}) {
       transition={{ duration: 0.4 }}
     >
       {/* Creator Header */}
-      <div className="flex items-center gap-3" onClick={()=>{
-        navigate("")
+      <div className="flex items-center gap-3 cursor-pointer" onClick={()=>{
+        navigate(`/profile/${creator?._id}`)
       }}>
         <img
           src={creator?.avatar || fallbackAvatar}
