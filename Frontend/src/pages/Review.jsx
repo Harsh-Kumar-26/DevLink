@@ -226,14 +226,21 @@ export default function ClientProjectReviews() {
                                 ))}
                                 <span>{reviewInputs[pjt.projectId]?.rating ?? 0}/5</span>
                               </div>
-                              <Button
+                              {pjt.reviewed?(<Button
+                                variant="green"
+                                onClick={() =>
+                                  submitReview(pjt.projectId, pjt.userId)
+                                }
+                              >
+                                Edit Review
+                              </Button>):(<Button
                                 variant="green"
                                 onClick={() =>
                                   submitReview(pjt.projectId, pjt.userId)
                                 }
                               >
                                 Submit Review
-                              </Button>
+                              </Button>)}
                             </motion.div>
                           </td>
                         </tr>
