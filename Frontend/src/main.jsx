@@ -13,6 +13,7 @@ import MainLayout from './pages/Main.jsx'
 import PostProject from './forms/createpjt.jsx'
 import MyProjects from './pages/MyProjects.jsx'
 import UserProjectsList from './components/Userpjtdata.jsx'
+import ClientApplications from './pages/applications.jsx'
 
 const router=createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router=createBrowserRouter([
   {
     path:"/login",
     element:<LoginPage/>
+  },
+  {
+    path:"/capp",
+    element:<ClientApplications/>
   },
   {
     path:"/signup",

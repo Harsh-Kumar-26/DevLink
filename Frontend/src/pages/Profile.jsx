@@ -80,11 +80,11 @@ const userid = queryParams.get("userid");
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
               <h2 className="text-3xl font-bold">{user.fullname}</h2>
               <div className="flex gap-3">
-                <Link to="/editprofile">
+                {userid?(<></>):(<Link to="/editprofile">
                 <button className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-sm font-medium transition">
                   <FaEdit /> Edit Profile
                 </button>
-                </Link>
+                </Link>)}
                 <button onClick={back} className="flex items-center gap-2 bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg text-sm font-medium transition">
                   <FaArrowLeft /> Back
                 </button>
