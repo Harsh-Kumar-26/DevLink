@@ -13,45 +13,13 @@ export default function ClientApplications() {
 
   const testing = false;
 
-//   const testApplications = [
-//     {
-//       user: {
-//         username: 'johndoe',
-//         specialties: ['React', 'Node.js', 'MongoDB'],
-//         avgRating: 4.5,
-//       },
-//       project: {
-//         title: 'Portfolio Website',
-//       },
-//     },
-//     {
-//       user: {
-//         username: 'janesmith',
-//         specialties: ['Python', 'Django'],
-//         avgRating: 4.8,
-//       },
-//       project: {
-//         title: 'Backend API Development',
-//       },
-//     },
-//     {
-//       user: {
-//         username: 'devguru99',
-//         specialties: ['Flutter', 'Firebase'],
-//         avgRating: 4.2,
-//       },
-//       project: {
-//         title: 'Mobile App MVP',
-//       },
-//     },
-//   ];
 
   useEffect(() => {
     async function fetchApplications() {
       setLoading(true);
       try {
         if (testing) {
-        //   setApplications(testApplications);
+        
         } else {
           const res = await axios.post(
           `${import.meta.env.VITE_BACKENDURL}/usercreatedprojects`,{userid},{withCredentials: true}
@@ -59,6 +27,7 @@ export default function ClientApplications() {
             let filtered=[];
             filtered = res.data.data.filter((p) => p.accepted==false);
             setApplications(filtered);
+            console.log(applications);
         }
       } catch (err) {
         console.error('Error fetching applications:', err);
@@ -71,6 +40,8 @@ export default function ClientApplications() {
   }, []);
 
   const acceptUser = async (userid, projectid) => {
+    console.log(userid);
+    console.log(projectid);   
     const confirmed = window.confirm(`Are you sure you want to accept\nOnce confirmed it can't be removed`);
     if (!confirmed) return;
 
