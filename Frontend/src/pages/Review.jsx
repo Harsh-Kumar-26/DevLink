@@ -165,17 +165,24 @@ export default function ClientProjectReviews() {
                       </td>
                       <td className="py-3 px-4">
                         <div className="flex gap-2 flex-wrap">
-                          <Button
+                          {pjt.reviewed?(<Button
+                            variant="secondary"
+                            onClick={() =>
+                              setActiveReview(activeReview === pjt.projectId ? null : pjt.projectId)
+                            }
+                          >
+                            Edit Review
+                          </Button>):(<Button
                             variant="primary"
                             onClick={() =>
                               setActiveReview(activeReview === pjt.projectId ? null : pjt.projectId)
                             }
                           >
                             Review Project
-                          </Button>
-                          <Button variant="green" onClick={() => alert('Payment flow placeholder')}>
+                          </Button>)}
+                          {pjt.paid?(<></>):(<Button variant="green" onClick={() => alert('Payment flow placeholder')}>
                             Payment
-                          </Button>
+                          </Button>)}
                         </div>
                       </td>
                     </tr>
