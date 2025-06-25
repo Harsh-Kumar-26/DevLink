@@ -55,6 +55,7 @@ export default function ProjectCardt({ pjtid = "6837088589b3d5646e0db65e" }) {
     accepted,
     completed
   } = project;
+console.log(accept);
 
   return isloding ? (
     <Loader />
@@ -156,6 +157,7 @@ export default function ProjectCardt({ pjtid = "6837088589b3d5646e0db65e" }) {
 
       {/* {accepted?<div><Link><div></div></Link></div>:<></>} */}
       <div className="flex justify-end mt-4">
+        {accepted?<></>:(
           <Button variant="danger" onClick={async()=>{
             const confirmed = window.confirm('Are you sure you want to delete this project?');
             if(confirmed){
@@ -163,7 +165,8 @@ export default function ProjectCardt({ pjtid = "6837088589b3d5646e0db65e" }) {
               navigate(0);
               window.alert("Project deleted");  
             }
-          }}>Delete</Button>
+          }}>Delete</Button>)
+        }
       </div>
            <div className="mt-4"><p className="text-sm text-gray-400 mb-2">Total applicants: {(applied?.length)||0}</p></div>  
     </motion.div>
