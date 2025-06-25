@@ -7,8 +7,9 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
 
-export default function ProfilePage({userid}) {
+export default function ProfilePage() {
   const navigate=useNavigate();
+   const { userid } = useParams();
   const back=()=>{
     navigate("/main");
   }
@@ -25,8 +26,8 @@ export default function ProfilePage({userid}) {
           `${import.meta.env.VITE_BACKENDURL}/current-user`,{ withCredentials: true });
         }
         else{
-         response = await axios.get(
-          `${import.meta.env.VITE_BACKENDURL}/user-from-id`,{ withCredentials: true }); 
+         response = await axios.post(
+          `${import.meta.env.VITE_BACKENDURL}/user-from-id`,{id:userid},{ withCredentials: true }); 
         }
         let userData = response.data.data;
         setuser(userData);
