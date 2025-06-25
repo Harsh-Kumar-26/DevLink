@@ -180,7 +180,7 @@ export default function ClientProjectReviews() {
                           >
                             Review Project
                           </Button>)}
-                          {pjt.paid?(<div className="mt-3 text-green-400 text-sm">✅Paid</div>):(<Button variant="green" onClick={() => alert('Payment flow placeholder')}>
+                          {pjt.paid?(<div className="mt-3 text-green-400 text-sm">✅ Paid</div>):(<Button variant="green" onClick={() => alert('Payment flow placeholder')}>
                             Payment
                           </Button>)}
                         </div>

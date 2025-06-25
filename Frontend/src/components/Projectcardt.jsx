@@ -53,7 +53,9 @@ export default function ProjectCardt({ pjtid = "6837088589b3d5646e0db65e" }) {
     accept,
     applied=[],
     accepted,
-    completed
+    completed,
+    reviewed,
+    paid
   } = project;
 console.log(accept);
 
@@ -128,9 +130,21 @@ console.log(accept);
           </div>
         )}
         {completed && (
+          <>
           <div className="mt-3 text-green-400 text-sm">
             ✅ Project Finished
           </div>
+          {reviewed?(<div className="mt-3 text-green-400 text-sm">
+            ✅ Project Reviewed
+          </div>):(<div className="mt-3 text-green-400 text-sm">
+            ❌ Project not reviewed
+          </div>)}
+          {paid?(<div className="mt-3 text-green-400 text-sm">
+            ✅ Payment completed
+          </div>):(<div className="mt-3 text-green-400 text-sm">
+            ❌ Payment not done
+          </div>)}
+          </>
         )}
         
         {/* Applied Freelancers */}
