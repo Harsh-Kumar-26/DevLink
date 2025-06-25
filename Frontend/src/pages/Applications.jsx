@@ -33,7 +33,7 @@ export default function ClientApplications() {
             let filtered=[];
             filtered = res.data.data.filter((p) => p.accepted==false);
             setApplications(filtered);
-            console.log(applications);
+            console.log(filtered);
         }
       } catch (err) {
         console.error('Error fetching applications:', err);
