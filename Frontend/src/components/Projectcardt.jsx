@@ -10,8 +10,11 @@ import axios from "axios";
 import Button from "./Button";
 import Loader from "./loader";
 import { formatDistanceToNow } from "date-fns";
+import { useNavigate } from "react-router-dom";
+
 
 export default function ProjectCardt({ pjtid = "6837088589b3d5646e0db65e" }) {
+  const navigate=useNavigate();
   const [isloding, setisloding] = useState(false);
   const [project, setproject] = useState(null);
   const [error, setError] = useState(null);
@@ -153,9 +156,14 @@ export default function ProjectCardt({ pjtid = "6837088589b3d5646e0db65e" }) {
 
       {/* {accepted?<div><Link><div></div></Link></div>:<></>} */}
       <div className="flex justify-end mt-4">
-        <Link to={`/edit-project/${_id}`}>
-          <Button variant="green">Edit</Button>
-        </Link>
+          <Button variant="danger" onClick={async()=>{
+            const confirmed = window.confirm('Are you sure you want to delete this project?');
+            if(confirmed){
+              await axios.post(`${import.meta.env.VITE_BACKENDURL}/delete-project`,{projectid:_id},{ withCredentials: true });
+              navigate(0);
+              window.alert("Project deleted");  
+            }
+          }}>Delete</Button>
       </div>
            <div className="mt-4"><p className="text-sm text-gray-400 mb-2">Total applicants: {(applied?.length)||0}</p></div>  
     </motion.div>
