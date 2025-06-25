@@ -114,7 +114,7 @@ export default function ClientProjectReviews() {
           ← Back
         </Button>
 
-        <h2 className="text-3xl font-bold mb-6">Review & Payment</h2>
+        <h2 className="text-3xl font-bold mb-6">Review & Payments</h2>
 
         {loading ? (
           <p>Loading projects...</p>
@@ -180,7 +180,7 @@ export default function ClientProjectReviews() {
                           >
                             Review Project
                           </Button>)}
-                          {pjt.paid?(<></>):(<Button variant="green" onClick={() => alert('Payment flow placeholder')}>
+                          {pjt.paid?(<div className="mt-3 text-green-400 text-sm">✅Paid</div>):(<Button variant="green" onClick={() => alert('Payment flow placeholder')}>
                             Payment
                           </Button>)}
                         </div>
@@ -199,7 +199,7 @@ export default function ClientProjectReviews() {
                               transition={{ duration: 0.3 }}
                               className="overflow-hidden"
                             >
-                              <h4 className="text-lg font-semibold mb-2">Submit Review</h4>
+                              {pjt.reviewed?(<h4 className="text-lg font-semibold mb-2">Edit Review</h4>):(<h4 className="text-lg font-semibold mb-2">Submit Review</h4>)}
                               <textarea
                                 className="w-full p-2 rounded bg-[#1e2a3a] text-white mb-3"
                                 rows="4"

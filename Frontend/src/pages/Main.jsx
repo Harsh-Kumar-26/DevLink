@@ -121,7 +121,13 @@ data();
                   <FaList className="text-teal-400" />
                   Devs Applications
                 </Link>
-
+                <Link
+                  to="/review"
+                  className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-teal-500/20 transition"
+                >
+                  <FaList className="text-teal-400" />
+                  Review & Payemnts
+                </Link>
                 <p className="text-sm text-gray-400 uppercase tracking-widest mt-6 mb-2">
                   Developer
                 </p>
