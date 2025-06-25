@@ -88,6 +88,10 @@ const projectschema=new mongoose.Schema({
      },
      pdt_link:{
         type:String
+     },
+     paid:{
+      type:Boolean,
+      default:false
      }
 },{timestamps:true});
 

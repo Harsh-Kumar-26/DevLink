@@ -14,6 +14,7 @@ import PostProject from './forms/createpjt.jsx'
 import MyProjects from './pages/MyProjects.jsx'
 import UserProjectsList from './components/Userpjtdata.jsx'
 import ClientApplications from './pages/Applications.jsx'
+import ClientProjectReviews from './pages/Review.jsx'
 
 const router=createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router=createBrowserRouter([
   },{
     path:"/l",
     element:<UserProjectsList pjtkey="all"/>
+  },
+  {
+    path:"/review",
+    element:<ClientProjectReviews/>
   },
    {
     path:"/myprojects",

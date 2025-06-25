@@ -398,7 +398,7 @@ const {userid}=req.body;
 if(!userid){
     throw new ApiError(400,"User dont exist");
 }
-  const projects = await project.find({creator:userid}).populate("applied","_id username specilities avgrating").skip(skip).limit(limit).lean();
+  const projects = await project.find({creator:userid}).populate("applied","_id username specilities avgrating").populate("accept","_id username").skip(skip).limit(limit).lean();
     if(!projects){
         throw new ApiError(400,"User didnt created any project");
     }
@@ -407,12 +407,14 @@ if(!userid){
     pjt_name:p.pjt_name,
     projectId: p._id,
     creatorId: p.creator,
-    acceptedId: p.accept,
     reviewed: p.reviewed || false,
     accepted:p.accepted,
     completed:p.completed,
     specilities: p.specilities,
-    applied:p.applied
+    applied:p.applied,
+    accept:p.accept,
+    pdt_link:p.pdt_link,
+    code_link:p.code_link
   }));
 
   return res.status(200).json({ success: true, data: summary });

@@ -29,7 +29,7 @@ export default function UserProjectsList({pjtkey="all"}) {
       if (pjtkey === "all") {
         filtered = data;
       } else if (pjtkey === "accepted") {
-        filtered = data.filter((p) => p.accepted==true);
+        filtered = data.filter((p) => (p.accepted==true && p.completed==false));
       } else if (pjtkey === "completed") {
         filtered = data.filter((p) => p.completed==true);
       }

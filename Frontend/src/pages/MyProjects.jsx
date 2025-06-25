@@ -15,7 +15,7 @@ export default function MyProjects() {
 
   const tabs = [
     { key: "all", label: "All Projects" },
-    { key: "accepted", label: "Accepted Projects" },
+    { key: "accepted", label: "Ongoing Projects" },
     { key: "completed", label: "Completed Projects" },
   ];
 
