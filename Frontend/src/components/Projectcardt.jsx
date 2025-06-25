@@ -124,7 +124,7 @@ console.log(accept);
         {/* Selected Freelancer */}
         {accepted && (
           <div className="mt-3 text-green-400 text-sm">
-            ✅ Accepted: <Link to={`/profile?userid=${accept?._id}`}><span className="font-semibold cursor-pointer hover:underline">{accept.username}</span></Link>
+            ✅ Accepted: <Link to={`/profile?userid=${accept?._id}`}><span className="font-semibold cursor-pointer hover:underline">{accept.fullname}</span></Link>
           </div>
         )}
         {completed && (
