@@ -99,7 +99,7 @@ export default function ClientApplications() {
                     <td className="py-3 px-4">{apps?.pjt_name || 'Untitled'}</td>
                     <td className="py-3 px-4">
                       <div className="flex flex-wrap gap-2">
-                        {app?.specilties?.map((tag) => (
+                        {app?.specilities?.map((tag) => (
                           <span
                             // key={i}
                             className="bg-purple-600 text-white text-xs px-2 py-1 rounded-full"
