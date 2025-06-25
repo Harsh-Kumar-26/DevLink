@@ -57,6 +57,7 @@ export default function ClientApplications() {
         { userid,projectid},
         { withCredentials: true }
       );
+      navigate(0);
       alert('User accepted!');
     } catch (err) {
       console.error('Failed to accept user:', err);
@@ -130,7 +131,9 @@ export default function ClientApplications() {
                 )}
               </tbody>
             </table>
+            <p>No More Applications</p>
           </div>
+          
         )}
       </div>
     </div>

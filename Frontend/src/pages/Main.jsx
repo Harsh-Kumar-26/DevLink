@@ -99,6 +99,14 @@ data();
                 <p className="text-sm text-gray-400 uppercase tracking-widest mb-2">
                   Client
                 </p>
+                
+                <Link
+                  to="/postproject"
+                  className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-teal-500/20 transition"
+                >
+                  <FaPlus className="text-teal-400" />
+                  Post a Project
+                </Link>
                 <Link
                   to="/myprojects"
                   className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-teal-500/20 transition"
@@ -107,11 +115,11 @@ data();
                   My Projects
                 </Link>
                 <Link
-                  to="/postproject"
+                  to="//capp"
                   className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-teal-500/20 transition"
                 >
-                  <FaPlus className="text-teal-400" />
-                  Post a Project
+                  <FaList className="text-teal-400" />
+                  Devs Applications
                 </Link>
 
                 <p className="text-sm text-gray-400 uppercase tracking-widest mt-6 mb-2">

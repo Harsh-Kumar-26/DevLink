@@ -50,7 +50,7 @@ export default function ProjectCardt({ pjtid = "6837088589b3d5646e0db65e" }) {
     bkphoto,
     createdAt,
     description,
-    selected,
+    accept,
     applied=[],
     accepted,
     completed
@@ -123,7 +123,7 @@ export default function ProjectCardt({ pjtid = "6837088589b3d5646e0db65e" }) {
         {/* Selected Freelancer */}
         {accepted && (
           <div className="mt-3 text-green-400 text-sm">
-            ✅ Selected: <Link to><span className="font-semibold">{selected}</span></Link>
+            ✅ Accepted: <Link to={`/profile?userid=${accept?._id}`}><span className="font-semibold cursor-pointer hover:underline">{accept.username}</span></Link>
           </div>
         )}
         {completed && (
