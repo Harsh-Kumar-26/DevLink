@@ -85,6 +85,8 @@ export default function ClientProjectReviews() {
 
     try {
       if (!testing) {
+        console.log(projectId);
+        
         await axios.post(
           `${import.meta.env.VITE_BACKENDURL}/review`,
           {
@@ -146,7 +148,7 @@ export default function ClientProjectReviews() {
                           href={pjt.code_link}
                           target="_blank"
                           rel="noreferrer"
-                          className="text-blue-400 hover:underline"
+                          className="text-blue-400 hover:underline cursor-pointer"
                         >
                           Code
                         </a>
@@ -156,7 +158,7 @@ export default function ClientProjectReviews() {
                           href={pjt.pdt_link}
                           target="_blank"
                           rel="noreferrer"
-                          className="text-green-400 hover:underline"
+                          className="text-green-400 hover:underline cursor-pointer"
                         >
                           Product
                         </a>
