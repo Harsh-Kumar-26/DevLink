@@ -5,11 +5,13 @@ import { Link } from "react-router-dom";
 import Loader from "../components/loader";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-
+import { useLocation } from "react-router-dom";
 
 export default function ProfilePage() {
   const navigate=useNavigate();
-   const { userid } = useParams();
+   const location = useLocation();
+const queryParams = new URLSearchParams(location.search);
+const userid = queryParams.get("userid");
   const back=()=>{
     if(!userid){
     navigate("/main");
