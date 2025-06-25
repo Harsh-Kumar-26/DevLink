@@ -3,6 +3,7 @@ import axios from 'axios';
 import { FaStar } from 'react-icons/fa';
 import { useNavigate ,Link} from 'react-router-dom';
 import Button from '../components/Button';
+import Loader from '../components/loader';
 
 
 export default function ClientApplications() {
@@ -21,6 +22,11 @@ export default function ClientApplications() {
         if (testing) {
         
         } else {
+          const userRes = await axios.get(
+          `${import.meta.env.VITE_BACKENDURL}/current-user`,
+          { withCredentials: true }
+        );
+        const userid = userRes.data.data._id;
           const res = await axios.post(
           `${import.meta.env.VITE_BACKENDURL}/usercreatedprojects`,{userid},{withCredentials: true}
         );
@@ -89,7 +95,7 @@ export default function ClientApplications() {
                     { const application=apps.applied ||[];
                         return application.map((app)=>(
                   <tr className="border-b border-gray-700 hover:bg-gray-800/40">
-                    <td className="py-3 px-4 hover:underline cursor-pointer"><Link to="/profile?userid=${app?._id}">{app?.username || 'N/A'}</Link></td>
+                    <td className="py-3 px-4 hover:underline cursor-pointer"><Link to={`/profile?userid=${app?._id}`}>{app?.username || 'N/A'}</Link></td>
                     <td className="py-3 px-4">{apps?.pjt_name || 'Untitled'}</td>
                     <td className="py-3 px-4">
                       <div className="flex flex-wrap gap-2">
