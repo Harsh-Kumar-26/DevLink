@@ -315,7 +315,7 @@ const removeapply = asynchandler(async (req, res) => {
     }
 
     projectDoc.applied=projectDoc.applied.filter(e=>
-        e._id!=userid
+        e._id.toString()!=userid.toString()
     )
     await projectDoc.save();
 
