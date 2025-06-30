@@ -28,6 +28,10 @@ const router=createBrowserRouter([
     path:"/review",
     element:<ClientProjectReviews/>
   },{
+    path:"/status",
+    element:<Status/>
+  },
+  {
     path:"/card",
     element:<ProjectCard/>
   },

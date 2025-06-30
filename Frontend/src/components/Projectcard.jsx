@@ -13,12 +13,22 @@ import Button from "./Button";
 import { useState , useEffect} from "react";
 import Loader from "./loader";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 // Sample fallback image
 const fallbackAvatar = "https://cdn3.iconfinder.com/data/icons/essential-rounded/64/Rounded-31-512.png";
 
-export default function ProjectCard({pjtid}) {
+export default function ProjectCard({pjid}) {
   const navigate=useNavigate();
+  let pjtid;
+  if(!pjid){
+  const location = useLocation();
+const queryParams = new URLSearchParams(location.search);
+pjtid = queryParams.get("pjtid");
+  }
+  else{
+    pjtid=pjid;
+  }
     // console.log(pjtid);
     const [bookmarked, setBookmarked] = useState(false);
     const [isloding,setisloding]=useState(false);
