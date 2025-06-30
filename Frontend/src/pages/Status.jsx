@@ -11,7 +11,7 @@ export default function Status() {
   const [projects,setproject]=useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-let userid;
+  const [user,setuser]=useState();
   const testing = false;
 
 
@@ -26,7 +26,8 @@ let userid;
           `${import.meta.env.VITE_BACKENDURL}/current-user`,
           { withCredentials: true }
         );
-        userid = userRes.data.data._id;
+        const userid = userRes.data.data._id;
+        setuser(userid);
           const res = await axios.post(
           `${import.meta.env.VITE_BACKENDURL}/userappliedprojects`,{userid},{withCredentials: true}
         );
@@ -101,7 +102,7 @@ let userid;
                     <td className="py-3 px-4">{apps?.pjt_name || 'Untitled'}</td>
                     <td className="py-3 px-4">
                       {apps.accepted ? (
-  apps.acceptedId?.toString() !== userid?.toString()
+  apps.acceptedId?.toString() !== user?.toString()
     ? <div className='text-red-500'>Rejected</div>
     : <div className='text-green-500'>Accepted</div>
 ) : (
