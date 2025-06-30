@@ -11,7 +11,7 @@ export default function Status() {
   const [projects,setproject]=useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
+let userid;
   const testing = false;
 
 
@@ -26,7 +26,7 @@ export default function Status() {
           `${import.meta.env.VITE_BACKENDURL}/current-user`,
           { withCredentials: true }
         );
-        const userid = userRes.data.data._id;
+        userid = userRes.data.data._id;
           const res = await axios.post(
           `${import.meta.env.VITE_BACKENDURL}/userappliedprojects`,{userid},{withCredentials: true}
         );
