@@ -139,11 +139,11 @@ data();
                   Find Work
                 </Link>
                 <Link
-                  to="/developer/applications"
+                  to="/status"
                   className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-teal-500/20 transition"
                 >
                   <FaList className="text-teal-400" />
-                  My Applications
+                  Applications Status
                 </Link>
               </nav>
 

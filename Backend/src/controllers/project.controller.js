@@ -314,9 +314,9 @@ const removeapply = asynchandler(async (req, res) => {
         throw new ApiError(400,"Project has been accepted, you cant remove your apply now");
     }
 
-    projectDoc.applied=project.applied.filter(e=>{
-        e._id!=userid;
-    })
+    projectDoc.applied=projectDoc.applied.filter(e=>
+        e._id!=userid
+    )
     await projectDoc.save();
 
     return res.status(201).json(

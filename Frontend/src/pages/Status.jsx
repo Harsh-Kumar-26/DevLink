@@ -57,8 +57,8 @@ export default function Status() {
       navigate(0);
       alert("Apply removed");
     } catch (err) {
-      console.error('Failed to accept user:', err);
-      alert('Could not accept user.');
+      console.error('Failed to remove apply:', err);
+      alert('Could not remove apply.');
     }
   };
 
