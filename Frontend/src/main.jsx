@@ -16,18 +16,20 @@ import UserProjectsList from './components/Userpjtdata.jsx'
 import ClientApplications from './pages/Applications.jsx'
 import ClientProjectReviews from './pages/Review.jsx'
 import Status from './pages/Status.jsx'
+import ProjectCard from './components/Projectcard.jsx'
 
 const router=createBrowserRouter([
   {
     path:"/",
     element:<Landing/>
-  },{
-    path:"/l",
-    element:<Status/>
-  },
+  }
+,
   {
     path:"/review",
     element:<ClientProjectReviews/>
+  },{
+    path:"/card",
+    element:<ProjectCard/>
   },
    {
     path:"/myprojects",

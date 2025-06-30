@@ -98,7 +98,7 @@ export default function Status() {
                         // return application.map((app)=>(
                   <tr className="border-b border-gray-700 hover:bg-gray-800/40">
                     {/* <td className="py-3 px-4 hover:underline cursor-pointer"><Link to={`/profile?userid=${app?._id}`}>{app?.username || 'N/A'}</Link></td> */}
-                    <td className="py-3 px-4">{apps?.pjt_name || 'Untitled'}</td>
+                    <Link to={`/project/${apps?.projectId}`}><td className="py-3 px-4 hover:underline cursor-pointer">{apps?.pjt_name || 'Untitled'}</td></Link>
                     <td className="py-3 px-4">
                       {apps.accepted ? (
   apps.acceptedId !== userid
@@ -111,7 +111,7 @@ export default function Status() {
                     <td className="py-3 px-4">
                       {apps.accepted?(<></>):(<Button variant="danger"
                         onClick={() =>
-                          acceptUser(apps?.projectId)
+                          removeapply(apps?.projectId)
                         }
                         // className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs"
                       >
