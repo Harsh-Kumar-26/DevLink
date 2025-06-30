@@ -101,7 +101,7 @@ let userid;
                     <td className="py-3 px-4">{apps?.pjt_name || 'Untitled'}</td>
                     <td className="py-3 px-4">
                       {apps.accepted ? (
-  apps.acceptedId !== userid
+  apps.acceptedId?.toString() !== userid?.toString()
     ? <div className='text-red-500'>Rejected</div>
     : <div className='text-green-500'>Accepted</div>
 ) : (
