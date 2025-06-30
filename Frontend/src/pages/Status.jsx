@@ -95,7 +95,6 @@ export default function Status() {
               </thead>
               <tbody>
                 {applications.map((apps) =>
-                    { const application=apps.applied ||[];
                         // return application.map((app)=>(
                   <tr className="border-b border-gray-700 hover:bg-gray-800/40">
                     {/* <td className="py-3 px-4 hover:underline cursor-pointer"><Link to={`/profile?userid=${app?._id}`}>{app?.username || 'N/A'}</Link></td> */}
@@ -120,7 +119,6 @@ export default function Status() {
                       </Button>
                     </td>
                   </tr>
-}
                 )}
               </tbody>
             </table>
