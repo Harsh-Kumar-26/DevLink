@@ -102,21 +102,21 @@ export default function Status() {
                     <td className="py-3 px-4">
                       {apps.accepted ? (
   apps.acceptedId !== userid
-    ? <div>Rejected</div>
-    : <div>Accepted</div>
+    ? <div className='text-red-500'>Rejected</div>
+    : <div className='text-green-500'>Accepted</div>
 ) : (
-  <div>Applied</div>
+  <div >Applied</div>
   )}
                     </td>
                     <td className="py-3 px-4">
-                      <Button variant="danger"
+                      {apps.accepted?(<></>):(<Button variant="danger"
                         onClick={() =>
                           acceptUser(apps?.projectId)
                         }
                         // className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs"
                       >
                         Remove Apply
-                      </Button>
+                      </Button>)}
                     </td>
                   </tr>
                 )}
