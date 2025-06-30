@@ -18,17 +18,17 @@ import { useLocation } from "react-router-dom";
 // Sample fallback image
 const fallbackAvatar = "https://cdn3.iconfinder.com/data/icons/essential-rounded/64/Rounded-31-512.png";
 
-export default function ProjectCard({pjid}) {
+export default function ProjectCard({pjtid}) {
   const navigate=useNavigate();
-  let pjtid;
-  if(!pjid){
-  const location = useLocation();
-const queryParams = new URLSearchParams(location.search);
-pjtid = queryParams.get("pjtid");
-  }
-  else{
-    pjtid=pjid;
-  }
+//   let pjtid;
+//   if(!pjid){
+//   const location = useLocation();
+// const queryParams = new URLSearchParams(location.search);
+// pjtid = queryParams.get("pjtid");
+//   }
+//   else{
+//     pjtid=pjid;
+//   }
     // console.log(pjtid);
     const [bookmarked, setBookmarked] = useState(false);
     const [isloding,setisloding]=useState(false);
