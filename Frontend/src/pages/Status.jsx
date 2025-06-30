@@ -101,8 +101,8 @@ export default function Status() {
                     <td className="py-3 px-4">{apps?.pjt_name || 'Untitled'}</td>
                     <td className="py-3 px-4">
                       {apps.accepted ? (
-  apps.accept !== userid 
-    ? <div>Rejected</div> 
+  apps.acceptedId !== userid
+    ? <div>Rejected</div>
     : <div>Accepted</div>
 ) : (
   <div>Applied</div>

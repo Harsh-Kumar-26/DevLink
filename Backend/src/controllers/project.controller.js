@@ -378,6 +378,7 @@ if(!userid){
   // Map each project to desired output format
   const summary = projects.map(p => ({
     projectId: p._id,
+    pjt_name:p.pjt_name,
     creatorId: p.creator,
     appliedIds: p.applied,
     acceptedId: p.accept,
