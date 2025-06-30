@@ -6,7 +6,7 @@ import Button from '../components/Button';
 import Loader from '../components/loader';
 
 
-export default function ClientApplications() {
+export default function Status() {
   const [applications, setApplications] = useState([]);
   const [projects,setproject]=useState([]);
   const [loading, setLoading] = useState(true);
