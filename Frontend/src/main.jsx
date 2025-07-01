@@ -12,13 +12,13 @@ import ChangePasswordPage from './pages/Changepass.jsx'
 import MainLayout from './pages/Main.jsx'
 import PostProject from './forms/createpjt.jsx'
 import MyProjects from './pages/MyProjects.jsx'
-import UserProjectsList from './components/Userpjtdata.jsx'
 import ClientApplications from './pages/Applications.jsx'
 import ClientProjectReviews from './pages/Review.jsx'
 import Status from './pages/Status.jsx'
 import ProjectCard from './components/Projectcard.jsx'
 import Liveproject from './pages/Ongoing.jsx'
 import Pstpjt from './pages/Pastpjt.jsx'
+import ProjectCardtwo from './components/Projectcardtwo.jsx'
 
 const router=createBrowserRouter([
   {
@@ -27,6 +27,9 @@ const router=createBrowserRouter([
   },{
     path:"/pastpjt",
     element:<Pstpjt/>
+  },{
+    path:"/l",
+    element:<ProjectCardtwo/>
   }
 ,{
   path:"/live",
