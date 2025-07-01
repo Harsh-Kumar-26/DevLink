@@ -174,7 +174,7 @@ export default function Liveproject() {
                     >
                       <td className="py-3 px-4">{pjt.pjt_name}</td>
                       <td className="py-3 px-4">
-                        {pjt.com_date}
+                        {new Date(pjt.com_date).toLocaleDateString()}
                       </td>
                       <td className="py-3 px-4">
                         {pjt.status}
