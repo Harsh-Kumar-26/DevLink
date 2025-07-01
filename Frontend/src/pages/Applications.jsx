@@ -97,7 +97,7 @@ export default function ClientApplications() {
                         return application.map((app)=>(
                   <tr className="border-b border-gray-700 hover:bg-gray-800/40">
                     <td className="py-3 px-4 hover:underline cursor-pointer"><Link to={`/profile?userid=${app?._id}`}>{app?.username || 'N/A'}</Link></td>
-                    <td className="py-3 px-4">{apps?.pjt_name || 'Untitled'}</td>
+                    <td className="py-3 px-4 cursor-pointer hover-text-blue-500"><Link to={`/l?pjtid=${apps?.projectId}`}>{apps?.pjt_name || 'Untitled'}</Link></td>
                     <td className="py-3 px-4">
                       <div className="flex flex-wrap gap-2">
                         {app?.specilities?.map((tag) => (

@@ -9,6 +9,7 @@ import { formatDistanceToNow } from "date-fns";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "./loader";
+import Button from "./Button";
 
 const fallbackAvatar = "https://cdn3.iconfinder.com/data/icons/essential-rounded/64/Rounded-31-512.png";
 
@@ -69,7 +70,7 @@ export default function ProjectCardtwo() {
       {/* Back Button */}
       <Button variant="secondary"
         onClick={() => navigate(-1)}
-        className="mb-6 text-sm text-gray-400 hover:text-white transition"
+        // className="mb-6 text-sm text-gray-400 hover:text-white transition"
       >
         ← Back
       </Button>
