@@ -139,7 +139,7 @@ export default function ClientProjectReviews() {
                     >
                       <td className="py-3 px-4">{pjt.pjt_name}</td>
                       <td className="py-3 px-4">
-                        <Link to={`/profile?userid=${pjt.accept._id}`} className="hover:underline">
+                        <Link to={`/profile?userid=${pjt.accept?._id}`} className="hover:underline">
                           {pjt.accept.username}
                         </Link>
                       </td>
