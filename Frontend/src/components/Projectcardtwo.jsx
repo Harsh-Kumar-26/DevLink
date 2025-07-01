@@ -22,8 +22,8 @@ export default function ProjectCardtwo() {
   const navigate=useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const pjid = queryParams.get("pjtid");
-  const [pjtid,setpjtid]=useState(null);
+  const pjtid = queryParams.get("pjtid");
+//   const [pjtid,setpjtid]=useState(null);
   const [isloding,setisloding]=useState(false);
   const [project,setproject]=useState(null);
   const [creator,setcreator]=useState(null);
@@ -31,7 +31,7 @@ export default function ProjectCardtwo() {
   useEffect(() => {
       async function fetchUser() {
           try {
-            setpjtid(pjid);
+            // setpjtid(pjid);
           setisloding(true);
           console.log(pjtid);
           
