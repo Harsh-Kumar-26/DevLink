@@ -1,7 +1,7 @@
 import { asynchandler } from "../utils/asynchandler.js";
 import {ApiError} from "../utils/apierror.js"
 import {project} from "../models/project.model.js";
-// import {User} from "../models/user.model.js";
+import {User} from "../models/user.model.js";
 import UploadOnCloudinary from "../utils/cloudinary.js"
 import ApiResponse from "../utils/apiresponse.js";
 // import { verifyJWT } from "../middlewares/auth.middleware.js";
@@ -395,7 +395,7 @@ const {userid}=req.body;
 if(!userid){
     throw new ApiError(400,"User dont exist");
 }
-// hi
+    const user= await User.findById(userid);
   const projects = await project.find({
 //   accept: { $ne: userid },
   applied: userid
@@ -403,6 +403,18 @@ if(!userid){
     if(!projects){
         throw new ApiError(400,"User didnt applied for any project");
     }
+    let totalrating=0;
+    let count=0;
+    for (const p of projects) {
+    const rating = p.rating_user;
+    if (rating && rating > 0) {
+      totalrating += rating;
+      count++;
+    }
+}
+    const avgRating = count > 0 ? (totalrating / count).toFixed(2) : null;
+    user.avgrating=avgRating;
+    await user.save();
   // Map each project to desired output format
   const summary = projects.map(p => ({
     projectId: p._id,
