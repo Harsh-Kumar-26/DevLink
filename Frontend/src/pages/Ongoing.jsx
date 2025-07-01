@@ -5,7 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Button from '../components/Button';
 
-const testing = true;
+const testing = false;
 
 const mockProjects = [
   {
@@ -30,6 +30,7 @@ export default function Liveproject() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeReview, setActiveReview] = useState(null);
+  const [activestatus, setActivestatus] = useState(null);
   const [reviewInputs, setReviewInputs] = useState({});
   const navigate = useNavigate();
 
@@ -78,6 +79,36 @@ export default function Liveproject() {
     }));
   };
 
+  const updatestatus = async (projectId, userId) => {
+    const reviewData = reviewInputs[projectId] || {};
+    if (!reviewData.status) {
+      alert("Please provide status.");
+      return;
+    }
+
+    try {
+      if (!testing) {
+        console.log(projectId);
+        
+        await axios.post(
+          `${import.meta.env.VITE_BACKENDURL}/updatestatus`,
+          {
+            projectid:projectId,
+            status:reviewData.status
+          },
+          { withCredentials: true }
+        );
+      } else {
+        console.log('Mock submit:', { projectId, userId, ...reviewData });
+      }
+      alert('Status Updated!');
+      setActivestatus(null);
+    } catch (err) {
+      console.error('Failed to update status:', err);
+      alert('Could not update status.');
+    }
+  };
+
   const submitReview = async (projectId, userId) => {
     const reviewData = reviewInputs[projectId] || {};
     if (!reviewData.code || !reviewData.pdt) {
@@ -101,11 +132,11 @@ export default function Liveproject() {
       } else {
         console.log('Mock submit:', { projectId, userId, ...reviewData });
       }
-      alert('Review submitted!');
+      alert('Project submitted!');
       setActiveReview(null);
     } catch (err) {
-      console.error('Failed to submit review:', err);
-      alert('Could not submit review.');
+      console.error('Failed to submit Project:', err);
+      alert('Could not submit Project.');
     }
   };
 
@@ -116,7 +147,7 @@ export default function Liveproject() {
           ← Back
         </Button>
 
-        <h2 className="text-3xl font-bold mb-6">Review & Payments</h2>
+        <h2 className="text-3xl font-bold mb-6">My Current Projects</h2>
 
         {loading ? (
           <p>Loading projects...</p>
@@ -149,7 +180,8 @@ export default function Liveproject() {
                       <td className="py-3 px-4">
                         <div className="flex gap-2 flex-wrap">
                           
-                            <Button>Edit Status</Button>
+                            <Button onClick={()=>setActivestatus(activestatus === pjt.projectId ? null : pjt.projectId)
+                            }>Edit Status</Button>
                             <Button variant="green" onClick={() =>
                               setActiveReview(activeReview === pjt.projectId ? null : pjt.projectId)
                             }>Submit Project</Button>
@@ -203,6 +235,36 @@ export default function Liveproject() {
                                 }
                               >
                                 Submit Project
+                              </Button>
+                            </motion.div>
+                          </td>
+                        </tr>
+                      )}
+                    </AnimatePresence>
+
+                    <AnimatePresence>
+                      {activestatus === pjt.projectId && (
+                        <tr key={`review-${pjt.projectId}`}>
+                          <td colSpan={5} className="bg-[#2a3b5a] px-4 py-4">
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3 }}
+                              className="overflow-hidden"
+                            >
+                              <h4 className="text-lg font-semibold mb-2">Edit status</h4>
+                              
+                                <label for="st">New Status(%): </label>
+                              <input type="number" id="st" placeholder='Status' className="p-2 rounded bg-[#1e2a3a] text-white mb-3" min="0" max="1" step="0.01" /><br/>
+                              
+                              <Button
+                                variant="green"
+                                onClick={() =>
+                                  updatestatus(pjt.projectId, pjt.userId)
+                                }
+                              >
+                                Update Status
                               </Button>
                             </motion.div>
                           </td>

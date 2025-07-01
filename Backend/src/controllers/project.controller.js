@@ -223,7 +223,35 @@ projectDoc.accepted=true;
     return(res.status(201).json(new ApiResponse(200,projectDoc,"User approval accepted successfully")));
 
 });
-
+const updatestatus=asynchandler(async(req,res)=>{
+    const userid=req.user?._id;
+    const {projectid,status}=req.body;
+    if(!userid){
+        throw new ApiError(400,"Unauthorized request");
+    }
+    if(!projectid){
+        throw new ApiError(404,"Project id not found");
+    }
+    if(!status){
+        throw new ApiError(400,"Status is required");
+    }
+    const projectDoc = await project.findById(projectid);
+    if(!projectDoc){
+        throw new ApiError(404,"Project not found");
+    }
+    if(!projectDoc.accepted){
+        throw new ApiError(400,"Unauthorized request");
+    }
+    if (projectDoc.accept._id.toString() !== userid.toString()) {
+    throw new ApiError(400, "Unauthorized request");
+    }
+    if(projectDoc.completed){
+        throw new ApiError(400,"You can submit project only once");
+    }
+    projectDoc.status=status;
+    await projectDoc.save();
+    return(res.status(201).json(new ApiResponse(200,projectDoc,"Project submitted successfully")));
+});
 const complete=asynchandler(async(req,res)=>{
     const userid=req.user?._id;
     const {projectid,code_link,pdt_link}=req.body;
@@ -431,4 +459,4 @@ if(!userid){
     applied accepted and completed can be done through same fxn only a bit complex frontend needed
 */
 
-export {createproject,deleteproject,editproject,sendproject,apply,acceptproject,complete,review,removeapply,getProjectSummaries,sendprojectbyname,userappliedprojects,usercreatedprojects};
+export {createproject,deleteproject,updatestatus,editproject,sendproject,apply,acceptproject,complete,review,removeapply,getProjectSummaries,sendprojectbyname,userappliedprojects,usercreatedprojects};

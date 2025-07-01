@@ -2,7 +2,7 @@ import express from "express";
 import {registeruser,loginuser,logoutuser,refreshaccesstoken,getcurrentuser,editprofile,getuserfromid} from "../controllers/user.controller.js";
 import {verifyJWT} from "../middlewares/auth.middleware.js";
 import {upload} from "../middlewares/multer.middleware.js";
-import {createproject,deleteproject,sendprojectbyname,editproject, sendproject,apply,acceptproject,complete,review,removeapply,getProjectSummaries,userappliedprojects,usercreatedprojects} from "../controllers/project.controller.js"
+import {createproject,updatestatus,deleteproject,sendprojectbyname,editproject, sendproject,apply,acceptproject,complete,review,removeapply,getProjectSummaries,userappliedprojects,usercreatedprojects} from "../controllers/project.controller.js"
 
 const router=express.Router();
 router.route("/signup").post(
@@ -19,6 +19,7 @@ router.route("/signup").post(
     registeruser);
     router.route("/login").post(loginuser);
     router.route("/logout").post(verifyJWT,logoutuser);
+    router.route("/updatestatus").post(verifyJWT,updatestatus);
     router.route("/refreshtoken").post(refreshaccesstoken);
     router.route("/current-user").get(verifyJWT,getcurrentuser);
     router.route("/user-from-id").post(getuserfromid);
