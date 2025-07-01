@@ -256,7 +256,10 @@ export default function Liveproject() {
                               <h4 className="text-lg font-semibold mb-2">Edit status</h4>
                               
                                 <label for="st">New Status(%): </label>
-                              <input type="number" id="st" placeholder='Status' className="p-2 rounded bg-[#1e2a3a] text-white mb-3" min="0" max="1" step="0.01" /><br/>
+                              <input type="number" id="st" placeholder='Status' className="p-2 rounded bg-[#1e2a3a] text-white mb-3" min="0" max="1" step="0.01" 
+                              	onChange={(e) =>
+                                  handleReviewChange(pjt.projectId, 'status', e.target.value)
+                                }/><br/>
                               
                               <Button
                                 variant="green"
