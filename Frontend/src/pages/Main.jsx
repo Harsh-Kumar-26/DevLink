@@ -76,7 +76,7 @@ data();
               animate={{ x: 0 }}
               exit={{ x: -320 }}
               transition={{ duration: 0.3 }}
-              className="fixed top-0 left-0 z-40 h-full w-72 bg-[linear-gradient(to_bottom,_#0e0e10,_#1a1c2c,_#0e0e10)] border-r border-gray-800 shadow-inner p-6 flex flex-col shadow-2xl rounded-tr-3xl rounded-br-3xl md:static md:shadow-none md:rounded-none"
+  className="overflow-y-auto scrollbar-hidden fixed top-0 left-0 z-40 h-full w-72 bg-[linear-gradient(to_bottom,_#0e0e10,_#1a1c2c,_#0e0e10)] border-r border-gray-800 shadow-inner p-6 flex flex-col shadow-2xl rounded-tr-3xl rounded-br-3xl md:static md:shadow-none md:rounded-none"
             // bg-gradient-to-b from-[#121829] to-[#1f2a41]
             >
               <div className="flex justify-between items-center mb-8">
@@ -131,19 +131,33 @@ data();
                 <p className="text-sm text-gray-400 uppercase tracking-widest mt-6 mb-2">
                   Developer
                 </p>
-                <Link
+                {/* <Link
                   to="/developer/find"
                   className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-teal-500/20 transition"
                 >
                   <FaSearch className="text-teal-400" />
                   Find Work
-                </Link>
+                </Link> */}
                 <Link
                   to="/status"
                   className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-teal-500/20 transition"
                 >
                   <FaList className="text-teal-400" />
                   Applications Status
+                </Link>
+                <Link
+                  to="/live"
+                  className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-teal-500/20 transition"
+                >
+                  <FaList className="text-teal-400" />
+                  Live Projects
+                </Link>
+                <Link
+                  to="/pastpjt"
+                  className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-teal-500/20 transition"
+                >
+                  <FaList className="text-teal-400" />
+                  Projects History
                 </Link>
               </nav>
 

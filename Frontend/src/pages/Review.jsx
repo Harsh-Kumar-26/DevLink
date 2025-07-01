@@ -137,7 +137,7 @@ export default function ClientProjectReviews() {
                       key={pjt.projectId}
                       className="border-b border-gray-700 hover:bg-gray-800/40"
                     >
-                      <td className="py-3 px-4">{pjt.pjt_name}</td>
+                      <td className="py-3 px-4  cursor-pointer hover-text-blue-500"><Link to={`/l?pjtid=${pjt.projectId}`}>{pjt.pjt_name}</Link></td>
                       <td className="py-3 px-4">
                         <Link to={`/profile?userid=${pjt.accept?._id}`} className="hover:underline">
                           {pjt.accept?.username}

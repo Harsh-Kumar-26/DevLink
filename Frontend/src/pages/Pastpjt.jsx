@@ -38,6 +38,9 @@ export default function Pstpjt() {
   const [activestatus, setActivestatus] = useState(null);
   const [reviewInputs, setReviewInputs] = useState({});
   const navigate = useNavigate();
+   const location = useLocation();
+const queryParams = new URLSearchParams(location.search);
+const uid = queryParams.get("userid");
 
   useEffect(() => {
     async function fetchProjects() {
@@ -46,13 +49,19 @@ export default function Pstpjt() {
         if (testing) {
           setProjects(mockProjects);
         } else {
+          let userid;
+          if(uid){
+            userid=uid;
+          }
+          else{
             console.log("1");
           const userRes = await axios.get(
           `${import.meta.env.VITE_BACKENDURL}/current-user`,
           { withCredentials: true }
         );
         console.log("2");
-        const userid = userRes.data.data._id;
+        userid = userRes.data.data._id;
+      }
         console.log("3");
           const res = await axios.post(
           `${import.meta.env.VITE_BACKENDURL}/userappliedprojects`,{userid},{withCredentials: true}
@@ -108,7 +117,7 @@ export default function Pstpjt() {
                       key={pjt.projectId}
                       className="border-b border-gray-700 hover:bg-gray-800/40"
                     >
-                      <td className="py-3 px-4">{pjt.pjt_name}</td>
+                      <td className="py-3 px-4 cursor-pointer hover-text-blue-500"><Link to={`/l?pjtid=${pjt.projectId}`}>{pjt.pjt_name}</Link></td>
                       <td className="py-3 px-4">
                         {new Date(pjt.com_date).toLocaleDateString()}
                       </td>
