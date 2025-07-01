@@ -4,6 +4,7 @@ import { FaStar } from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Button from '../components/Button';
+import { useLocation } from 'react-router-dom';
 
 const testing = false;
 
