@@ -33,6 +33,8 @@ export default function ProjectCardtwo() {
           try {
             setpjtid(pjid);
           setisloding(true);
+          console.log(pjtid);
+          
           const response = await axios.post(`${import.meta.env.VITE_BACKENDURL}/send-project`,{projectid:pjtid},{ withCredentials: true }
           );
           let userData = response.data.data;
@@ -79,7 +81,7 @@ export default function ProjectCardtwo() {
     >
       {/* Creator Header */}
       <div className="flex items-center gap-3 cursor-pointer" onClick={()=>{
-        navigate(-1);
+        navigate(`/profile?userid=${creator?._id}`)
       }}>
         <img
           src={creator?.avatar || fallbackAvatar}
