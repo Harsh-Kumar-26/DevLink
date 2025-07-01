@@ -67,12 +67,12 @@ export default function ProjectCardtwo() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white p-4 sm:p-8">
       {/* Back Button */}
-      <button
+      <Button variant="secondary"
         onClick={() => navigate(-1)}
         className="mb-6 text-sm text-gray-400 hover:text-white transition"
       >
         ← Back
-      </button>
+      </Button>
 
       <motion.div
         className="max-w-3xl mx-auto bg-gradient-to-b from-white/5 to-white/0 bg-white/5 backdrop-blur-md border border-gray-700 rounded-2xl p-6 sm:p-8 shadow-lg space-y-6"
