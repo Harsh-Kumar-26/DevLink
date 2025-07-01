@@ -397,7 +397,7 @@ if(!userid){
 }
 // hi
   const projects = await project.find({
-  accept: { $ne: userid },
+//   accept: { $ne: userid },
   applied: userid
 }).lean();
     if(!projects){
