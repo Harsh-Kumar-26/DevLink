@@ -6,6 +6,7 @@ import Loader from "../components/loader";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import Button from "../components/Button";
 
 export default function ProfilePage() {
   const navigate=useNavigate();
@@ -113,7 +114,8 @@ const userid = queryParams.get("userid");
                 <strong>Description:</strong>
                 <p className="mt-1 text-gray-300">{user.description}</p>
               </div>
-            </div>
+              {userid?(<Link to={`/pastpjt?userid=${userid}`}><strong className="text-green-500">View Past Projects</strong></Link>):<></>}
+              </div>
           </div>
         </div>
       </motion.div>
