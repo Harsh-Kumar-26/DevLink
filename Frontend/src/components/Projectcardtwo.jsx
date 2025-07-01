@@ -24,14 +24,14 @@ export default function ProjectCardtwo() {
   const queryParams = new URLSearchParams(location.search);
   const pjid = queryParams.get("pjtid");
   const [pjtid,setpjtid]=useState(null);
-    setpjtid(pjid);
-    const [isloding,setisloding]=useState(false);
-    const [project,setproject]=useState(null);
-    const [creator,setcreator]=useState(null);
-    const [error,setError]=useState(null);
-      useEffect(() => {
+  const [isloding,setisloding]=useState(false);
+  const [project,setproject]=useState(null);
+  const [creator,setcreator]=useState(null);
+  const [error,setError]=useState(null);
+  useEffect(() => {
       async function fetchUser() {
-        try {
+          try {
+            setpjtid(pjid);
           setisloding(true);
           const response = await axios.post(`${import.meta.env.VITE_BACKENDURL}/send-project`,{projectid:pjtid},{ withCredentials: true }
           );
