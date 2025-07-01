@@ -415,7 +415,13 @@ if(!userid){
     completed:p.completed,
     specilities: p.specilities,
     com_date:p.complete_date,
-    status:p.status
+    status:p.status,
+    final_date:p.final_date,
+    user_review:p.user_review,
+    rating_user:p.rating_user,
+    money:p.money,
+    paid:p.paid,
+    reviewed:p.reviewed
   }));
 
   return res.status(200).json({ success: true, data: summary });

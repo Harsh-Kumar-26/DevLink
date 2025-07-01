@@ -18,11 +18,15 @@ import ClientProjectReviews from './pages/Review.jsx'
 import Status from './pages/Status.jsx'
 import ProjectCard from './components/Projectcard.jsx'
 import Liveproject from './pages/Ongoing.jsx'
+import Pstpjt from './pages/Pastpjt.jsx'
 
 const router=createBrowserRouter([
   {
     path:"/",
     element:<Landing/>
+  },{
+    path:"/pastpjt",
+    element:<Pstpjt/>
   }
 ,{
   path:"/live",
