@@ -96,6 +96,7 @@ export default function ClientProjectReviews() {
           },
           { withCredentials: true }
         );
+        navigate(0);
       } else {
         console.log('Mock submit:', { projectId, userId, ...reviewData });
       }

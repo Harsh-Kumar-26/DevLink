@@ -91,7 +91,7 @@ const uid = queryParams.get("userid");
           ← Back
         </Button>
 
-        <h2 className="text-3xl font-bold mb-6">My Current Projects</h2>
+        <h2 className="text-3xl font-bold mb-6">Past Projects</h2>
 
         {loading ? (
           <p>Loading projects...</p>
