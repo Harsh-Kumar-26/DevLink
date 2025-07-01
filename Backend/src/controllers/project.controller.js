@@ -412,7 +412,7 @@ if(!userid){
       count++;
     }
 }
-    const avgRating = count > 0 ? (totalrating / count).toFixed(2) : null;
+    const avgRating = count > 0 ? (totalrating / count).toFixed(2) : 0;
     user.avgrating=avgRating;
     await user.save();
   // Map each project to desired output format
