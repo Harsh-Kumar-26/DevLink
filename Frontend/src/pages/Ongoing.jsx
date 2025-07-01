@@ -172,7 +172,7 @@ export default function Liveproject() {
                       key={pjt.projectId}
                       className="border-b border-gray-700 hover:bg-gray-800/40"
                     >
-                      <td className="py-3 px-4">{pjt.pjt_name}</td>
+                      <td className="py-3 px-4 cursor-pointer hover-text-blue-500"><Link to={`/l?pjtid=${pjt.projectId}`}>{pjt.pjt_name}</Link></td>
                       <td className="py-3 px-4">
                         {new Date(pjt.com_date).toLocaleDateString()}
                       </td>
