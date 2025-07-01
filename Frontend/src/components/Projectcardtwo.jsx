@@ -1,66 +1,58 @@
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   FaRupeeSign,
   FaRegClock,
-  FaUser,
-  FaBookmark,
-  FaRegBookmark,
   FaFileAlt,
 } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
-import Button from "./Button";
-import { useState , useEffect} from "react";
-import Loader from "./loader";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import Loader from "./loader";
 
-// Sample fallback image
 const fallbackAvatar = "https://cdn3.iconfinder.com/data/icons/essential-rounded/64/Rounded-31-512.png";
 
 export default function ProjectCardtwo() {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const pjtid = queryParams.get("pjtid");
-//   const [pjtid,setpjtid]=useState(null);
-  const [isloding,setisloding]=useState(false);
-  const [project,setproject]=useState(null);
-  const [creator,setcreator]=useState(null);
-  const [error,setError]=useState(null);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [project, setProject] = useState(null);
+  const [creator, setCreator] = useState(null);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
-      async function fetchUser() {
-          try {
-            // setpjtid(pjid);
-          setisloding(true);
-          console.log(pjtid);
-          
-          const response = await axios.post(`${import.meta.env.VITE_BACKENDURL}/send-project`,{projectid:pjtid},{ withCredentials: true }
-          );
-          let userData = response.data.data;
-          // console.log(userData);
-          setproject(userData);
-          // console.log(userData.creator);
-          const creatorres = await axios.post(`${import.meta.env.VITE_BACKENDURL}/user-from-id`,{id:userData.creator},{ withCredentials: true });
-          // console.log(creatorres);
-          let creatordata=creatorres.data.data;
-          // console.log(creatordata);
-          
-          setcreator(creatordata);
-        } catch (err) {
-          setError("Failed to fetch user");
-        }
-        finally{
-          setisloding(false);
-        }
+    async function fetchUser() {
+      try {
+        setIsLoading(true);
+        const response = await axios.post(
+          `${import.meta.env.VITE_BACKENDURL}/send-project`,
+          { projectid: pjtid },
+          { withCredentials: true }
+        );
+        const userData = response.data.data;
+        setProject(userData);
+
+        const creatorRes = await axios.post(
+          `${import.meta.env.VITE_BACKENDURL}/user-from-id`,
+          { id: userData.creator },
+          { withCredentials: true }
+        );
+        setCreator(creatorRes.data.data);
+      } catch (err) {
+        setError("Failed to fetch project");
+      } finally {
+        setIsLoading(false);
       }
-      fetchUser();
-    }, []);
-    if(!project){
-        return <Loader/>
     }
-    const {
-    _id,
+    fetchUser();
+  }, []);
+
+  if (!project || !creator || isLoading) return <Loader />;
+
+  const {
     pjt_name,
     money,
     deswritten,
@@ -72,84 +64,100 @@ export default function ProjectCardtwo() {
     description,
   } = project;
 
-  return (isloding || !project || !creator)?<Loader/>:(
-    <motion.div
-  className="bg-gradient-to-b from-white/5 to-white/0 bg-white/5 backdrop-blur-sm border border-gray-700 rounded-2xl p-5 shadow-md hover:shadow-xl transition duration-300 flex flex-col gap-4 mb-5"
-    initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-    >
-      {/* Creator Header */}
-      <div className="flex items-center gap-3 cursor-pointer" onClick={()=>{
-        navigate(`/profile?userid=${creator?._id}`)
-      }}>
-        <img
-          src={creator?.avatar || fallbackAvatar}
-          alt="creator"
-          className="w-10 h-10 rounded-full object-cover border border-purple-500"
-        />
-        <div className="flex flex-col">
-          <span className="text-sm font-semibold text-purple-300">
-            {creator?.fullname || "Unknown User"}
-          </span>
-          <span className="text-xs text-gray-500">
-            Posted {formatDistanceToNow(new Date(createdAt))} ago
-          </span>
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white p-4 sm:p-8">
+      {/* Back Button */}
+      <button
+        onClick={() => navigate(-1)}
+        className="mb-6 text-sm text-gray-400 hover:text-white transition"
+      >
+        ← Back
+      </button>
+
+      <motion.div
+        className="max-w-3xl mx-auto bg-gradient-to-b from-white/5 to-white/0 bg-white/5 backdrop-blur-md border border-gray-700 rounded-2xl p-6 sm:p-8 shadow-lg space-y-6"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        {/* Creator Info */}
+        <div
+          className="flex items-center gap-4 cursor-pointer"
+          onClick={() => navigate(`/profile?userid=${creator?._id}`)}
+        >
+          <img
+            src={creator?.avatar || fallbackAvatar}
+            alt="creator"
+            className="w-12 h-12 rounded-full object-cover border border-purple-500"
+          />
+          <div>
+            <p className="text-base font-medium text-purple-300">
+              {creator?.fullname || "Unknown User"}
+            </p>
+            <p className="text-xs text-gray-400">
+              Posted {formatDistanceToNow(new Date(createdAt))} ago
+            </p>
+          </div>
         </div>
-      </div>
 
-      {/* Background Image */}
-      {bkphoto && (
-        <img
-          src={bkphoto}
-          alt="project background"
-          className="rounded-xl h-48 w-full object-cover"
-        />
-      )}
-
-      {/* Project Info */}
-      <div className="flex flex-col gap-2">
-        <h2 className="text-xl font-semibold text-purple-400">{pjt_name}</h2>
-        <p className="text-sm text-gray-300 line-clamp-4">{deswritten}</p>
-
-        {/* Description File Link */}
-        {description && (
-          <a
-            href={description}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1 text-purple-400 mt-1 text-sm hover:underline"
-            title="View Project Description File"
-          >
-            <FaFileAlt />
-            <span>Description File</span>
-          </a>
+        {/* Project Image */}
+        {bkphoto && (
+          <img
+            src={bkphoto}
+            alt="Project Background"
+            className="w-full h-60 object-cover rounded-xl"
+          />
         )}
 
-        <div className="flex flex-wrap gap-2 mt-2">
+        {/* Project Title & Description */}
+        <div className="space-y-2">
+          <h1 className="text-2xl sm:text-3xl font-semibold text-purple-400">
+            {pjt_name}
+          </h1>
+          <p className="text-gray-300 leading-relaxed">{deswritten}</p>
+
+          {description && (
+            <a
+              href={description}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-purple-300 text-sm hover:underline"
+            >
+              <FaFileAlt />
+              View Full Description
+            </a>
+          )}
+        </div>
+
+        {/* Tags */}
+        <div className="flex flex-wrap gap-2">
           {specilities?.map((tag, idx) => (
             <span
               key={idx}
-              className="bg-purple-800/30 text-purple-300 px-2 py-1 rounded-full text-xs"
+              className="bg-purple-800/30 text-purple-300 px-3 py-1 rounded-full text-xs"
             >
               #{tag}
             </span>
           ))}
         </div>
 
-        <div className="flex flex-wrap justify-between text-sm text-gray-400 mt-4">
-          <div className="flex items-center gap-1">
-            <FaRupeeSign className="text-purple-400" />
-            {money.toLocaleString()} INR
+        {/* Budget & Deadline */}
+        <div className="flex justify-between text-sm text-gray-400 border-t border-gray-700 pt-4">
+          <div className="flex items-center gap-2">
+            <FaRupeeSign className="text-purple-300" />
+            <span>{money.toLocaleString()} INR</span>
           </div>
-          <div className="flex items-center gap-1">
-            <FaRegClock className="text-purple-400" />
-            {new Date(complete_date).toLocaleDateString()}
+          <div className="flex items-center gap-2">
+            <FaRegClock className="text-purple-300" />
+            <span>{new Date(complete_date).toLocaleDateString()}</span>
           </div>
         </div>
-      </div>
-       <div className="mt-4"><p className="text-sm text-gray-400 mb-2">Total applicants: {(applied?.length)||0}</p></div>
-      
-    </motion.div>
+
+        {/* Applicants */}
+        <div className="text-sm text-gray-400">
+          Total applicants: <span className="font-semibold text-white">{applied.length}</span>
+        </div>
+      </motion.div>
+    </div>
   );
 }
