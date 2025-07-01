@@ -98,6 +98,7 @@ export default function Liveproject() {
           },
           { withCredentials: true }
         );
+        navigate(0);
       } else {
         console.log('Mock submit:', { projectId, userId, ...reviewData });
       }
@@ -129,6 +130,7 @@ export default function Liveproject() {
           },
           { withCredentials: true }
         );
+        navigate(0);
       } else {
         console.log('Mock submit:', { projectId, userId, ...reviewData });
       }
