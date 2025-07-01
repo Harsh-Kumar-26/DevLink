@@ -17,13 +17,17 @@ import ClientApplications from './pages/Applications.jsx'
 import ClientProjectReviews from './pages/Review.jsx'
 import Status from './pages/Status.jsx'
 import ProjectCard from './components/Projectcard.jsx'
+import Liveproject from './pages/Ongoing.jsx'
 
 const router=createBrowserRouter([
   {
     path:"/",
     element:<Landing/>
   }
-,
+,{
+  path:"/live",
+  element:<Liveproject/>
+},
   {
     path:"/review",
     element:<ClientProjectReviews/>

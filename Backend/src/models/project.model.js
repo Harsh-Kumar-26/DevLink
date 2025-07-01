@@ -59,6 +59,12 @@ const projectschema=new mongoose.Schema({
         type:Date,
         required:[true,"Date field is required"]
      },
+     status:{
+      type:Number,
+      default:0,
+      min:0,
+      max:100
+     },
      final_date:{
         // Date when user finally submits the project
         type:Date,

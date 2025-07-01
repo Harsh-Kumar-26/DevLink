@@ -5,7 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Button from '../components/Button';
 
-const testing = false;
+const testing = true;
 
 const mockProjects = [
   {
@@ -26,7 +26,7 @@ const mockProjects = [
   },
 ];
 
-export default function ClientProjectReviews() {
+export default function Liveproject() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeReview, setActiveReview] = useState(null);
@@ -49,11 +49,13 @@ export default function ClientProjectReviews() {
         const userid = userRes.data.data._id;
         console.log("3");
           const res = await axios.post(
-          `${import.meta.env.VITE_BACKENDURL}/usercreatedprojects`,{userid},{withCredentials: true}
+          `${import.meta.env.VITE_BACKENDURL}/userappliedprojects`,{userid},{withCredentials: true}
         );
         console.log("4");
             let filtered=[];
-            filtered = res.data.data.filter((p) => p.completed==true);
+            console.log(res.data.data);
+            
+            filtered = res.data.data.filter((p) => (p.completed==false && p.accepted==true && p.acceptedId?.toString() == userid?.toString()));
             setProjects(filtered);
             console.log(filtered);
         }
@@ -78,8 +80,8 @@ export default function ClientProjectReviews() {
 
   const submitReview = async (projectId, userId) => {
     const reviewData = reviewInputs[projectId] || {};
-    if (!reviewData.review || reviewData.rating == null) {
-      alert("Please provide both a review and a rating.");
+    if (!reviewData.code || !reviewData.pdt) {
+      alert("Please provide both code link and product link.");
       return;
     }
 
@@ -88,11 +90,11 @@ export default function ClientProjectReviews() {
         console.log(projectId);
         
         await axios.post(
-          `${import.meta.env.VITE_BACKENDURL}/review`,
+          `${import.meta.env.VITE_BACKENDURL}/complete`,
           {
             projectid:projectId,
-            review: reviewData.review,
-            rating: reviewData.rating,
+            code_link: reviewData.code,
+            pdt_link: reviewData.pdt,
           },
           { withCredentials: true }
         );
@@ -124,9 +126,9 @@ export default function ClientProjectReviews() {
               <thead className="text-gray-400 border-b border-gray-600">
                 <tr>
                   <th className="py-3 px-4">Project Name</th>
-                  <th className="py-3 px-4">Username</th>
-                  <th className="py-3 px-4">Code Link</th>
-                  <th className="py-3 px-4">Product Link</th>
+                  <th className="py-3 px-4">Completion Date</th>
+                  <th className="py-3 px-4">Status(%)</th>
+                  {/* <th className="py-3 px-4">Product Link</th> */}
                   <th className="py-3 px-4">Actions</th>
                 </tr>
               </thead>
@@ -139,50 +141,19 @@ export default function ClientProjectReviews() {
                     >
                       <td className="py-3 px-4">{pjt.pjt_name}</td>
                       <td className="py-3 px-4">
-                        <Link to={`/profile?userid=${pjt.accept?._id}`} className="hover:underline">
-                          {pjt.accept?.username}
-                        </Link>
+                        {pjt.com_date}
                       </td>
                       <td className="py-3 px-4">
-                        <a
-                          href={pjt.code_link}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="text-blue-400 hover:underline cursor-pointer"
-                        >
-                          Code
-                        </a>
-                      </td>
-                      <td className="py-3 px-4">
-                        <a
-                          href={pjt.pdt_link}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="text-green-400 hover:underline cursor-pointer"
-                        >
-                          Product
-                        </a>
+                        {pjt.status}
                       </td>
                       <td className="py-3 px-4">
                         <div className="flex gap-2 flex-wrap">
-                          {pjt.reviewed?(<Button
-                            variant="secondary"
-                            onClick={() =>
+                          
+                            <Button>Edit Status</Button>
+                            <Button variant="green" onClick={() =>
                               setActiveReview(activeReview === pjt.projectId ? null : pjt.projectId)
-                            }
-                          >
-                            Edit Review
-                          </Button>):(<Button
-                            variant="primary"
-                            onClick={() =>
-                              setActiveReview(activeReview === pjt.projectId ? null : pjt.projectId)
-                            }
-                          >
-                            Review Project
-                          </Button>)}
-                          {pjt.paid?(<div className="mt-3 text-green-400 text-sm">✅ Paid</div>):(<Button variant="green" onClick={() => alert('Payment flow placeholder')}>
-                            Payment
-                          </Button>)}
+                            }>Submit Project</Button>
+                          
                         </div>
                       </td>
                     </tr>
@@ -199,48 +170,40 @@ export default function ClientProjectReviews() {
                               transition={{ duration: 0.3 }}
                               className="overflow-hidden"
                             >
-                              {pjt.reviewed?(<h4 className="text-lg font-semibold mb-2">Edit Review</h4>):(<h4 className="text-lg font-semibold mb-2">Submit Review</h4>)}
-                              <textarea
-                                className="w-full p-2 rounded bg-[#1e2a3a] text-white mb-3"
-                                rows="4"
-                                placeholder="Write your review..."
-                                value={reviewInputs[pjt.projectId]?.review || ''}
+                              <h4 className="text-lg font-semibold mb-2">Submit Project</h4>
+                              
+                                <label for="code">Code Link: </label>
+                              <input
+                              type="url"
+                                className="p-2 rounded bg-[#1e2a3a] text-white mb-3"
+                                placeholder="Submit Code Link..."
+                                id="code"
+                                // value={reviewInputs[pjt.projectId]?.code || ''}
                                 onChange={(e) =>
-                                  handleReviewChange(pjt.projectId, 'review', e.target.value)
+                                  handleReviewChange(pjt.projectId, 'code', e.target.value)
+                                }
+                              /><br/>
+                              <label for="pdt">Product Link: </label>
+                              <input
+                              type="url"
+                                className="p-2 rounded bg-[#1e2a3a] text-white mb-3"
+                                placeholder="Submit Product Link..."
+                                id="pdt"
+                                // value={reviewInputs[pjt.projectId]?.review || ''}
+                                onChange={(e) =>
+                                  handleReviewChange(pjt.projectId, 'pdt', e.target.value)
                                 }
                               />
-                              <div className="flex items-center gap-2 mb-4">
-                                <span>Rating:</span>
-                                {[0, 1, 2, 3, 4, 5].map((num) => (
-                                  <FaStar
-                                    key={num}
-                                    className={`cursor-pointer ${
-                                      (reviewInputs[pjt.projectId]?.rating || 0) >= num
-                                        ? 'text-yellow-400'
-                                        : 'text-gray-500'
-                                    }`}
-                                    onClick={() =>
-                                      handleReviewChange(pjt.projectId, 'rating', num)
-                                    }
-                                  />
-                                ))}
-                                <span>{reviewInputs[pjt.projectId]?.rating ?? 0}/5</span>
-                              </div>
-                              {pjt.reviewed?(<Button
+                              
+                              <br/><br/>
+                              <Button
                                 variant="green"
                                 onClick={() =>
                                   submitReview(pjt.projectId, pjt.userId)
                                 }
                               >
-                                Edit Review
-                              </Button>):(<Button
-                                variant="green"
-                                onClick={() =>
-                                  submitReview(pjt.projectId, pjt.userId)
-                                }
-                              >
-                                Submit Review
-                              </Button>)}
+                                Submit Project
+                              </Button>
                             </motion.div>
                           </td>
                         </tr>

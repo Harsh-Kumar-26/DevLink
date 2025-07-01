@@ -385,7 +385,9 @@ if(!userid){
     reviewed: p.reviewed || false,
     accepted:p.accepted,
     completed:p.completed,
-    specilities: p.specilities
+    specilities: p.specilities,
+    com_date:p.complete_date,
+    status:p.status
   }));
 
   return res.status(200).json({ success: true, data: summary });
