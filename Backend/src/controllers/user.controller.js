@@ -76,7 +76,7 @@ try{
       email,
       type: "individual",
       legal_business_name: accountHolderName,
-      business_type: "freelancer",
+      business_type: "individual",
       bank_account: {
         name: accountHolderName,
         ifsc,
