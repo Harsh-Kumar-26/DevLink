@@ -5,6 +5,7 @@ import UploadOnCloudinary from "../utils/cloudinary.js"
 import ApiResponse from "../utils/apiresponse.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import {Router} from "express";
+import axios from "axios";
 import jwt from "jsonwebtoken";
 
 const generateaccessandrefreshtoken=async(userid)=>{
