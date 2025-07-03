@@ -67,8 +67,9 @@ const registeruser = asynchandler(async (req, res, next) => {
   const avatar = await UploadOnCloudinary(avatarlocalpath);
 
 console.log("1");
-
-  const routeResponse = await axios.post(
+let routeResponse;
+try{
+  routeResponse = await axios.post(
     "https://api.razorpay.com/v2/accounts",
     {
       name: accountHolderName,
@@ -89,6 +90,10 @@ console.log("1");
       },
     }
   );
+  }
+catch(err){
+    throw new ApiError(500, err);
+}
 console.log("2");
 
   const razorpayAccountId = routeResponse.data.id;
@@ -104,6 +109,7 @@ console.log("2");
     avatar: avatar?.url || "",
     razorpayAccountId,
   });
+
   console.log("3");
 
 
