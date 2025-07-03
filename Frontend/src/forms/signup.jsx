@@ -66,15 +66,18 @@ export default function SignupPage() {
       data.append("accountNumber", formData.accountNumber);
       data.append("ifsc", formData.ifsc);
       data.append("accountHolderName", formData.accountHolderName);
-
+      console.log("1");
+      
       await axios.post(`${import.meta.env.VITE_BACKENDURL}/signup`, data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+      console.log("2");
 
       await axios.post(`${import.meta.env.VITE_BACKENDURL}/login`, {
         username: formData.username,
         password: formData.password,
       }, { withCredentials: true });
+      console.log("3");
 
       navigate("/main");
     } catch (err) {
