@@ -21,45 +21,101 @@ catch(error){
 }
 }
 
-const registeruser=asynchandler(async(req,res,next)=>{
-    const {fullname,username,email,password,specilities,description}=req.body;
-    if([fullname,email,password,username,description].some((field)=>{
-        return(
-        field?.trim()==="")
-    })){
-        throw new ApiError(400,"All fields are required");
+const registeruser = asynchandler(async (req, res, next) => {
+  const {
+    fullname,
+    username,
+    email,
+    password,
+    specilities,
+    description,
+    accountNumber,
+    ifsc,
+    accountHolderName,
+  } = req.body;
+
+  if ([fullname, email, password, username, description].some(field => !field?.trim())) {
+    throw new ApiError(400, "All fields are required");
+  }
+
+  if (!accountNumber || !ifsc || !accountHolderName) {
+    throw new ApiError(400, "Bank details are required for payouts");
+  }
+
+  if (password.length < 8) {
+    throw new ApiError(400, "Password must be at least 8 characters long");
+  }
+
+  if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+    throw new ApiError(400, "Password must include a special character");
+  }
+
+  const existuser = await User.findOne({
+    $or: [{ username }, { email }],
+  });
+
+  if (existuser) {
+    throw new ApiError(409, "User already exists");
+  }
+
+  let avatarlocalpath = "";
+  if (req.files?.avatar?.length > 0) {
+    avatarlocalpath = req.files.avatar[0].path;
+  }
+
+  const avatar = await UploadOnCloudinary(avatarlocalpath);
+
+console.log("1");
+
+  const routeResponse = await axios.post(
+    "https://api.razorpay.com/v2/accounts",
+    {
+      name: accountHolderName,
+      email,
+      type: "individual",
+      legal_business_name: accountHolderName,
+      business_type: "freelancer",
+      bank_account: {
+        name: accountHolderName,
+        ifsc,
+        account_number: accountNumber,
+      },
+    },
+    {
+      auth: {
+        username: process.env.RAZORPAY_KEY_ID,
+        password: process.env.RAZORPAY_KEY_SECRET,
+      },
     }
-    if(password.length<8){
-                throw new ApiError(400,"Password must be atleast 8 characters long");
-    }
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-    if(!hasSpecialChar){
-        throw new ApiError(400,"Password must have a special character");
-    }
-    const existuser=await User.findOne({
-        $or:[{username},{email}]
-    })
-    if(existuser){
-        throw new ApiError(409,"User already exist");
-    }
-    let avatarlocalpath="";
-    if(req.files && req.files.avatar && Array.isArray(req.files.avatar) && req.files.avatar.length>0){
-        avatarlocalpath=req.files.avatar[0].path;
-    }
-    const avatar=await UploadOnCloudinary(avatarlocalpath);
-    const user=await User.create({
-        fullname,email,password,specilities,description,username:username.toLowerCase(),avatar: avatar?.url||""
-    })
-    const createduser=await User.findById(user._id).select(
-        "-password -refreshToken"
-    )
-    if(!createduser){
-        throw new ApiError(500,"Something went wrong while signing up")
-    }
-    return res.status(201).json(
-        new ApiResponse(200, createduser, "User registered succesfully")
-    )
-})
+  );
+console.log("2");
+
+  const razorpayAccountId = routeResponse.data.id;
+  console.log(razorpayAccountId);
+
+  const user = await User.create({
+    fullname,
+    email,
+    password,
+    specilities,
+    description,
+    username: username.toLowerCase(),
+    avatar: avatar?.url || "",
+    razorpayAccountId,
+  });
+  console.log("3");
+
+
+  const createduser = await User.findById(user._id).select("-password -refreshToken");
+
+  if (!createduser) {
+    throw new ApiError(500, "Something went wrong while signing up");
+  }
+
+  return res.status(201).json(
+    new ApiResponse(200, createduser, "User registered successfully")
+  );
+});
 
 const loginuser=asynchandler(async(req,res)=>{
     const {email,username,password}=req.body;
@@ -160,7 +216,7 @@ const getuserfromid=asynchandler(async(req,res)=>{
 
 const editprofile=asynchandler(async(req,res)=>{
     const userid=req.user._id;
-    let {fullname,email,specilities,description,updateavatar,oldpassword,newpassword}=req.body;
+    let {fullname,email,specilities,description,updateavatar,oldpassword,newpassword,accountNumber, ifsc, accountHolderName}=req.body;
     const olduser=await User.findById(userid);
     if(!fullname){
         fullname=olduser.fullname;
@@ -189,6 +245,25 @@ const editprofile=asynchandler(async(req,res)=>{
     url=avatar?.url||"";
     
 }
+
+if (accountNumber && ifsc && accountHolderName) {
+  await axios.post(
+    `https://api.razorpay.com/v2/accounts/${olduser.razorpayAccountId}/bank_account`,
+    {
+      name: accountHolderName,
+      ifsc,
+      account_number: accountNumber,
+    },
+    {
+      auth: {
+        username: process.env.RAZORPAY_KEY_ID,
+        password: process.env.RAZORPAY_KEY_SECRET,
+      },
+    }
+  );
+}
+
+
 if(!updateavatar){
     if (req.body.avatar) {
         url = req.body.avatar;

@@ -433,7 +433,7 @@ if(!userid){
     rating_user:p.rating_user,
     money:p.money,
     paid:p.paid,
-    reviewed:p.reviewed
+    // reviewed:p.reviewed
   }));
 
   return res.status(200).json({ success: true, data: summary });

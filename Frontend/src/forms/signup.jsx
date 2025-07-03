@@ -6,16 +6,6 @@ import axios from "axios";
 import Button from "../components/Button";
 import Loader from "../components/loader";
 import { specialitiesList } from "../Constants";
-// const specialitiesList = [
-//   "Backend Developer", "Frontend Developer", "Full Stack Web Developer", "Android Developer",
-//   "iOS Developer", "Blockchain Developer", "Machine Learning Engineer", "Data Scientist",
-//   "DevOps Engineer", "Game Developer", "Cybersecurity Specialist", "AI Engineer", "UI/UX Designer",
-//   "Database Administrator", "AR/VR Developer", "Embedded Systems Engineer", "IoT Developer",
-//   "Cloud Solutions Architect", "Systems Engineer", "Site Reliability Engineer",
-//   "Desktop Application Developer", "Data Analyst", "QA Engineer", "Web3 Developer",
-//   "Computer Vision Engineer", "Mobile App Developer", "Network Engineer", "Product Manager",
-//   "Software Architect"
-// ];
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -26,6 +16,9 @@ export default function SignupPage() {
     avatar: null,
     description: "",
     specialities: [],
+    accountNumber: "",
+    ifsc: "",
+    accountHolderName: "",
   });
 
   const [formError, setFormError] = useState("");
@@ -69,10 +62,13 @@ export default function SignupPage() {
       }
       formData.specialities.forEach((spec) => data.append("specilities", spec));
 
-      const res = await axios.post(`${import.meta.env.VITE_BACKENDURL}/signup`, data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      // Append Razorpay account fields
+      data.append("accountNumber", formData.accountNumber);
+      data.append("ifsc", formData.ifsc);
+      data.append("accountHolderName", formData.accountHolderName);
+
+      await axios.post(`${import.meta.env.VITE_BACKENDURL}/signup`, data, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
 
       await axios.post(`${import.meta.env.VITE_BACKENDURL}/login`, {
@@ -198,6 +194,49 @@ export default function SignupPage() {
                   <span className="text-sm">{spec}</span>
                 </label>
               ))}
+            </div>
+          </div>
+
+          {/* Razorpay Bank Details */}
+          <div className="sm:col-span-2 lg:col-span-3 mt-6">
+            <h3 className="text-lg font-semibold mb-2">Bank Details for Payment</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div>
+                <label className="block font-semibold">Account Number <span className="text-red-500">*</span></label>
+                <input
+                  type="text"
+                  name="accountNumber"
+                  value={formData.accountNumber}
+                  onChange={handleChange}
+                  placeholder="eg. 1234567890"
+                  className="bg-gray-800 p-3 rounded-lg outline-none focus:ring-2 focus:ring-purple-500 w-full"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block font-semibold">IFSC Code <span className="text-red-500">*</span></label>
+                <input
+                  type="text"
+                  name="ifsc"
+                  value={formData.ifsc}
+                  onChange={handleChange}
+                  placeholder="eg. PUNB0001234"
+                  className="bg-gray-800 p-3 rounded-lg outline-none focus:ring-2 focus:ring-purple-500 w-full"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block font-semibold">Account Holder Name <span className="text-red-500">*</span></label>
+                <input
+                  type="text"
+                  name="accountHolderName"
+                  value={formData.accountHolderName}
+                  onChange={handleChange}
+                  placeholder="eg. Harsh Kumar"
+                  className="bg-gray-800 p-3 rounded-lg outline-none focus:ring-2 focus:ring-purple-500 w-full"
+                  required
+                />
+              </div>
             </div>
           </div>
         </div>
