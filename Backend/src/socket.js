@@ -14,15 +14,15 @@ export const initSocket = (server) => {
   });
 
   io.on("connection", (socket) => {
-    console.log(" New socket connected:", socket);
-try{
+    console.log(" New socket connected:", socket.id);
     socket.on("joinRoom", ({ projectId }) => {
-      socket.join(`room_${projectId}`);
-      console.log(`Socket ${socket.id} joined room_${projectId}`);
+        socket.join(`room_${projectId}`);
+        console.log(`Socket ${socket.id} joined room_${projectId}`);
     });
-
+    
     socket.on("sendMessage", async ({ projectId, senderId, message }) => {
-      if (!projectId || !senderId || !message?.trim()) return;
+        if (!projectId || !senderId || !message?.trim()) return;
+        try{
 
       // Save message to DB
       let chat = await Chat.findOne({ projectId });
@@ -45,16 +45,16 @@ try{
         message,
         timestamp: new Date(),
       });
+      }
+      catch(err){
+          console.log(err);
+          
+      }
     });
 
     socket.on("disconnect", () => {
       console.log(" Socket disconnected:", socket.id);
     });
-}
-catch(err){
-    console.log(err);
-    
-}
   });
 
   return io;
