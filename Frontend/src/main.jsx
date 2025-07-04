@@ -19,6 +19,7 @@ import ProjectCard from './components/Projectcard.jsx'
 import Liveproject from './pages/Ongoing.jsx'
 import Pstpjt from './pages/Pastpjt.jsx'
 import ProjectCardtwo from './components/Projectcardtwo.jsx'
+import TestChat from './pages/Testpage.jsx'
 
 const router=createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router=createBrowserRouter([
   },{
     path:"/l",
     element:<ProjectCardtwo/>
+  },
+  {
+    path:"/test",
+    element:<TestChat/>
   }
 ,{
   path:"/live",
