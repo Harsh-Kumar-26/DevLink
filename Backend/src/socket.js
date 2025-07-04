@@ -15,7 +15,7 @@ export const initSocket = (server) => {
 
   io.on("connection", (socket) => {
     console.log(" New socket connected:", socket);
-
+try{
     socket.on("joinRoom", ({ projectId }) => {
       socket.join(`room_${projectId}`);
       console.log(`Socket ${socket.id} joined room_${projectId}`);
@@ -50,6 +50,11 @@ export const initSocket = (server) => {
     socket.on("disconnect", () => {
       console.log(" Socket disconnected:", socket.id);
     });
+}
+catch(err){
+    console.log(err);
+    
+}
   });
 
   return io;
