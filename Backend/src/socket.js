@@ -4,6 +4,8 @@ import Chat from "./models/chat.model.js";
 let io;
 
 export const initSocket = (server) => {
+    console.log("Test 1");
+    
   io = new Server(server, {
     cors: {
       origin: process.env.CORS_ORIGIN,
