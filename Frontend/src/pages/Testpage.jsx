@@ -9,7 +9,7 @@ const projectId = "6837088589b3d5646e0db65e0db65e";
 const clientId = "6837072fafa2f289ba575c34";
 const developerId = "68445268431b42897198b51b";
 
-// 🔁 Change this to test as client or developer
+// Change this to test as client or developer
 const currentUserId = clientId; // or developerId
 
 export default function TestChat() {

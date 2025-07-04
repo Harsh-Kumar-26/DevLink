@@ -7,10 +7,14 @@ import { initSocket } from "./socket.js";
 dotenv.config();
 
 // Create HTTP server
+console.log("1!");
+
 const server = createServer(app);
+console.log("2!");
 
 // Initialize Socket.IO on the server
 initSocket(server); 
+console.log("3!");
 
 connectDB()
   .then(() => {
