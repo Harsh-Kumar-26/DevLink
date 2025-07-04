@@ -1,5 +1,5 @@
 import { Server } from "socket.io";
-import Chat from "./models/chat.model";
+import Chat from "./models/chat.model.js";
 
 let io;
 
@@ -44,7 +44,7 @@ export const initSocket = (server) => {
         timestamp: new Date(),
       });
     });
-    
+
     socket.on("disconnect", () => {
       console.log(" Socket disconnected:", socket.id);
     });
