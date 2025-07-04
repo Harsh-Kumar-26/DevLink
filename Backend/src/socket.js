@@ -47,7 +47,7 @@ export const initSocket = (server) => {
       });
       }
       catch(err){
-          console.log(err);
+          console.log("error ",err);
           
       }
     });
