@@ -465,7 +465,8 @@ if(!userid){
     accept:p.accept,
     pdt_link:p.pdt_link,
     code_link:p.code_link,
-    paid:p.paid
+    paid:p.paid,
+    status:p.status
   }));
   return res.status(200).json({ success: true, data: summary });
 });
