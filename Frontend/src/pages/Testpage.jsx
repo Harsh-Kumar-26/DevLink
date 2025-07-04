@@ -5,7 +5,7 @@ const socket = io("https://devlinkbackend.onrender.com", {
   withCredentials: true,
 });
 
-const projectId = "6837088589b3d5646e0db65e0db65e";
+const projectId = "6837088589b3d5646e0db65e";
 const clientId = "6837072fafa2f289ba575c34";
 const developerId = "68445268431b42897198b51b";
 
