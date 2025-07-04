@@ -68,36 +68,36 @@ const registeruser = asynchandler(async (req, res, next) => {
 
 console.log("1");
 let routeResponse;
-try{
-  routeResponse = await axios.post(
-    "https://api.razorpay.com/v2/accounts",
-    {
-      name: accountHolderName,
-      email,
-      type: "individual",
-      legal_business_name: accountHolderName,
-      business_type: "individual",
-      bank_account: {
-        name: accountHolderName,
-        ifsc,
-        account_number: accountNumber,
-      },
-    },
-    {
-      auth: {
-        username: process.env.RAZORPAY_KEY_ID,
-        password: process.env.RAZORPAY_KEY_SECRET,
-      },
-    }
-  );
-  }
-catch(err){
-    throw new ApiError(500, err);
-}
+// try{
+//   routeResponse = await axios.post(
+//     "https://api.razorpay.com/v2/accounts",
+//     {
+//       name: accountHolderName,
+//       email,
+//       type: "individual",
+//       legal_business_name: accountHolderName,
+//       business_type: "individual",
+//       bank_account: {
+//         name: accountHolderName,
+//         ifsc,
+//         account_number: accountNumber,
+//       },
+//     },
+//     {
+//       auth: {
+//         username: process.env.RAZORPAY_KEY_ID,
+//         password: process.env.RAZORPAY_KEY_SECRET,
+//       },
+//     }
+//   );
+//   }
+// catch(err){
+//     throw new ApiError(500, err);
+// }
 console.log("2");
 
-  const razorpayAccountId = routeResponse.data.id;
-  console.log(razorpayAccountId);
+  // const razorpayAccountId = routeResponse.data.id;
+  // console.log(razorpayAccountId);
 
   const user = await User.create({
     fullname,
@@ -107,7 +107,7 @@ console.log("2");
     description,
     username: username.toLowerCase(),
     avatar: avatar?.url || "",
-    razorpayAccountId,
+    // razorpayAccountId,
   });
 
   console.log("3");
@@ -253,22 +253,22 @@ const editprofile=asynchandler(async(req,res)=>{
     
 }
 
-if (accountNumber && ifsc && accountHolderName) {
-  await axios.post(
-    `https://api.razorpay.com/v2/accounts/${olduser.razorpayAccountId}/bank_account`,
-    {
-      name: accountHolderName,
-      ifsc,
-      account_number: accountNumber,
-    },
-    {
-      auth: {
-        username: process.env.RAZORPAY_KEY_ID,
-        password: process.env.RAZORPAY_KEY_SECRET,
-      },
-    }
-  );
-}
+// if (accountNumber && ifsc && accountHolderName) {
+//   await axios.post(
+//     `https://api.razorpay.com/v2/accounts/${olduser.razorpayAccountId}/bank_account`,
+//     {
+//       name: accountHolderName,
+//       ifsc,
+//       account_number: accountNumber,
+//     },
+//     {
+//       auth: {
+//         username: process.env.RAZORPAY_KEY_ID,
+//         password: process.env.RAZORPAY_KEY_SECRET,
+//       },
+//     }
+//   );
+// }
 
 
 if(!updateavatar){

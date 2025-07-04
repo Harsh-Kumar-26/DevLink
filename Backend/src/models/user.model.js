@@ -73,7 +73,8 @@ const userschema=new mongoose.Schema({
         max:5
     },
     razorpayAccountId:{
-        type:String
+        type:String,
+        default:""
     }
 },{timestamps:true});
 
