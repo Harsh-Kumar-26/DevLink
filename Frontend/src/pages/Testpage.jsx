@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
-const socket = io("https://dev-link-beta.vercel.app", {
+const socket = io("https://devlinkbackend.onrender.com", {
   withCredentials: true,
 });
 
