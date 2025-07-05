@@ -5,17 +5,9 @@ import { useLocation } from "react-router-dom";
 import { use } from "react";
 import axios from "axios";
 
-const socketRef = useRef();
-
-useEffect(() => {
-  socketRef.current = io(import.meta.env.VITE_BACKENDURL, {
-    withCredentials: true,
-  });
-
-  return () => {
-    socketRef.current.disconnect();
-  };
-}, []);
+const socket = io(import.meta.env.VITE_BACKENDURL, {
+  withCredentials: true,
+});
 
 
 export default function ChatPage() {
