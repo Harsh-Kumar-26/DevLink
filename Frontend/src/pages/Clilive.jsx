@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FaStar } from 'react-icons/fa';
+import { FaStar,FaRegCommentDots } from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Button from '../components/Button';
@@ -161,6 +161,7 @@ export default function Cliveproject() {
                   <th className="py-3 px-4">Project Name</th>
                   <th className="py-3 px-4">Completion Date</th>
                   <th className="py-3 px-4">Status(%)</th>
+                  <th className="py-3 px-4">Chat</th>
                   {/* <th className="py-3 px-4">Product Link</th> */}
                   {/* <th className="py-3 px-4">Actions</th> */}
                 </tr>
@@ -179,6 +180,18 @@ export default function Cliveproject() {
                       <td className="py-3 px-4">
                         {pjt.status}
                       </td>
+                      <td className="py-3 px-4 text-center">
+                        <motion.button
+                          whileHover={{ scale: 1.2 }}
+                          whileTap={{ scale: 0.9 }}
+                          transition={{ duration: 0.2 }}
+                          className="text-blue-400 hover:text-blue-200"
+                          title="Open Chat"
+                          onClick={() => navigate(`/chat?projectId=${pjt.projectId}`)}
+                        >
+                          <FaRegCommentDots size={22} />
+                        </motion.button>
+                      </td>                      
                       {/* <td className="py-3 px-4">
                         <div className="flex gap-2 flex-wrap">
                           

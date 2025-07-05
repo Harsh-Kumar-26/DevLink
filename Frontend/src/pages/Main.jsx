@@ -122,6 +122,13 @@ data();
                   Devs Applications
                 </Link>
                 <Link
+                  to="/clive"
+                  className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-teal-500/20 transition"
+                >
+                  <FaList className="text-teal-400" />
+                  Live Projects
+                </Link>
+                <Link
                   to="/review"
                   className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-teal-500/20 transition"
                 >

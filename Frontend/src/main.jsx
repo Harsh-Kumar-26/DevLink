@@ -21,6 +21,8 @@ import Pstpjt from './pages/Pastpjt.jsx'
 import ProjectCardtwo from './components/Projectcardtwo.jsx'
 import TestChat from './pages/Testpage.jsx'
 import Cliveproject from './pages/Clilive.jsx'
+import ChatPage from './components/Chat.jsx'
+
 
 const router=createBrowserRouter([
   {
@@ -38,7 +40,7 @@ const router=createBrowserRouter([
   },
   {
     path:"/test",
-    element:<TestChat/>
+    element:<ChatPage/>
   }
 ,{
   path:"/live",
