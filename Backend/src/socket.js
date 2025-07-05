@@ -27,7 +27,7 @@ export const initSocket = (server) => {
       // Save message to DB
       let chat = await Chat.findOne({ projectId });
 
-      const newMessage = { sender: senderId, message };
+      const newMessage = { senderId, message };
 
       if (!chat) {
         chat = await Chat.create({
