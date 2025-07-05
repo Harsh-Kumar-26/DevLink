@@ -46,6 +46,8 @@ export default function ChatPage() {
     socket.on("receiveMessage", (data) => {
       setMessages((prev) => [...prev, data]);
     });
+    console.log("m1",messages);
+    
 
     return () => {
       socket.emit("leaveRoom", { projectId });
