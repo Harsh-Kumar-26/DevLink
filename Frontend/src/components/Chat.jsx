@@ -60,7 +60,7 @@ export default function ChatPage() {
   }, [messages]);
 
   const sendMessage = () => {
-    console.log("Received message from client:", { projectId, senderId, msg });
+    console.log("Received message from client:", { projectId, currentUserId, msg });
     if (!msg.trim()) return;
 
     socket.emit("sendMessage", {
