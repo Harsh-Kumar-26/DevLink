@@ -5,9 +5,7 @@ import { useLocation } from "react-router-dom";
 import { use } from "react";
 import axios from "axios";
 
-const socket = io(import.meta.env.VITE_BACKENDURL, {
-  withCredentials: true,
-});
+
 
 
 export default function ChatPage() {
@@ -16,6 +14,7 @@ export default function ChatPage() {
     const [currentUserId,setcurrentUserId]=useState(null);
   const [searchParams] = useSearchParams();
   const chatRef = useRef(null);
+    const socketRef = useRef(null);
 
   const navigate = useNavigate();
 
@@ -58,6 +57,13 @@ export default function ChatPage() {
 
   useEffect(() => {
     if (!projectId) return;
+    socketRef.current = io(import.meta.env.VITE_BACKENDURL, {
+      withCredentials: true,
+      transports: ["websocket"],
+    });
+
+    const socket = socketRef.current;
+
     socket.emit("joinRoom", { projectId })
 
     socket.on("receiveMessage", (data) => {
