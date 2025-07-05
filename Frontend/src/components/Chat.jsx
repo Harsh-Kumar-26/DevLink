@@ -5,9 +5,18 @@ import { useLocation } from "react-router-dom";
 import { use } from "react";
 import axios from "axios";
 
-const socket = io(import.meta.env.VITE_BACKENDURL, {
-  withCredentials: true,
-});
+const socketRef = useRef();
+
+useEffect(() => {
+  socketRef.current = io(import.meta.env.VITE_BACKENDURL, {
+    withCredentials: true,
+  });
+
+  return () => {
+    socketRef.current.disconnect();
+  };
+}, []);
+
 
 export default function ChatPage() {
   const [messages, setMessages] = useState([]);
@@ -39,6 +48,22 @@ export default function ChatPage() {
         }
         fetchuser();
     },[]);
+
+    useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_BACKENDURL}/chat/${projectId}`, {
+          withCredentials: true,
+        });
+        setMessages(res.data);
+      } catch (error) {
+        console.log("Chat fetch error:", error);
+      }
+    };
+    if (projectId) fetchMessages();
+  }, [projectId]);
+
+
   useEffect(() => {
     if (!projectId) return;
     socket.emit("joinRoom", { projectId })
@@ -63,7 +88,7 @@ export default function ChatPage() {
     console.log("Received message from client:", { projectId, currentUserId, msg });
     if (!msg.trim()) return;
 
-    socket.emit("sendMessage", {
+    socket.current.emit("sendMessage", {
       projectId,
       senderId: currentUserId,
       message: msg,

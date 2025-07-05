@@ -38,13 +38,10 @@ export const initSocket = (server) => {
         chat.messages.push(newMessage);
         await chat.save();
       }
+        const savedMsg = chat.messages[chat.messages.length - 1];
 
       // Emit message to room
-      io.to(`room_${projectId}`).emit("receiveMessage", {
-        senderId,
-        message,
-        timestamp: new Date(),
-      });
+      io.to(`room_${projectId}`).emit("receiveMessage", savedMsg);
       }
       catch(err){
           console.log("error ",err);
