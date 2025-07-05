@@ -29,8 +29,8 @@ export default function ChatPage() {
             const response=await axios.get(
             `${import.meta.env.VITE_BACKENDURL}/current-user`,{ withCredentials: true });
             console.log(response);
-            setcurrentUserId(response._id);
-            console.log(response._id);
+            setcurrentUserId(response.data.data._id);
+            // console.log(response._id);
             
         } catch (error) {
             console.log(error);
