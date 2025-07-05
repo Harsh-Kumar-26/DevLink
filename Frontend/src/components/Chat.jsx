@@ -50,7 +50,7 @@ export default function ChatPage() {
     
 
     return () => {
-      socket.emit("leaveRoom", { projectId });
+    //   socket.emit("leaveRoom", { projectId });
       socket.off("receiveMessage");
     };
   }, [projectId]);
