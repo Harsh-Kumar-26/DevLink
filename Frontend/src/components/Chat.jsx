@@ -3,6 +3,7 @@ import { io } from "socket.io-client";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { use } from "react";
+import axios from "axios";
 
 const socket = io(import.meta.env.VITE_BACKENDURL, {
   withCredentials: true,
@@ -34,7 +35,7 @@ export default function ChatPage() {
         }
         }
         fetchuser();
-    })
+    },[]);
   useEffect(() => {
     if (!projectId) return;
     socket.emit("joinRoom", { projectId })
@@ -69,6 +70,8 @@ export default function ChatPage() {
 
     setMsg("");
   };
+
+    if (!currentUserId || !projectId) return null;
 
   return (
     <div className="flex flex-col h-screen bg-[#0f1b2a] text-white">
