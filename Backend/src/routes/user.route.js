@@ -3,6 +3,7 @@ import {registeruser,loginuser,logoutuser,refreshaccesstoken,getcurrentuser,edit
 import {verifyJWT} from "../middlewares/auth.middleware.js";
 import {upload} from "../middlewares/multer.middleware.js";
 import {createproject,updatestatus,deleteproject,sendprojectbyname,editproject, sendproject,apply,acceptproject,complete,review,removeapply,getProjectSummaries,userappliedprojects,usercreatedprojects} from "../controllers/project.controller.js"
+import { chatdata } from "../controllers/chat.controller.js";
 
 const router=express.Router();
 router.route("/signup").post(
@@ -17,6 +18,7 @@ router.route("/signup").post(
         }
     ]) ,
     registeruser);
+    router.route("/chat").post(verifyJWT,chatdata);
     router.route("/login").post(loginuser);
     router.route("/logout").post(verifyJWT,logoutuser);
     router.route("/updatestatus").post(verifyJWT,updatestatus);
