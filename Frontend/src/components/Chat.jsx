@@ -70,8 +70,11 @@ export default function ChatPage() {
 
     setMsg("");
   };
+console.log("ci ",currentUserId);
+console.log("pi ",projectId);
 
-    if (!currentUserId || !projectId) return null;
+
+    // if (!currentUserId || !projectId) return null;
 
   return (
     <div className="flex flex-col h-screen bg-[#0f1b2a] text-white">
