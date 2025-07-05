@@ -80,7 +80,7 @@ export default function ChatPage() {
     console.log("Received message from client:", { projectId, currentUserId, msg });
     if (!msg.trim()) return;
 
-    socket.current.emit("sendMessage", {
+    socket.emit("sendMessage", {
       projectId,
       senderId: currentUserId,
       message: msg,
