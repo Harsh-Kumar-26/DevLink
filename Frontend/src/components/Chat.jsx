@@ -28,7 +28,7 @@ export default function ChatPage() {
         try {
             const response=await axios.get(
             `${import.meta.env.VITE_BACKENDURL}/current-user`,{ withCredentials: true });
-            console.log(response);
+            // console.log(response);
             setcurrentUserId(response.data.data._id);
             // console.log(response._id);
             
@@ -73,11 +73,11 @@ export default function ChatPage() {
 
     setMsg("");
   };
-console.log("ci ",currentUserId);
-console.log("pi ",projectId);
+
+console.log(messages);
 
 
-    // if (!currentUserId || !projectId) return null;
+    if (!currentUserId || !projectId) return null;
 
   return (
     <div className="flex flex-col h-screen bg-[#0f1b2a] text-white">
