@@ -122,7 +122,7 @@ console.log("Set 3",messages);
 return (
   <div className="flex flex-col h-screen bg-[#0f1b2a] text-white">
     {/* Header */}
-    <div className="flex items-center p-4 bg-[#1c2a3a] border-b border-gray-700 shadow-md">
+    <div className="flex items-center p-4 bg-[#1c2a3a] border-b border-gray-700">
       <button
         onClick={() => navigate(-1)}
         className="text-sm px-3 py-1 bg-blue-500 rounded hover:bg-blue-600 mr-3"
@@ -135,36 +135,64 @@ return (
     {/* Chat Box */}
     <div
       ref={chatRef}
-      className="flex-1 overflow-y-auto p-4 space-y-3"
+      className="flex-1 overflow-y-auto p-4 space-y-2"
       style={{ scrollBehavior: "smooth" }}
     >
-      {messages.map((msg, idx) => {
-        const isMe = msg.senderId === currentUserId;
-        const timestamp = new Date(msg.timestamp || Date.now()).toLocaleTimeString([], {
-          hour: '2-digit',
-          minute: '2-digit'
+      {(() => {
+        const groupedMessages = {};
+
+        messages.forEach((msg) => {
+          const date = new Date(msg.timestamp || Date.now()).toDateString();
+          if (!groupedMessages[date]) groupedMessages[date] = [];
+          groupedMessages[date].push(msg);
         });
 
-        return (
-          <div
-            key={idx}
-            className={`flex flex-col ${isMe ? "items-end" : "items-start"}`}
-          >
-            <div
-              className={`max-w-sm px-4 py-2 rounded-2xl shadow-md ${
-                isMe
-                  ? "bg-blue-600 text-white rounded-br-none"
-                  : "bg-gray-700 text-gray-100 rounded-bl-none"
-              }`}
-            >
-              <p className="break-words whitespace-pre-wrap">{msg.message}</p>
+        const formatDate = (dateStr) => {
+          const today = new Date().toDateString();
+          const yesterday = new Date(Date.now() - 86400000).toDateString();
+
+          if (dateStr === today) return "Today";
+          if (dateStr === yesterday) return "Yesterday";
+          return new Date(dateStr).toLocaleDateString([], {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+          });
+        };
+
+        return Object.entries(groupedMessages).map(([dateStr, msgs], index) => (
+          <div key={index} className="space-y-2">
+            <div className="text-center text-sm text-gray-400 my-4">
+              ── {formatDate(dateStr)} ──
             </div>
-            <span className="text-xs text-gray-400 mt-1">
-              {timestamp}
-            </span>
+            {msgs.map((msg, idx) => {
+              const isMe = msg.senderId === currentUserId;
+              const time = new Date(msg.timestamp || Date.now()).toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit'
+              });
+
+              return (
+                <div
+                  key={idx}
+                  className={`flex flex-col ${isMe ? "items-end" : "items-start"}`}
+                >
+                  <div
+                    className={`max-w-sm px-4 py-2 rounded-2xl shadow-md ${
+                      isMe
+                        ? "bg-blue-600 text-white rounded-br-none"
+                        : "bg-gray-700 text-gray-100 rounded-bl-none"
+                    }`}
+                  >
+                    <p>{msg.message}</p>
+                  </div>
+                  <span className="text-xs text-gray-400 mt-1">{time}</span>
+                </div>
+              );
+            })}
           </div>
-        );
-      })}
+        ));
+      })()}
     </div>
 
     {/* Input */}
@@ -174,12 +202,12 @@ return (
         value={msg}
         onChange={(e) => setMsg(e.target.value)}
         placeholder="Type your message..."
-        className="flex-1 p-2 rounded-lg bg-[#263447] text-white outline-none border border-transparent focus:border-blue-400 transition"
+        className="flex-1 p-2 rounded bg-[#263447] text-white outline-none"
         onKeyDown={(e) => e.key === "Enter" && sendMessage()}
       />
       <button
         onClick={sendMessage}
-        className="bg-green-500 px-4 py-2 rounded-lg hover:bg-green-600 transition"
+        className="bg-green-500 px-4 py-2 rounded hover:bg-green-600"
       >
         Send
       </button>
