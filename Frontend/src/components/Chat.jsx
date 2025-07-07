@@ -106,10 +106,10 @@ export default function ChatPage() {
       message: msg,
     });
         console.log("Set 2");
-    setMessages((prev) => [
-      ...prev,
-      { senderId: currentUserId, message: msg, timestamp: new Date() },
-    ]);
+    // setMessages((prev) => [
+    //   ...prev,
+    //   { senderId: currentUserId, message: msg, timestamp: new Date() },
+    // ]);
 
     setMsg("");
   };
