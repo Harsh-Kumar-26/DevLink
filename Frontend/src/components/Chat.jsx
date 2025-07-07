@@ -1,9 +1,10 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { io } from "socket.io-client";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { use } from "react";
 import axios from "axios";
+import { useMemo } from "react";
 
 
 
@@ -11,16 +12,21 @@ import axios from "axios";
 export default function ChatPage() {
   const [messages, setMessages] = useState([]);
   const [msg, setMsg] = useState("");
-    const [currentUserId,setcurrentUserId]=useState(null);
+  const [currentUserId,setcurrentUserId]=useState(null);
   const [searchParams] = useSearchParams();
   const chatRef = useRef(null);
-    const socketRef = useRef(null);
-
+  const socketRef = useRef(null);
   const navigate = useNavigate();
 
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const projectId = queryParams.get("projectId");
+
+    const socket=useMemo(()=>{
+      io(import.meta.env.VITE_BACKENDURL,{
+        withCredentials:true,
+      }),[]
+    });
 
 
     useEffect(()=>{
@@ -40,41 +46,43 @@ export default function ChatPage() {
         fetchuser();
     },[]);
 
-    useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        const res = await axios.post(`${import.meta.env.VITE_BACKENDURL}/chat`,{pjtid:projectId}, {
-          withCredentials: true,
-        });
-        setMessages(res.data);
-      } catch (error) {
-        console.log("Chat fetch error:", error);
-      }
-    };
-    if (projectId) fetchMessages();
-  }, [projectId]);
+  //   useEffect(() => {
+  //   const fetchMessages = async () => {
+  //     try {
+  //       const res = await axios.post(`${import.meta.env.VITE_BACKENDURL}/chat`,{pjtid:projectId}, {
+  //         withCredentials: true,
+  //       });
+  //       setMessages(res.data);
+  //     } catch (error) {
+  //       console.log("Chat fetch error:", error);
+  //     }
+  //   };
+  //   if (projectId) fetchMessages();
+  // }, [projectId]);
 
 
   useEffect(() => {
     if (!projectId) return;
-    socketRef.current = io(import.meta.env.VITE_BACKENDURL, {
-      withCredentials: true,
-      transports: ["websocket"],
-    });
+    // socketRef.current = io(import.meta.env.VITE_BACKENDURL, {
+    //   withCredentials: true,
+    //   transports: ["websocket"],
+    // });
 
-    const socket = socketRef.current;
+    // const socket = socketRef.current;
+    socket.on("connect",()=>{
+      console.log("Connected");
+    })
+    socket.emit("joinRoom", { projectId });
 
-    socket.emit("joinRoom", { projectId })
-
-    socket.on("receiveMessage", (data) => {
-      setMessages((prev) => [...prev, data]);
+    socket.on("receiveMessage", (savedMsg) => {
+      setMessages((prev) => [...prev, savedMsg]);
     });
     console.log("m1",messages);
     
 
     return () => {
     //   socket.emit("leaveRoom", { projectId });
-      socket.off("receiveMessage");
+      socket.disconnect();
     };
   }, [projectId]);
 
@@ -86,7 +94,7 @@ export default function ChatPage() {
     console.log("Received message from client:", { projectId, currentUserId, msg });
     if (!msg.trim()) return;
 
-    socketRef.current.emit("sendMessage", {
+    socket.emit("sendMessage", {
       projectId,
       senderId: currentUserId,
       message: msg,

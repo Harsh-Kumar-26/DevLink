@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import connectDB from "./db/index.js";
 import app from "./app.js";
 import { createServer } from "http";
-import { initSocket } from "./socket.js"; 
+import { initSocket } from "./socket.js";
 
 dotenv.config();
 
@@ -12,7 +12,6 @@ console.log("1!");
 const server = createServer(app);
 console.log("2!");
 
-// Initialize Socket.IO on the server
 initSocket(server);
 console.log("3!");
 
