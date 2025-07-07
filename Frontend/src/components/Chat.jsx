@@ -22,7 +22,7 @@ export default function ChatPage() {
     const projectId = queryParams.get("projectId");
 
     const socket=useMemo(()=>
-      io(import.meta.env.VITE_BACKENDURL,{
+      io("https://devlinkbackend.onrender.com",{
         withCredentials:true,
       }),[]
     );
