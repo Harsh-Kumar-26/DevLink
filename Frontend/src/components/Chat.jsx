@@ -21,11 +21,11 @@ export default function ChatPage() {
     const queryParams = new URLSearchParams(location.search);
     const projectId = queryParams.get("projectId");
 
-    const socket=useMemo(()=>{
+    const socket=useMemo(()=>
       io(import.meta.env.VITE_BACKENDURL,{
         withCredentials:true,
       }),[]
-    });
+    );
 
 
     useEffect(()=>{
