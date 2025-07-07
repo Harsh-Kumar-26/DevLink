@@ -8,7 +8,6 @@ import { useMemo } from "react";
 
 
 
-
 export default function ChatPage() {
   const [messages, setMessages] = useState([]);
   const [msg, setMsg] = useState("");
@@ -71,17 +70,16 @@ export default function ChatPage() {
     // const socket = socketRef.current;
     socket.on("connect",()=>{
       console.log("Connected");
-    })
+    });
     socket.emit("joinRoom", { projectId });
 
     socket.on("receiveMessage", (savedMsg) => {
       setMessages((prev) => [...prev, savedMsg]);
     });
-    console.log("m1",messages);
+    // console.log("m1",messages);
     
 
     return () => {
-    //   socket.emit("leaveRoom", { projectId });
       socket.disconnect();
     };
   }, [projectId]);
@@ -92,14 +90,15 @@ export default function ChatPage() {
 
   const sendMessage = () => {
     console.log("Received message from client:", { projectId, currentUserId, msg });
-    if (!msg.trim()) return;
-
+    if (!msg.trim() || !projectId || !currentUserId) return;
+    console.log("Set 1");
+    
     socket.emit("sendMessage", {
       projectId,
       senderId: currentUserId,
       message: msg,
     });
-
+        console.log("Set 2");
     setMessages((prev) => [
       ...prev,
       { senderId: currentUserId, message: msg, timestamp: new Date() },
@@ -108,7 +107,7 @@ export default function ChatPage() {
     setMsg("");
   };
 
-console.log(messages);
+console.log("Set 3",messages);
 
 
     if (!currentUserId || !projectId) return null;
