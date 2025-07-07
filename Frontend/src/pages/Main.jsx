@@ -169,13 +169,13 @@ data();
               </nav>
 
               <div className="mt-auto pt-6 border-t border-teal-700 flex flex-col gap-3">
-                <Link
+                {/* <Link
                   to="/settings"
                   className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-teal-500/20 transition"
                 >
                   <FaCog className="text-teal-400" />
                   Settings
-                </Link>
+                </Link> */}
                 <Link
                     to="/profile"
                     className="flex items-center gap-3 justify-center w-full"
