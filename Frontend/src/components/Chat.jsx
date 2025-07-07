@@ -77,7 +77,9 @@ export default function ChatPage() {
     socket.emit("joinRoom", { projectId });
 
     socket.on("receiveMessage", (savedMsg) => {
+      console.log("R1");
       setMessages((prev) => [...prev, savedMsg]);
+            console.log("R2");
     });
     // console.log("m1",messages);
     
