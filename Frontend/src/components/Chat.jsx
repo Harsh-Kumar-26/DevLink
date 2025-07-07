@@ -69,22 +69,24 @@ export default function ChatPage() {
     //   transports: ["websocket"],
     // });
     console.log("Hi 2",projectId);
-    
+      const handleReceive = (savedMsg) => {
+    console.log("📥 R1");
+    setMessages((prev) => [...prev, savedMsg]);
+    console.log("📥 R2");
+  };
     // const socket = socketRef.current;
     socket.on("connect",()=>{
       console.log("Connected");
     });
     socket.emit("joinRoom", { projectId });
 
-    socket.on("receiveMessage", (savedMsg) => {
-      console.log("R1");
-      setMessages((prev) => [...prev, savedMsg]);
-            console.log("R2");
-    });
+     socket.off("receiveMessage", handleReceive);
+  socket.on("receiveMessage", handleReceive);
     // console.log("m1",messages);
     
 
     return () => {
+          socket.off("receiveMessage", handleReceive);
       socket.disconnect();
     };
   }, [projectId]);
