@@ -21,7 +21,9 @@ export const initSocket = (server) => {
     });
     
     socket.on("sendMessage", async ({ projectId, senderId, message }) => {
+      console.log("HK1");
         if (!projectId || !senderId || !message?.trim()) return;
+              console.log("HK2");
         try{
 
       // Save message to DB
