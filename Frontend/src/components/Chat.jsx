@@ -61,12 +61,15 @@ export default function ChatPage() {
 
 
   useEffect(() => {
+        console.log("Hi 1");
+
     if (!projectId) return;
     // socketRef.current = io(import.meta.env.VITE_BACKENDURL, {
     //   withCredentials: true,
     //   transports: ["websocket"],
     // });
-
+    console.log("Hi 2",projectId);
+    
     // const socket = socketRef.current;
     socket.on("connect",()=>{
       console.log("Connected");
