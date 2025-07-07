@@ -30,7 +30,7 @@ export default function ProjectCard({pjtid}) {
 //     pjtid=pjid;
 //   }
     // console.log(pjtid);
-    const [bookmarked, setBookmarked] = useState(false);
+    // const [bookmarked, setBookmarked] = useState(false);
     const [isloding,setisloding]=useState(false);
     const [project,setproject]=useState(null);
     const [ap,setap]=useState(false);
@@ -86,7 +86,7 @@ export default function ProjectCard({pjtid}) {
     applied = [],
     description,
   } = project;
-  const toggleBookmark = () => setBookmarked(!bookmarked);
+  // const toggleBookmark = () => setBookmarked(!bookmarked);
 
   return (isloding || !project || !creator)?<Loader/>:(
     <motion.div
@@ -173,7 +173,7 @@ export default function ProjectCard({pjtid}) {
           </Link> */}
           <Button onClick={apply} disabled={ap} variant={ap?"secondary":"green"}>{ap?"Applied":"Apply"}</Button>
         </div>
-        <button
+        {/* <button
           onClick={toggleBookmark}
           className="text-purple-400 hover:text-purple-300 transition"
           title={bookmarked ? "Remove Bookmark" : "Bookmark"}
@@ -183,7 +183,7 @@ export default function ProjectCard({pjtid}) {
           ) : (
             <FaRegBookmark size={18} />
           )}
-        </button>
+        </button> */}
       </div>
 
       {/* Applied Users */}
