@@ -3,7 +3,7 @@
 DevLink is a **full-stack social platform for developers** to connect, collaborate, and share resources.  
 It’s a **production-grade MERN project** featuring real-time interactions, secure authentication, and modern UI/UX.  
 
-🌐 **Live Demo:** [Frontend (Vercel)]([https://your-vercel-link.com](https://dev-link-beta.vercel.app/))
+🌐 **Live Demo:** [Frontend (Vercel)](https://dev-link-beta.vercel.app/)
 
 ---
 
