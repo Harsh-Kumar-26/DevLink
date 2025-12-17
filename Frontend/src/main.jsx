@@ -1,8 +1,6 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter,RouterProvider } from 'react-router-dom'
 import './index.css'
-import App from './App.jsx'
 import Landing from './pages/Landingpage.jsx'
 import LoginPage from './forms/login.jsx'
 import SignupPage from './forms/signup.jsx'
@@ -19,7 +17,6 @@ import ProjectCard from './components/Projectcard.jsx'
 import Liveproject from './pages/Ongoing.jsx'
 import Pstpjt from './pages/Pastpjt.jsx'
 import ProjectCardtwo from './components/Projectcardtwo.jsx'
-import TestChat from './pages/Testpage.jsx'
 import Cliveproject from './pages/Clilive.jsx'
 import ChatPage from './components/Chat.jsx'
 
@@ -97,6 +94,3 @@ const router=createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <RouterProvider router={router}/>
 )
-  // <StrictMode>
-    {/* <App /> */}
-  {/* </StrictMode>, */}

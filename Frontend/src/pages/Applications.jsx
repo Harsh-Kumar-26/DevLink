@@ -3,7 +3,6 @@ import axios from 'axios';
 import { FaStar } from 'react-icons/fa';
 import { useNavigate ,Link} from 'react-router-dom';
 import Button from '../components/Button';
-import Loader from '../components/loader';
 
 
 export default function ClientApplications() {

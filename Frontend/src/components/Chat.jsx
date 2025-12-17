@@ -78,6 +78,7 @@ export default function ChatPage() {
     socket.on("connect",()=>{
       console.log("Connected");
     });
+    // Hi
     socket.emit("joinRoom", { projectId });
 
      socket.off("receiveMessage", handleReceive);

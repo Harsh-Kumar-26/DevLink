@@ -8,7 +8,7 @@
 // const razorpay = new Razorpay({
 //   key_id: process.env.RAZORPAY_KEY_ID,
 //   key_secret: process.env.RAZORPAY_KEY_SECRET,
-// });
+//  });
 
 // // Create Razorpay order
 // export const createOrder = async (req, res) => {
@@ -84,7 +84,7 @@
 
 
 
-//   // ✅ Update DB on successful payment
+//   // Update DB on successful payment
 //     await Project.findByIdAndUpdate(projectId, {
 //       paid: payoutSuccess
 //     });

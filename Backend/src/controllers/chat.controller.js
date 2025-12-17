@@ -11,4 +11,3 @@ export const chatdata=asynchandler(async(req,res)=>{
     const chat = await Chat.findOne({ projectId: pjtid });
     res.json(chat?.messages || []);
 });
-
